@@ -57,10 +57,7 @@ namespace ITCSurveyReportLite
             // add arrow symbol to add/remove buttons
             cmdAddSurvey.Text = char.ConvertFromUtf32(0x2192);
             cmdRemoveSurvey.Text = char.ConvertFromUtf32(0x2190);
-            cmdAddPrefixHeading.Text = char.ConvertFromUtf32(0x2192);
-            cmdRemovePrefixHeading.Text = char.ConvertFromUtf32(0x2190);
-            cmdAddVarName.Text = char.ConvertFromUtf32(0x2192);
-            cmdRemoveVarName.Text = char.ConvertFromUtf32(0x2190);
+            
 
             // start with blank constructor, default settings
             reportType = ReportTypes.Standard;
@@ -103,18 +100,7 @@ namespace ITCSurveyReportLite
 
             reportLayoutBindingSource.DataSource = SR.LayoutOptions;
 
-            // populate the repeated fields list
-            lstRepeatedFields.Items.Add("PreP");
-            lstRepeatedFields.Items.Add("PreI");
-            lstRepeatedFields.Items.Add("PreA");
-            lstRepeatedFields.Items.Add("LitQ");
-            lstRepeatedFields.Items.Add("RespOptions");
-            lstRepeatedFields.Items.Add("NRCodes");
-            lstRepeatedFields.Items.Add("PstI");
-            lstRepeatedFields.Items.Add("PstP");
-
-            // populate highlight scheme box
-            cboHighlightScheme.DataSource = Enum.GetValues(typeof(HScheme));
+          
 
 
             // bind selected surveys to the list of surveys in SR
@@ -124,12 +110,8 @@ namespace ITCSurveyReportLite
 
             // bind question filters to the holding object
             filterBy = 1;
-            txtQrangeLow.DataBindings.Add("Text", questionFilters, "QRangeLow");
-            txtQrangeHigh.DataBindings.Add("Text", questionFilters, "QRangeHigh");
-            // varnames     
-            lstSelectedVarNames.DataSource = questionFilters.Varnames;
-
-            optQuestionRange.Checked = true;
+         
+        
 
             lblStatus.Visible = false;
             lblStatus.Text = "Ready.";
@@ -367,12 +349,7 @@ namespace ITCSurveyReportLite
 
         private void UpdateColumnOrder()
         {
-            List<ReportColumn> columns = new List<ReportColumn>();
-            for (int i = 0; i < gridColumnOrder.ColumnCount; i++)
-            {
-                columns.Add(new ReportColumn(gridColumnOrder.Columns[i].HeaderText, gridColumnOrder.Columns[i].DisplayIndex + 1));
-            }
-            SR.ColumnOrder = columns;
+            
         }
 
         #region Current Survey "Load" Methods
@@ -415,14 +392,7 @@ namespace ITCSurveyReportLite
             //lstSelectedVarNames.DataSource = CurrentSurvey.Varnames;
 
             // standard fields
-            lstStdFields.SelectedItems.Clear();
-            foreach (object item in CurrentSurvey.StdFieldsChosen)
-            {
-                for (int i = 0; i < lstStdFields.Items.Count; i++)
-                    if (item.ToString().Equals(lstStdFields.Items[i].ToString()))
-                        lstStdFields.SetSelected(i, true);
-
-            }
+            
 
             // comments and translations
             // list them
@@ -436,13 +406,7 @@ namespace ITCSurveyReportLite
 
             }
 
-            foreach (object item in CurrentSurvey.CommentFields)
-            {
-                for (int i = 0; i < lstCommentFields.Items.Count; i++)
-                    if (item.ToString().Equals(lstCommentFields.Items[i].ToString()))
-                        lstCommentFields.SetSelected(i, true);
-
-            }
+           
 
             switch (CurrentSurvey.RoutingFormat)
             {
@@ -461,105 +425,28 @@ namespace ITCSurveyReportLite
             chkEnglishRouting.DataBindings.Add("Checked", CurrentSurvey, "EnglishRouting");
 
 
-            txtCommentFilter.DataBindings.Clear();
-            txtCommentFilter.DataBindings.Add("Text", CurrentSurvey, "CommentText");
-
-            chkCorrected.Visible = CurrentSurvey.HasCorrectedWordings;
-
-            chkCorrected.DataBindings.Clear();
-            chkCorrected.DataBindings.Add("Checked", CurrentSurvey, "Corrected");
-
-            // extra fields
-            chkFilterCol.DataBindings.Clear();
-            chkFilterCol.DataBindings.Add("Checked", CurrentSurvey, "FilterCol");
-            chkDomainCol.DataBindings.Clear();
-            chkDomainCol.DataBindings.Add("Checked", CurrentSurvey, "DomainLabelCol");
-            chkTopicCol.DataBindings.Clear();
-            chkTopicCol.DataBindings.Add("Checked", CurrentSurvey, "TopicLabelCol");
-            chkContentCol.DataBindings.Clear();
-            chkContentCol.DataBindings.Add("Checked", CurrentSurvey, "ContentLabelCol");
-            chkVarLabelCol.DataBindings.Clear();
-            chkVarLabelCol.DataBindings.Add("Checked", CurrentSurvey, "VarLabelCol");
-            chkProductCol.DataBindings.Clear();
-            chkProductCol.DataBindings.Add("Checked", CurrentSurvey, "ProductLabelCol");
-            chkAltQNum2Col.DataBindings.Clear();
-            chkAltQNum2Col.DataBindings.Add("Checked", CurrentSurvey, "AltQnum2Col");
-            chkAltQNum3Col.DataBindings.Clear();
-            chkAltQNum3Col.DataBindings.Add("Checked", CurrentSurvey, "AltQnum3Col");
+           
 
         }
 
         private void LoadPrefixes(string survey)
         {
-            cboPrefixesHeadings.DataSource = null;
-            cboPrefixesHeadings.ValueMember = "Prefix";
-            cboPrefixesHeadings.DisplayMember = "Prefix";
-            cboPrefixesHeadings.DataSource = DBAction.GetVariablePrefixes(survey);
-            cboPrefixesHeadings.SelectedItem = null;
+           
         }
 
         private void LoadVarNames(string survey)
         {
-            cboVarNames.ValueMember = "VarName";
-            cboVarNames.DisplayMember = "VarName";
-
-            if (lstPrefixesHeadings.Items.Count > 0)
-            {
-                List<VariableName> vars = DBAction.GetVariableList(survey);
-
-                List<string> prefixes = (List<string>)lstPrefixesHeadings.DataSource;
-
-                vars = vars.Where(x => prefixes.Contains(x.FullVarName.Substring(0, 2))).ToList();
-
-                cboVarNames.DataSource = vars;
-            }
-            else
-            {
-                cboVarNames.DataSource = DBAction.GetVariableList(survey);
-            }
-
-            cboVarNames.SelectedItem = null;
+           
         }
 
         private void LoadHeadings(string survey)
         {
-            cboPrefixesHeadings.DataSource = null;
-            cboPrefixesHeadings.ValueMember = "Qnum";
-            cboPrefixesHeadings.DisplayMember = "PreP";
-            cboPrefixesHeadings.DataSource = DBAction.GetHeadings(survey);
+           
         }
 
         private void LoadExtraFields(Survey survey)
         {
-            // load comment types
-            List<string> noteTypes = DBAction.GetQuesCommentTypes(survey.SID);
-
-            lstCommentFields.Items.Clear();
-            foreach (string s in noteTypes)
-                lstCommentFields.Items.Add(s);
-
-            // load comment authors
-            List<Person> authors = DBAction.GetCommentAuthors(survey.SID);
-
-            lstCommentAuthors.DisplayMember = "Name";
-            lstCommentAuthors.ValueMember = "NoteInit";
-            lstCommentAuthors.DataSource = authors;
-
-            if (lstCommentAuthors.Items.Count > 0)
-                lstCommentAuthors.SetSelected(0, false);
-
-            // load comment source names (authorities)
-            List<string> sourceNames = DBAction.GetCommentSourceNames(survey.SurveyCode);
-
-            foreach (string s in sourceNames)
-                lstCommentSources.Items.Add(s);
-
-            // load translation languages
-            List<string> langs = DBAction.GetLanguages(survey);
-
-            lstTransFields.Items.Clear();
-            foreach (string s in langs)
-                lstTransFields.Items.Add(s);
+            
 
         }
 
@@ -780,102 +667,88 @@ namespace ITCSurveyReportLite
             else
                 compare.MatchOnRename = false;
 
-            cboHighlightScheme.Enabled = surveyCount == 2;
+            
 
 
             if (surveyCount == 2)
             {
                 if (SR.Surveys[0].SurveyCode == SR.Surveys[1].SurveyCode) // self compare
                 {
-                    cboHighlightScheme.SelectedItem = HScheme.Sequential;
+                   
                     compare.HighlightScheme = HScheme.Sequential;
-                    cboHighlightScheme.Enabled = false;
+                    
                 }
                 else if (SR.CheckForDiffCountry())
                 {
 
-                    cboHighlightScheme.SelectedItem = HScheme.AcrossCountry;
+                    
                     compare.HighlightScheme = HScheme.AcrossCountry;
-                    cboHighlightScheme.Enabled = false;
+                    
                 }
                 else
                 {
                     compare.HighlightScheme = HScheme.Sequential;
-                    cboHighlightScheme.SelectedItem = HScheme.Sequential;
+                 
 
                 }
             }
             else
             {
-                cboHighlightScheme.SelectedItem = HScheme.AcrossCountry;
+                
             }
-            beforeAfterReportCheckBox.Enabled = surveyCount == 2;
-
-            semiTelCheckBox.Enabled = !(SR.ReportType == ReportTypes.Order) && !(surveyCount > 1);
-
-            chkTableFormat.Enabled = !(surveyCount > 1);
+            
 
             if (surveyCount > 1 || SR.ReportType == ReportTypes.Label)
             {
                 SR.SubsetTables = false;
-                chkTableFormat.Enabled = false;
+                
                 SR.SubsetTablesTranslation = false;
-                chkTranslationTableFormat.Visible = false;
-                chkTranslationTableFormat.Enabled = false;
+               
             }
 
 
             if (SR.ReportType == ReportTypes.Label || !SR.HasF2F())
             {
-                inlineRoutingCheckBox.Enabled = false;
+               
 
             }
             else
             {
-                inlineRoutingCheckBox.Enabled = true;
+                
             }
 
             if (surveyCount > 1)
             {
-                inlineRoutingCheckBox.Enabled = compare.HighlightStyle != HStyle.TrackedChanges;
+                
             }
 
 
             // order comparisons
             // check for order comparison
-            lblOrderOptions.Visible = SR.ReportType == ReportTypes.Order;
-            includeWordingsCheckBox.Visible = SR.ReportType == ReportTypes.Order;
-            bySectionCheckBox.Visible = SR.ReportType == ReportTypes.Order;
-
+           
             // table of contents disabled for T/C reports, since it needs headings
             if (SR.ReportType == ReportTypes.Label)
             {
-                optToCNone.Checked = true; // changing the checked state updates the SR object
+               
             }
 
-            groupToC.Enabled = SR.ReportType == ReportTypes.Standard;
-            optToCPgNum.Enabled = !(surveyCount > 1);
+          
 
-            // "Don't read" options disabled for T/C and order reports
-            if (SR.ReportType != ReportTypes.Standard)
-                optNRFormatNeither.Checked = true;
+           
+             
 
-            groupNRFormat.Enabled = SR.ReportType == ReportTypes.Standard;
+     
 
-            // Web format is disabled for T/C and order reports
-            if (SR.ReportType != ReportTypes.Standard)
-                webCheckBox.Checked = false;
+           
+              
 
-            webCheckBox.Enabled = SR.ReportType == ReportTypes.Standard;
+           
 
         }
 
         private void ShowTranslationSubsetTableOption()
         {
-            if (SR.ReportType == ReportTypes.Standard && SR.Surveys.Count == 1 && SR.Surveys[0].TransFields.Count == 1)
-                chkTranslationTableFormat.Visible = chkTableFormat.Checked;
-            else
-                chkTranslationTableFormat.Visible = false;
+            
         }
 
         private void UpdateGrids()
@@ -907,38 +780,12 @@ namespace ITCSurveyReportLite
 
         private void UpdateColumnOrderGrid()
         {
-            // popluate the column order grid
-            gridColumnOrder.Columns.Clear();
-            DataTable columns = new DataTable();
-            foreach (ReportColumn rc in SR.ColumnOrder)
-            {
-                columns.Columns.Add(new DataColumn(rc.ColumnName));
-
-            }
-
-            gridColumnOrder.DataSource = columns;
-            gridColumnOrder.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            gridColumnOrder.Refresh();
+            
         }
 
         private void UpdateQnumSurveyGrid()
         {
-            // populate the qnum survey grid
-            chklstQnumSurvey.Items.Clear();
-            chklstQnumSurvey.Items.AddRange(SR.Surveys.ToArray());
-
-            // check off the qnum survey
-            for (int i = 0; i < chklstQnumSurvey.Items.Count; i++)
-            {
-                ReportSurvey r = (ReportSurvey)chklstQnumSurvey.Items[i];
-                if (r.Qnum)
-                {
-                    chklstQnumSurvey.SetItemChecked(i, true);
-                    chklstQnumSurvey.SelectedItem = chklstQnumSurvey.Items[i];
-                }
-                else
-                    chklstQnumSurvey.SetItemChecked(i, false);
-            }
+           
         }
 
         private void UpdateReportColumns(object sender, EventArgs e)
@@ -1031,69 +878,35 @@ namespace ITCSurveyReportLite
         // Add the selected prefix to the Current Survey's prefix list and refresh the Prefix listbox
         private void AddPrefix(object sender, EventArgs e)
         {
-            if (cboPrefixesHeadings.SelectedValue != null && !lstPrefixesHeadings.Items.Contains(cboPrefixesHeadings.SelectedValue))
-            {
-                questionFilters.Prefixes.Add(cboPrefixesHeadings.SelectedValue.ToString());
-                lstPrefixesHeadings.DataSource = null;
-                lstPrefixesHeadings.DataSource = questionFilters.Prefixes;
-                LoadVarNames(CurrentSurvey.SurveyCode);
-            }
+           
         }
 
         // Remove the selected prefix from the Current Survey's prefix list and refresh the Prefix listbox
         private void RemovePrefix(object sender, EventArgs e)
         {
-            if (lstPrefixesHeadings.SelectedValue != null)
-            {
-                questionFilters.Prefixes.Remove(lstPrefixesHeadings.SelectedValue.ToString());
-                lstPrefixesHeadings.DataSource = null;
-                lstPrefixesHeadings.DataSource = questionFilters.Prefixes;
-                LoadVarNames(CurrentSurvey.SurveyCode);
-            }
+            
         }
 
         private void AddVarName_Click(object sender, EventArgs e)
         {
-            if (cboVarNames.SelectedValue != null && !lstSelectedVarNames.Items.Contains(cboVarNames.SelectedValue))
-            {
-                questionFilters.Varnames.Add(cboVarNames.SelectedValue.ToString());
-                lstSelectedVarNames.DataSource = null;
-                lstSelectedVarNames.DataSource = questionFilters.Varnames;
-            }
+            
         }
 
         private void RemoveVarName_Click(object sender, EventArgs e)
         {
-            if (lstSelectedVarNames.SelectedValue != null)
-            {
-                questionFilters.Varnames.Remove(lstSelectedVarNames.SelectedValue.ToString());
-                lstSelectedVarNames.DataSource = null;
-                lstSelectedVarNames.DataSource = questionFilters.Varnames;
-            }
+           
         }
 
         private void AddHeading(object sender, EventArgs e)
         {
 
-            Heading h = (Heading)cboPrefixesHeadings.SelectedItem;
-            // add it to the survey's headings collection
-            questionFilters.Headings.Add(h);
-            // refresh the selected headings list box, using the PreP as the display
-            lstPrefixesHeadings.DataSource = null;
-            lstPrefixesHeadings.DisplayMember = "PreP";
-            lstPrefixesHeadings.ValueMember = "Qnum";
-            lstPrefixesHeadings.DataSource = questionFilters.Headings;
+          
 
         }
 
         private void RemoveHeading(object sender, EventArgs e)
         {
-            if (lstPrefixesHeadings.SelectedItem != null)
-            {
-                questionFilters.Headings.Remove((Heading)lstPrefixesHeadings.SelectedItem);
-                lstPrefixesHeadings.DataSource = null;
-                lstPrefixesHeadings.DataSource = questionFilters.Headings;
-            }
+           
         }
 
         private void QuestionFilter_CheckedChanged(object sender, EventArgs e)
@@ -1103,68 +916,20 @@ namespace ITCSurveyReportLite
 
             if (!r.Checked) return;
 
-            txtQrangeHigh.Enabled = filterBy == 1;
-            txtQrangeLow.Enabled = filterBy == 1;
-
-            cboPrefixesHeadings.Enabled = filterBy == 2 || filterBy == 3;
-            lstPrefixesHeadings.Enabled = filterBy == 2 || filterBy == 3;
-            cmdAddPrefixHeading.Enabled = filterBy == 2 || filterBy == 3;
-            cmdRemovePrefixHeading.Enabled = filterBy == 2 || filterBy == 3;
+           
 
             switch (filterBy)
             {
                 case 1:
-                    lblPrefixOrHeading.Text = "Prefixes/Headings";
+                   
 
                     break;
                 case 2:
-                    lblPrefixOrHeading.Text = "Prefixes";
-
-                    cboPrefixesHeadings.Width = 65;
-                    cboPrefixesHeadings.DropDownWidth = 65;
-                    LoadPrefixes(CurrentSurvey.SurveyCode);
-
-                    cmdAddPrefixHeading.Left = 110;
-                    cmdAddPrefixHeading.Click -= AddHeading;
-                    cmdAddPrefixHeading.Click += AddPrefix;
-
-                    cmdRemovePrefixHeading.Left = 110;
-                    cmdRemovePrefixHeading.Click -= RemoveHeading;
-                    cmdRemovePrefixHeading.Click += RemovePrefix;
-
-                    lstPrefixesHeadings.Width = 65;
-                    lstPrefixesHeadings.Left = 145;
-
-                    lstPrefixesHeadings.DataSource = null;
-                    lstPrefixesHeadings.Items.Clear();
-                    lstPrefixesHeadings.DisplayMember = "Prefix";
-                    lstPrefixesHeadings.ValueMember = "Prefix";
-                    lstPrefixesHeadings.DataSource = questionFilters.Prefixes;
+                    
 
                     break;
                 case 3:
-                    lblPrefixOrHeading.Text = "Headings";
-
-                    cboPrefixesHeadings.Width = 200;
-                    cboPrefixesHeadings.DropDownWidth = 300;
-                    LoadHeadings(CurrentSurvey.SurveyCode);
-
-                    cmdAddPrefixHeading.Left = 245;
-                    cmdAddPrefixHeading.Click -= AddPrefix;
-                    cmdAddPrefixHeading.Click += AddHeading;
-
-                    cmdRemovePrefixHeading.Left = 245;
-                    cmdRemovePrefixHeading.Click -= RemovePrefix;
-                    cmdRemovePrefixHeading.Click += RemoveHeading;
-
-                    lstPrefixesHeadings.Width = 180;
-                    lstPrefixesHeadings.Left = 280;
-
-                    lstPrefixesHeadings.DataSource = null;
-                    lstPrefixesHeadings.Items.Clear();
-                    lstPrefixesHeadings.DisplayMember = "PreP";
-                    lstPrefixesHeadings.ValueMember = "Qnum";
-                    lstPrefixesHeadings.DataSource = questionFilters.Headings;
+                   
                     break;
 
             }
@@ -1182,10 +947,7 @@ namespace ITCSurveyReportLite
         private void StdFields_Click(object sender, EventArgs e)
         {
             CurrentSurvey.StdFieldsChosen.Clear();
-            for (int i = 0; i < lstStdFields.SelectedItems.Count; i++)
-            {
-                CurrentSurvey.StdFieldsChosen.Add(lstStdFields.SelectedItems[i].ToString());
-            }
+            
         }
 
         /// <summary>
@@ -1212,66 +974,14 @@ namespace ITCSurveyReportLite
         /// <param name="e"></param>
         private void CommentFields_Click(object sender, EventArgs e)
         {
-            CurrentSurvey.CommentFields.Clear();
-            for (int i = 0; i < lstCommentFields.SelectedItems.Count; i++)
-            {
-                CurrentSurvey.CommentFields.Add(lstCommentFields.SelectedItems[i].ToString());
-            }
-
-            UpdateReportColumns(sender, e);
+            
         }
 
-        /// <summary>
-        /// Bind the date time picker's value to the current survey's CommentDate property, but only if the control is checked. If not, the CommentDate should be null.
-        /// In this case, the binding needs to be removed first, because the control will not accept a null value.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CommentsSince_ValueChanged(object sender, EventArgs e)
-        {
-            DateTimePicker d = sender as DateTimePicker;
+        
 
-            dateTimeCommentsSince.DataBindings.Clear();
+        
 
-            if (!d.Checked)
-            {
-                CurrentSurvey.CommentDate = null;
-            }
-            else
-            {
-                CurrentSurvey.CommentDate = dateTimeCommentsSince.Value;
-                dateTimeCommentsSince.DataBindings.Add("Value", CurrentSurvey, "CommentDate");
-            }
-        }
-
-        /// <summary>
-        /// Adds the selected items in the list to the current survey's comment authors list. The list is cleared first, then the selected items are added back.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CommentAuthors_Click(object sender, EventArgs e)
-        {
-            CurrentSurvey.CommentAuthors.Clear();
-            for (int i = 0; i < lstCommentAuthors.SelectedItems.Count; i++)
-            {
-                Person r = (Person)lstCommentAuthors.SelectedItems[i];
-                CurrentSurvey.CommentAuthors.Add(r.ID);
-            }
-        }
-
-        /// <summary>
-        /// Adds the selected items in the list to the current survey's comment source list. The list is cleared first, then the selected items are added back.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CommentSources_Click(object sender, EventArgs e)
-        {
-            CurrentSurvey.CommentSources.Clear();
-            for (int i = 0; i < lstCommentSources.SelectedItems.Count; i++)
-            {
-                CurrentSurvey.CommentSources.Add(lstCommentSources.SelectedItems[i].ToString());
-            }
-        }
+        
 
         private void RoutingStyle_CheckedChanged(object sender, EventArgs e)
         {
@@ -1288,9 +998,9 @@ namespace ITCSurveyReportLite
         private void Compare_CheckedChanged(object sender, EventArgs e)
         {
             lblPrimarySurvey.Visible = chkCompare.Checked;
-            chkMatchOnRename.Visible = chkCompare.Checked;
+           
             groupHighlightOptions.Visible = chkCompare.Checked;
-            groupLayoutOptions.Visible = chkCompare.Checked;
+            
         }
 
         private void chklstPrimarySurvey_SelectedIndexChanged(object sender, EventArgs e)
@@ -1350,45 +1060,10 @@ namespace ITCSurveyReportLite
             SR.ColumnOrder = columns;
         }
 
-        private void chklstQnumSurvey_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var checkedItems = chklstQnumSurvey.CheckedItems;
+        
 
-            ReportSurvey r = (ReportSurvey)checkedItems[0];
-            SR.SetQnumSurvey(r.ID);
-        }
+        
 
-        private void chklstQnumSurvey_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            if (chklstQnumSurvey.CheckedItems.Count == 1)
-            {
-                bool isCheckedItemBeingUnchecked = (e.CurrentValue == CheckState.Checked);
-                if (isCheckedItemBeingUnchecked)
-                {
-                    e.NewValue = CheckState.Checked;
-                }
-                else
-                {
-                    Int32 checkedItemIndex = chklstQnumSurvey.CheckedIndices[0];
-                    chklstQnumSurvey.ItemCheck -= chklstPrimarySurvey_ItemCheck;
-                    chklstQnumSurvey.SetItemChecked(checkedItemIndex, false);
-                    chklstQnumSurvey.ItemCheck += chklstPrimarySurvey_ItemCheck;
-                }
-
-                return;
-            }
-        }
-
-
-        private void EnumerationRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton r = sender as RadioButton;
-            int sel = Convert.ToInt32(r.Tag);
-
-            SR.Numbering = (Enumeration)sel;
-
-            UpdateReportColumns(null, null);
-        }
 
 
 
@@ -1396,35 +1071,16 @@ namespace ITCSurveyReportLite
 
         #region Formatting Tab
 
-        private void qNInsertionCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            aQNInsertionCheckBox.Visible = qNInsertionCheckBox.Checked;
-        }
+        
 
         private void TableFormat_CheckedChanged(object sender, EventArgs e)
         {
             ShowTranslationSubsetTableOption();
         }
 
-        private void ShowRepeatedFields_CheckedChanged(object sender, EventArgs e)
-        {
-            lstRepeatedFields.Visible = chkShowRepeatedFields.Checked;
-        }
+        
 
-        private void RepeatedFields_Click(object sender, EventArgs e)
-        {
-
-            foreach (ReportSurvey s in SR.Surveys)
-                s.RepeatedFields.Clear();
-
-            for (int i = 0; i < lstRepeatedFields.SelectedItems.Count; i++)
-            {
-                foreach (ReportSurvey s in SR.Surveys)
-                {
-                    s.RepeatedFields.Add(lstRepeatedFields.SelectedItems[i].ToString());
-                }
-            }
-        }
+        
         #endregion  
 
         #region Output Tab
@@ -1459,35 +1115,6 @@ namespace ITCSurveyReportLite
 
             SR.NrFormat = (ReadOutOptions)sel;
         }
-
-        private void WebCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (webCheckBox.Checked)
-            {
-                optFileFormatPDF.Checked = true;
-                chkCoverPage.Checked = true;
-            }
-            else
-            {
-                chkCoverPage.Checked = false;
-                optFileFormatWord.Checked = true;
-            }
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         #endregion
