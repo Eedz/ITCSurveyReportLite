@@ -56,10 +56,10 @@
             this.pgCompare = new System.Windows.Forms.TabPage();
             this.chklstPrimarySurvey = new System.Windows.Forms.CheckedListBox();
             this.lblPrimarySurvey = new System.Windows.Forms.Label();
-            this.compareBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupHighlightOptions = new System.Windows.Forms.GroupBox();
             this.flowHighlightOptions = new System.Windows.Forms.FlowLayoutPanel();
             this.highlightNRCheckBox = new System.Windows.Forms.CheckBox();
+            this.compareBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ignoreSimilarWordsCheckBox = new System.Windows.Forms.CheckBox();
             this.showDeletedFieldsCheckBox = new System.Windows.Forms.CheckBox();
             this.chkShowDeletedQuestions = new System.Windows.Forms.CheckBox();
@@ -69,7 +69,6 @@
             this.highlightCheckBox = new System.Windows.Forms.CheckBox();
             this.chkCompare = new System.Windows.Forms.CheckBox();
             this.surveyReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.reportLayoutBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pgFileName = new System.Windows.Forms.TabPage();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -79,6 +78,7 @@
             this.fileNameTextBox = new System.Windows.Forms.TextBox();
             this.txtMainSource = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.reportLayoutBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.surveysBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.lblTitle = new System.Windows.Forms.Label();
             this.dateBackend = new System.Windows.Forms.DateTimePicker();
@@ -106,13 +106,13 @@
             this.groupRoutingStyle.SuspendLayout();
             this.panel2.SuspendLayout();
             this.pgCompare.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).BeginInit();
             this.groupHighlightOptions.SuspendLayout();
             this.flowHighlightOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).BeginInit();
             this.groupHighlightStyle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).BeginInit();
             this.pgFileName.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveysBindingSource)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -626,7 +626,7 @@
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.Location = new System.Drawing.Point(6, 24);
+            this.lblTitle.Location = new System.Drawing.Point(7, 24);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(240, 31);
             this.lblTitle.TabIndex = 6;
@@ -775,15 +775,15 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.pgCompare.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).EndInit();
             this.groupHighlightOptions.ResumeLayout(false);
             this.flowHighlightOptions.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).EndInit();
             this.groupHighlightStyle.ResumeLayout(false);
             this.groupHighlightStyle.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).EndInit();
             this.pgFileName.ResumeLayout(false);
             this.pgFileName.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveysBindingSource)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
