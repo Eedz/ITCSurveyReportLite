@@ -63,6 +63,8 @@ namespace ITCSurveyReportLite
 
             // start with blank constructor, default settings
             SR = new SurveyBasedReport();
+            SR.LayoutOptions.ToC = TableOfContents.PageNums;
+
             UP = new UserPrefs();
             questionFilters = new ReportSurvey();
         }
@@ -122,7 +124,7 @@ namespace ITCSurveyReportLite
 
         private void BindControls()
         {
-
+            // done with designer
         }
 
         #region Menu Strip
@@ -135,26 +137,6 @@ namespace ITCSurveyReportLite
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void standardToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void standardWTranslationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void websiteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void websiteWTranslationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         #endregion
@@ -194,6 +176,8 @@ namespace ITCSurveyReportLite
 
         private void cmdQuickGenerate_Click(object sender, EventArgs e)
         {
+            surveyReportBindingSource.EndEdit();
+
             if (lstSelectedSurveys.SelectedItems.Count == 0)
             {
                 MessageBox.Show("No surveys selected.");
@@ -442,7 +426,7 @@ namespace ITCSurveyReportLite
             // populate the survey and extra fields
             foreach (ReportSurvey rs in SR.Surveys)
             {
-                if (filterBy == 1)
+                if (filterBy == 1)  
                 {
                     rs.QRangeHigh = questionFilters.QRangeHigh;
                     rs.QRangeLow = questionFilters.QRangeLow;
@@ -490,7 +474,7 @@ namespace ITCSurveyReportLite
                 {
                     foreach (SurveyQuestion sq in rs.Questions)
                     {
-                        sq.VarName = new VariableName(DBAction.GetCurrentName(rs.SurveyCode, sq.VarName.FullVarName, rs.Backend));
+                        sq.VarName = new VariableName(DBAction.GetCurrentName(rs.SurveyCode, sq.VarName.VarName, rs.Backend));
                     }
 
                 }
@@ -514,7 +498,7 @@ namespace ITCSurveyReportLite
 
                 // varchanges (for appendix)
                 if (SR.VarChangesApp)
-                    rs.VarChanges = DBAction.GetVarNameChangeBySurvey(rs.SurveyCode, SR.ExcludeTempChanges);
+                    rs.VarChanges = new List<VarNameChange> (DBAction.GetVarNameChangeBySurvey(rs.SurveyCode).Where(x=>x.PreFWChange == SR.ExcludeTempChanges));
             }
         }
 
@@ -735,7 +719,6 @@ namespace ITCSurveyReportLite
                 for (int i = 0; i < lstTransFields.Items.Count; i++)
                     if (item.ToString().Equals(lstTransFields.Items[i].ToString()))
                         lstTransFields.SetSelected(i, true);
-
             }
 
             switch (CurrentSurvey.RoutingFormat)
@@ -763,8 +746,8 @@ namespace ITCSurveyReportLite
 
             lstTransFields.Items.Clear();
             foreach (string s in langs)
-                lstTransFields.Items.Add(s);
-
+                if (!s.Equals("English"))
+                    lstTransFields.Items.Add(s);
         }
 
         #endregion
@@ -943,6 +926,9 @@ namespace ITCSurveyReportLite
             txtMainSource.Text = mainSource;
             txtSecondSources.Text = secondSources;
 
+            fileNameTextBox.Text = mainSource;
+            if (!string.IsNullOrEmpty(secondSources))
+                fileNameTextBox.Text += " vs. " + secondSources;
 
         }
 
@@ -1059,7 +1045,7 @@ namespace ITCSurveyReportLite
         /// <param name="e"></param>
         private void dateBackend_ValueChanged(object sender, EventArgs e)
         {
-
+            return;
             if (dateBackend.Value == DateTime.Today)
                 return;
 
@@ -1078,15 +1064,27 @@ namespace ITCSurveyReportLite
 
         }
 
-        /// <summary>
-        /// Adds the selected items in the list to the current survey's standard field list. The list is cleared first, then the selected items are added back.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void StdFields_Click(object sender, EventArgs e)
+        private void dateBackend_Leave(object sender, EventArgs e)
         {
-            CurrentSurvey.StdFieldsChosen.Clear();
-            
+            if (dateBackend.Value == DateTime.Today)
+                return;
+
+            if (CurrentSurvey == null)
+                return;
+
+            string filePath = dateBackend.Value.ToString("yyyy-MM-dd");
+
+            BackupConnection bkp = new BackupConnection(dateBackend.Value);
+
+            if (!bkp.IsValidBackup())
+            {
+
+                MessageBox.Show("No backup found for this date. Getting nearest valid date");
+                dateBackend.Value = bkp.GetNearestBackup();
+            }
+            CurrentSurvey.Backend = dateBackend.Value;
+            UpdateReportColumns(null, null);
+            UpdateFileNameTab();
         }
 
         /// <summary>
@@ -1150,22 +1148,6 @@ namespace ITCSurveyReportLite
                 }
             }
         }
-
-        /// <summary>
-        /// Adds the selected items in the list to the current survey's comment field list. The list is cleared first, then the selected items are added back.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CommentFields_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        
-
-        
-
-        
 
         private void RoutingStyle_CheckedChanged(object sender, EventArgs e)
         {

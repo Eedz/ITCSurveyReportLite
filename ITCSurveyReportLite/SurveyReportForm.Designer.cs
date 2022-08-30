@@ -68,7 +68,6 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.highlightCheckBox = new System.Windows.Forms.CheckBox();
             this.chkCompare = new System.Windows.Forms.CheckBox();
-            this.surveyReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pgFileName = new System.Windows.Forms.TabPage();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -91,18 +90,14 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.quickReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.standardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.standardWTranslationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.websiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.websiteWTranslationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupTemplate = new System.Windows.Forms.GroupBox();
-            this.cmdGenerate = new System.Windows.Forms.Button();
             this.optNoTemplate = new System.Windows.Forms.RadioButton();
             this.optWebTransTemplate = new System.Windows.Forms.RadioButton();
             this.optWebTemplate = new System.Windows.Forms.RadioButton();
             this.optStdTransTemplate = new System.Windows.Forms.RadioButton();
             this.optStdTemplate = new System.Windows.Forms.RadioButton();
+            this.cmdGenerate = new System.Windows.Forms.Button();
+            this.surveyReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
             detailsLabel = new System.Windows.Forms.Label();
             fileNameLabel = new System.Windows.Forms.Label();
             this.tabControlOptions.SuspendLayout();
@@ -114,12 +109,12 @@
             this.flowHighlightOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).BeginInit();
             this.groupHighlightStyle.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).BeginInit();
             this.pgFileName.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveysBindingSource)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.groupTemplate.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // detailsLabel
@@ -212,7 +207,7 @@
             this.pgFields.Location = new System.Drawing.Point(4, 22);
             this.pgFields.Name = "pgFields";
             this.pgFields.Padding = new System.Windows.Forms.Padding(3);
-            this.pgFields.Size = new System.Drawing.Size(461, 313);
+            this.pgFields.Size = new System.Drawing.Size(430, 313);
             this.pgFields.TabIndex = 1;
             this.pgFields.Text = "Survey Content";
             // 
@@ -320,9 +315,7 @@
             "Topic",
             "Content",
             "VarLabel",
-            "Product",
-            "AltQNum 2",
-            "AltQNum 3"});
+            "Product"});
             this.lstExtraFields.Location = new System.Drawing.Point(20, 30);
             this.lstExtraFields.Name = "lstExtraFields";
             this.lstExtraFields.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
@@ -358,6 +351,7 @@
             this.dateBackend.Size = new System.Drawing.Size(107, 20);
             this.dateBackend.TabIndex = 8;
             this.dateBackend.ValueChanged += new System.EventHandler(this.dateBackend_ValueChanged);
+            this.dateBackend.Leave += new System.EventHandler(this.dateBackend_Leave);
             // 
             // lblBackend
             // 
@@ -377,7 +371,7 @@
             this.pgCompare.Controls.Add(this.chkCompare);
             this.pgCompare.Location = new System.Drawing.Point(4, 22);
             this.pgCompare.Name = "pgCompare";
-            this.pgCompare.Size = new System.Drawing.Size(461, 313);
+            this.pgCompare.Size = new System.Drawing.Size(430, 313);
             this.pgCompare.TabIndex = 2;
             this.pgCompare.Text = "Comparison";
             // 
@@ -535,10 +529,6 @@
             this.chkCompare.UseVisualStyleBackColor = true;
             this.chkCompare.CheckedChanged += new System.EventHandler(this.Compare_CheckedChanged);
             // 
-            // surveyReportBindingSource
-            // 
-            this.surveyReportBindingSource.DataSource = typeof(ITCLib.SurveyReport);
-            // 
             // pgFileName
             // 
             this.pgFileName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(170)))), ((int)(((byte)(136)))));
@@ -606,7 +596,6 @@
             // 
             // fileNameTextBox
             // 
-            this.fileNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.surveyReportBindingSource, "FileName", true));
             this.fileNameTextBox.Location = new System.Drawing.Point(11, 258);
             this.fileNameTextBox.Name = "fileNameTextBox";
             this.fileNameTextBox.Size = new System.Drawing.Size(399, 20);
@@ -666,8 +655,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.quickReportToolStripMenuItem});
+            this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(460, 24);
@@ -697,46 +685,6 @@
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
-            // quickReportToolStripMenuItem
-            // 
-            this.quickReportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.standardToolStripMenuItem,
-            this.standardWTranslationToolStripMenuItem,
-            this.websiteToolStripMenuItem,
-            this.websiteWTranslationToolStripMenuItem});
-            this.quickReportToolStripMenuItem.Name = "quickReportToolStripMenuItem";
-            this.quickReportToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
-            this.quickReportToolStripMenuItem.Text = "Quick Report";
-            this.quickReportToolStripMenuItem.Visible = false;
-            // 
-            // standardToolStripMenuItem
-            // 
-            this.standardToolStripMenuItem.Name = "standardToolStripMenuItem";
-            this.standardToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.standardToolStripMenuItem.Text = "Standard";
-            this.standardToolStripMenuItem.Click += new System.EventHandler(this.standardToolStripMenuItem_Click);
-            // 
-            // standardWTranslationToolStripMenuItem
-            // 
-            this.standardWTranslationToolStripMenuItem.Name = "standardWTranslationToolStripMenuItem";
-            this.standardWTranslationToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.standardWTranslationToolStripMenuItem.Text = "Standard w/ Translation";
-            this.standardWTranslationToolStripMenuItem.Click += new System.EventHandler(this.standardWTranslationToolStripMenuItem_Click);
-            // 
-            // websiteToolStripMenuItem
-            // 
-            this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
-            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.websiteToolStripMenuItem.Text = "Website";
-            this.websiteToolStripMenuItem.Click += new System.EventHandler(this.websiteToolStripMenuItem_Click);
-            // 
-            // websiteWTranslationToolStripMenuItem
-            // 
-            this.websiteWTranslationToolStripMenuItem.Name = "websiteWTranslationToolStripMenuItem";
-            this.websiteWTranslationToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.websiteWTranslationToolStripMenuItem.Text = "Website w/ Translation";
-            this.websiteWTranslationToolStripMenuItem.Click += new System.EventHandler(this.websiteWTranslationToolStripMenuItem_Click);
-            // 
             // groupTemplate
             // 
             this.groupTemplate.Controls.Add(this.optNoTemplate);
@@ -750,16 +698,6 @@
             this.groupTemplate.TabIndex = 62;
             this.groupTemplate.TabStop = false;
             this.groupTemplate.Text = "Report Template";
-            // 
-            // cmdGenerate
-            // 
-            this.cmdGenerate.Location = new System.Drawing.Point(361, 533);
-            this.cmdGenerate.Name = "cmdGenerate";
-            this.cmdGenerate.Size = new System.Drawing.Size(85, 33);
-            this.cmdGenerate.TabIndex = 5;
-            this.cmdGenerate.Text = "Generate";
-            this.cmdGenerate.UseVisualStyleBackColor = true;
-            this.cmdGenerate.Click += new System.EventHandler(this.cmdQuickGenerate_Click);
             // 
             // optNoTemplate
             // 
@@ -828,6 +766,20 @@
             this.optStdTemplate.UseVisualStyleBackColor = true;
             this.optStdTemplate.CheckedChanged += new System.EventHandler(this.ReportTemplate_CheckChanged);
             // 
+            // cmdGenerate
+            // 
+            this.cmdGenerate.Location = new System.Drawing.Point(361, 533);
+            this.cmdGenerate.Name = "cmdGenerate";
+            this.cmdGenerate.Size = new System.Drawing.Size(85, 33);
+            this.cmdGenerate.TabIndex = 5;
+            this.cmdGenerate.Text = "Generate";
+            this.cmdGenerate.UseVisualStyleBackColor = true;
+            this.cmdGenerate.Click += new System.EventHandler(this.cmdQuickGenerate_Click);
+            // 
+            // surveyReportBindingSource
+            // 
+            this.surveyReportBindingSource.DataSource = typeof(ITCLib.SurveyReport);
+            // 
             // SurveyReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -864,7 +816,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).EndInit();
             this.groupHighlightStyle.ResumeLayout(false);
             this.groupHighlightStyle.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).EndInit();
             this.pgFileName.ResumeLayout(false);
             this.pgFileName.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).EndInit();
@@ -873,6 +824,7 @@
             this.menuStrip1.PerformLayout();
             this.groupTemplate.ResumeLayout(false);
             this.groupTemplate.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -926,11 +878,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem quickReportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem standardToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem standardWTranslationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem websiteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem websiteWTranslationToolStripMenuItem;
         private System.Windows.Forms.Label lblCurrentSurveyFields;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupRoutingStyle;
