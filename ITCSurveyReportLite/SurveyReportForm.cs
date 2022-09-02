@@ -983,8 +983,11 @@ namespace ITCSurveyReportLite
             for (int i = 0; i < lstTransFields.SelectedItems.Count; i++)
             {
                 CurrentSurvey.TransFields.Add(lstTransFields.SelectedItems[i].ToString());
-
             }
+
+            if (lstTransFields.SelectedItems.Count > 0 & CurrentSurvey.EnglishRouting)
+                chkEnglishRouting.Visible = true;
+
             ShowTranslationSubsetTableOption();
             UpdateReportColumns(sender, e);
         }
@@ -1120,20 +1123,6 @@ namespace ITCSurveyReportLite
 
         #endregion
 
-        #region Formatting Tab
-
-        
-
-        private void TableFormat_CheckedChanged(object sender, EventArgs e)
-        {
-            ShowTranslationSubsetTableOption();
-        }
-
-        
-
-        
-        #endregion  
-
         #region Output Tab
         private void FileFormat_CheckedChanged(object sender, EventArgs e)
         {
@@ -1178,6 +1167,11 @@ namespace ITCSurveyReportLite
             //UpdateGrids();
         }
 
-        
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OptionsForm frm = new OptionsForm(SR);
+
+            frm.ShowDialog();
+        }
     }
 }
