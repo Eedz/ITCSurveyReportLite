@@ -23,7 +23,7 @@ namespace ITCSurveyReportLite
         SurveyBasedReport SR;
         // this report survey is just to hold the question filter selections. Just before the report is run, the filters will be copied to each report survey object in the report's list.
         ReportSurvey questionFilters;
-        int filterBy;
+
         Comparison compare;
         
         UserPrefs UP;
@@ -110,15 +110,9 @@ namespace ITCSurveyReportLite
             lstSelectedSurveys.ValueMember = "ID";
             lstSelectedSurveys.DisplayMember = "SurveyCode";
 
-
-
-            // bind question filters to the holding object
-            filterBy = 1;
-
             lblStatus.Visible = false;
             lblStatus.Text = "Ready.";
             cmdGenerate.Visible = false;
-
         }
 
 
@@ -426,30 +420,6 @@ namespace ITCSurveyReportLite
             // populate the survey and extra fields
             foreach (ReportSurvey rs in SR.Surveys)
             {
-                if (filterBy == 1)  
-                {
-                    rs.QRangeHigh = questionFilters.QRangeHigh;
-                    rs.QRangeLow = questionFilters.QRangeLow;
-                    rs.Prefixes = null;
-                    rs.Headings = null;
-                }
-                else if (filterBy == 2)
-                {
-                    rs.QRangeHigh = 0;
-                    rs.QRangeLow = 0;
-                    rs.Prefixes = questionFilters.Prefixes;
-                    rs.Headings = null;
-                }
-                else if (filterBy == 3)
-                {
-                    rs.QRangeHigh = 0;
-                    rs.QRangeLow = 0;
-                    rs.Prefixes = null;
-                    rs.Headings = questionFilters.Headings;
-                }
-
-                rs.Varnames = questionFilters.Varnames;
-
                 rs.Questions.Clear();
                 rs.SurveyNotes.Clear();
                 rs.VarChanges.Clear();
@@ -972,98 +942,13 @@ namespace ITCSurveyReportLite
             SR.Details = details;
         }
 
-
-        #region Filters Tab
-        // Add the selected prefix to the Current Survey's prefix list and refresh the Prefix listbox
-        private void AddPrefix(object sender, EventArgs e)
-        {
-           
-        }
-
-        // Remove the selected prefix from the Current Survey's prefix list and refresh the Prefix listbox
-        private void RemovePrefix(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void AddVarName_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void RemoveVarName_Click(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void AddHeading(object sender, EventArgs e)
-        {
-
-          
-
-        }
-
-        private void RemoveHeading(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void QuestionFilter_CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton r = sender as RadioButton;
-            filterBy = Convert.ToInt32(r.Tag);
-
-            if (!r.Checked) return;
-
-           
-
-            switch (filterBy)
-            {
-                case 1:
-                   
-
-                    break;
-                case 2:
-                    
-
-                    break;
-                case 3:
-                   
-                    break;
-
-            }
-        }
-
-        #endregion
-
-        #region Fields Tab
-
+        #region Survey Content Tab
+      
         /// <summary>
         /// After a date is chosen, check that a backup exists for that date. If the date chosen is today, do nothing.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dateBackend_ValueChanged(object sender, EventArgs e)
-        {
-            return;
-            if (dateBackend.Value == DateTime.Today)
-                return;
-
-            string filePath = dateBackend.Value.ToString("yyyy-MM-dd");
-
-            BackupConnection bkp = new BackupConnection(dateBackend.Value);
-
-            if (!bkp.IsValidBackup())
-            {
-
-                MessageBox.Show("No backup found for this date.");
-                dateBackend.Value = bkp.GetNearestBackup();
-            }
-
-            UpdateReportColumns(null, null);
-
-        }
-
         private void dateBackend_Leave(object sender, EventArgs e)
         {
             if (dateBackend.Value == DateTime.Today)
@@ -1098,8 +983,11 @@ namespace ITCSurveyReportLite
             for (int i = 0; i < lstTransFields.SelectedItems.Count; i++)
             {
                 CurrentSurvey.TransFields.Add(lstTransFields.SelectedItems[i].ToString());
-
             }
+
+            if (lstTransFields.SelectedItems.Count > 0 & CurrentSurvey.EnglishRouting)
+                chkEnglishRouting.Visible = true;
+
             ShowTranslationSubsetTableOption();
             UpdateReportColumns(sender, e);
         }
@@ -1155,6 +1043,13 @@ namespace ITCSurveyReportLite
             int sel = Convert.ToInt32(r.Tag);
 
             CurrentSurvey.RoutingFormat = (RoutingStyle)sel;
+        }
+
+        private void cmdCustomizeContent_Click(object sender, EventArgs e)
+        {
+            CustomizeForm frm = new CustomizeForm(CurrentSurvey);
+            frm.StartPosition = FormStartPosition.CenterParent;
+            frm.ShowDialog();
         }
 
         #endregion
@@ -1226,28 +1121,7 @@ namespace ITCSurveyReportLite
             SR.ColumnOrder = columns;
         }
 
-        
-
-        
-
-
-
-
         #endregion
-
-        #region Formatting Tab
-
-        
-
-        private void TableFormat_CheckedChanged(object sender, EventArgs e)
-        {
-            ShowTranslationSubsetTableOption();
-        }
-
-        
-
-        
-        #endregion  
 
         #region Output Tab
         private void FileFormat_CheckedChanged(object sender, EventArgs e)
@@ -1293,6 +1167,11 @@ namespace ITCSurveyReportLite
             //UpdateGrids();
         }
 
-        
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OptionsForm frm = new OptionsForm(SR);
+
+            frm.ShowDialog();
+        }
     }
 }
