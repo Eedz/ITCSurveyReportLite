@@ -11,6 +11,9 @@ using ITCLib;
 
 namespace ITCSurveyReportLite
 {
+    /// <summary>
+    /// Form for specifying which parts of the survey to include.
+    /// </summary>
     public partial class CustomizeForm : Form
     {
 
@@ -41,10 +44,11 @@ namespace ITCSurveyReportLite
             for (int i = 0; i < lstWordingFields.Items.Count; i++)
                 lstWordingFields.SetSelected(i, true);
 
+            SelectFilters();
+            
+            LoadVarNames();
 
-            rbPrefix.Checked = true;
-            FilterType = FilterBy.Prefix;
-            UpdateFilterType();
+            SelectVarNames();
         }
 
         #region Events 
@@ -75,6 +79,7 @@ namespace ITCSurveyReportLite
         {
             SaveFilter();
             SaveFieldInfo();
+            Survey.RemoveOtherSpecify = chkRemoveOtherSpecify.Checked;
 
             Close();
         }
@@ -86,27 +91,8 @@ namespace ITCSurveyReportLite
 
         private void lstFilterType_Click(object sender, EventArgs e)
         {
-            // load varname list based on what is selected
-            List<SurveyQuestion> varList = new List<SurveyQuestion>();
-            switch (FilterType)
-            {
-                case FilterBy.Prefix:
-                    foreach (string prefix in lstFilterType.SelectedItems)
-                        varList.AddRange(SurveyContent.Where(x => x.VarName.RefVarName.StartsWith(prefix)));
-                    break;
-                case FilterBy.Heading:
-                    varList = GetHeadingVarNames();
-                    break;
-                case FilterBy.Product:
-                    foreach (string product in lstFilterType.SelectedItems)
-                        varList.AddRange(SurveyContent.Where(x => x.VarName.Product.LabelText.Equals(product)));
-                    break;
-            }
-
-            lstVarName.ValueMember = "VarName.RefVarName";
-            lstVarName.DisplayMember = "VarName.RefVarName";
-            lstVarName.DataSource = varList;
-            lstVarName.SelectedItem = null;
+            LoadVarNames();
+            SelectVarNames();
         }
 
         private void txtLowerQnum_TextChanged(object sender, EventArgs e)
@@ -192,6 +178,81 @@ namespace ITCSurveyReportLite
             }
         }
 
+        private void LoadVarNames()
+        {
+            // load varname list based on what is selected
+            List<SurveyQuestion> varList = new List<SurveyQuestion>();
+            switch (FilterType)
+            {
+                case FilterBy.Prefix:
+                    foreach (string prefix in lstFilterType.SelectedItems)
+                        varList.AddRange(SurveyContent.Where(x => x.VarName.RefVarName.StartsWith(prefix)));
+                    break;
+                case FilterBy.Heading:
+                    varList = GetHeadingVarNames();
+                    break;
+                case FilterBy.Product:
+                    foreach (string product in lstFilterType.SelectedItems)
+                        varList.AddRange(SurveyContent.Where(x => x.VarName.Product.LabelText.Equals(product)));
+                    break;
+            }
+
+            lstVarName.ValueMember = "VarName.RefVarName";
+            lstVarName.DisplayMember = "VarName.RefVarName";
+            lstVarName.DataSource = varList;
+            lstVarName.SelectedItem = null;
+        }
+
+        private void SelectFilters()
+        {
+            if (Survey.Prefixes.Count > 0)
+            {
+                rbPrefix.Checked = true;
+                FilterType = FilterBy.Prefix;
+                UpdateFilterType();
+                foreach (string p in Survey.Prefixes)
+                {
+                    int index = lstFilterType.FindStringExact(p);
+                    lstFilterType.SetSelected(index, true);
+                }
+
+            }
+            else if (Survey.QRangeHigh != 0)
+            {
+                rbQnum.Checked = true;
+                FilterType = FilterBy.Qnum;
+                UpdateFilterType();
+                txtLowerQnum.Text = Survey.QRangeLow.ToString();
+                txtUpperQnum.Text = Survey.QRangeHigh.ToString();
+            }
+            else if (Survey.Headings.Count > 0)
+            {
+                rbHeading.Checked = true;
+                FilterType = FilterBy.Heading;
+                UpdateFilterType();
+                foreach (Heading h in Survey.Headings)
+                {
+                    int index = lstFilterType.FindStringExact(h.PreP + " - " + h.VarName.RefVarName);
+                    lstFilterType.SetSelected(index, true);
+                }
+            }
+            else
+            {
+                rbPrefix.Checked = true;
+                FilterType = FilterBy.Prefix;
+                UpdateFilterType();
+            }
+        }
+
+        private void SelectVarNames()
+        {
+            foreach(VariableName v in Survey.Varnames)
+            {
+                int index = lstVarName.FindStringExact(v.RefVarName);
+                lstVarName.SetSelected(index, true);
+            }
+        }
+
         private void SaveFilter()
         {
             Survey.Prefixes.Clear();
@@ -210,7 +271,11 @@ namespace ITCSurveyReportLite
                     foreach (string s in lstFilterType.SelectedItems)
                         foreach (SurveyQuestion sq in SurveyContent)
                             if (sq.VarName.RefVarName.Equals(s.Substring(s.IndexOf(" - ") + 3)))
-                                Survey.Headings.Add(new Heading(sq.Qnum, sq.PreP));
+                            {
+                                Heading h = new Heading(sq.Qnum, sq.PreP);
+                                h.VarName = new VariableName(sq.VarName.VarName);
+                                Survey.Headings.Add(h);
+                            }
                     break;
                 case FilterBy.Qnum:
                     if (Int32.TryParse(txtLowerQnum.Text, out int low))

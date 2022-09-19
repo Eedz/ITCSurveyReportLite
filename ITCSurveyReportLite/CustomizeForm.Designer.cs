@@ -48,6 +48,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
+            this.chkRemoveOtherSpecify = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panelQnumRange.SuspendLayout();
             this.SuspendLayout();
@@ -263,7 +264,7 @@
             // 
             // cmdOK
             // 
-            this.cmdOK.Location = new System.Drawing.Point(340, 576);
+            this.cmdOK.Location = new System.Drawing.Point(340, 597);
             this.cmdOK.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(87, 28);
@@ -274,7 +275,7 @@
             // 
             // cmdCancel
             // 
-            this.cmdCancel.Location = new System.Drawing.Point(435, 576);
+            this.cmdCancel.Location = new System.Drawing.Point(435, 597);
             this.cmdCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(87, 28);
@@ -283,12 +284,23 @@
             this.cmdCancel.UseVisualStyleBackColor = true;
             this.cmdCancel.Click += new System.EventHandler(this.cmdCancel_Click);
             // 
+            // chkRemoveOtherSpecify
+            // 
+            this.chkRemoveOtherSpecify.AutoSize = true;
+            this.chkRemoveOtherSpecify.Location = new System.Drawing.Point(313, 554);
+            this.chkRemoveOtherSpecify.Name = "chkRemoveOtherSpecify";
+            this.chkRemoveOtherSpecify.Size = new System.Drawing.Size(162, 20);
+            this.chkRemoveOtherSpecify.TabIndex = 9;
+            this.chkRemoveOtherSpecify.Text = "Remove Other (specify)";
+            this.chkRemoveOtherSpecify.UseVisualStyleBackColor = true;
+            // 
             // CustomizeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(541, 610);
+            this.ClientSize = new System.Drawing.Size(541, 648);
             this.ControlBox = false;
+            this.Controls.Add(this.chkRemoveOtherSpecify);
             this.Controls.Add(this.lstVarName);
             this.Controls.Add(this.cmdCancel);
             this.Controls.Add(this.cmdOK);
@@ -335,5 +347,6 @@
         private System.Windows.Forms.Panel panelQnumRange;
         private System.Windows.Forms.Button cmdShowLowest;
         private System.Windows.Forms.Button cmdShowMax;
+        private System.Windows.Forms.CheckBox chkRemoveOtherSpecify;
     }
 }

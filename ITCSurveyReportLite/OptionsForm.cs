@@ -11,6 +11,9 @@ using ITCLib;
 
 namespace ITCSurveyReportLite
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class OptionsForm : Form
     {
         SurveyBasedReport SR;
@@ -46,10 +49,21 @@ namespace ITCSurveyReportLite
                     break;
             }
 
+            chkBlankColumn.Checked = SR.LayoutOptions.BlankColumn;
             chkSurveyNotes.Checked = SR.SurvNotes;
             chkVarChangesColumn.Checked = SR.VarChangesCol;
             chkVarChangesAppendix.Checked = SR.VarChangesApp;
             chkExcludeHiddenChanges.Checked = SR.ExcludeTempChanges;
+
+            if (sr.Surveys.Count > 1 || !sr.HasF2F())
+            {
+                chkInlineRouting.Enabled = false;
+                chkInlineRouting.Checked = false;
+            }
+            else
+            {
+                chkInlineRouting.Enabled = true;
+            }
         }
 
         private void cmdCancel_Click(object sender, EventArgs e)
@@ -76,6 +90,7 @@ namespace ITCSurveyReportLite
             else if (rbNRDRO.Checked)
                 SR.NrFormat = ReadOutOptions.DontReadOut;
 
+            SR.LayoutOptions.BlankColumn = chkBlankColumn.Checked;
             SR.SurvNotes = chkSurveyNotes.Checked;
             SR.VarChangesCol = chkVarChangesColumn.Checked;
             SR.VarChangesApp = chkVarChangesAppendix.Checked;

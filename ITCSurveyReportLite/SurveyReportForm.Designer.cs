@@ -42,15 +42,18 @@
             this.pgFields = new System.Windows.Forms.TabPage();
             this.cmdCustomizeContent = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cmdCommentFields = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lstCommentTypes = new System.Windows.Forms.ListBox();
             this.chkEnglishRouting = new System.Windows.Forms.CheckBox();
-            this.groupRoutingStyle = new System.Windows.Forms.GroupBox();
-            this.optRoutingStyleNone = new System.Windows.Forms.RadioButton();
-            this.optRoutingStyleGrey = new System.Windows.Forms.RadioButton();
-            this.optRoutingStyleNormal = new System.Windows.Forms.RadioButton();
             this.lstTransFields = new System.Windows.Forms.ListBox();
             this.lblTransFields = new System.Windows.Forms.Label();
             this.lstExtraFields = new System.Windows.Forms.ListBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.groupRoutingStyle = new System.Windows.Forms.GroupBox();
+            this.optRoutingStyleNone = new System.Windows.Forms.RadioButton();
+            this.optRoutingStyleGrey = new System.Windows.Forms.RadioButton();
+            this.optRoutingStyleNormal = new System.Windows.Forms.RadioButton();
             this.lblCurrentSurveyFields = new System.Windows.Forms.Label();
             this.dateBackend = new System.Windows.Forms.DateTimePicker();
             this.lblBackend = new System.Windows.Forms.Label();
@@ -60,10 +63,12 @@
             this.groupHighlightOptions = new System.Windows.Forms.GroupBox();
             this.flowHighlightOptions = new System.Windows.Forms.FlowLayoutPanel();
             this.highlightNRCheckBox = new System.Windows.Forms.CheckBox();
+            this.compareBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ignoreSimilarWordsCheckBox = new System.Windows.Forms.CheckBox();
             this.showDeletedFieldsCheckBox = new System.Windows.Forms.CheckBox();
             this.chkShowDeletedQuestions = new System.Windows.Forms.CheckBox();
             this.chkReInsertDeletions = new System.Windows.Forms.CheckBox();
+            this.chkHideReference = new System.Windows.Forms.CheckBox();
             this.groupHighlightStyle = new System.Windows.Forms.GroupBox();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.highlightCheckBox = new System.Windows.Forms.CheckBox();
@@ -88,18 +93,22 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.outputOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupTemplate = new System.Windows.Forms.GroupBox();
+            this.optTranslator = new System.Windows.Forms.RadioButton();
             this.optNoTemplate = new System.Windows.Forms.RadioButton();
             this.optWebTransTemplate = new System.Windows.Forms.RadioButton();
             this.optWebTemplate = new System.Windows.Forms.RadioButton();
             this.optStdTransTemplate = new System.Windows.Forms.RadioButton();
             this.optStdTemplate = new System.Windows.Forms.RadioButton();
             this.cmdGenerate = new System.Windows.Forms.Button();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.compareBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.reportLayoutBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.surveysBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.chkHideIdenticalWordings = new System.Windows.Forms.CheckBox();
+            this.chkHideIdenticalQs = new System.Windows.Forms.CheckBox();
             this.surveyReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.chkIncludeEnglish = new System.Windows.Forms.CheckBox();
             detailsLabel = new System.Windows.Forms.Label();
             fileNameLabel = new System.Windows.Forms.Label();
             this.tabControlOptions.SuspendLayout();
@@ -109,11 +118,11 @@
             this.pgCompare.SuspendLayout();
             this.groupHighlightOptions.SuspendLayout();
             this.flowHighlightOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).BeginInit();
             this.groupHighlightStyle.SuspendLayout();
             this.pgFileName.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupTemplate.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveysBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).BeginInit();
@@ -200,7 +209,7 @@
             this.tabControlOptions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabControlOptions.Name = "tabControlOptions";
             this.tabControlOptions.SelectedIndex = 0;
-            this.tabControlOptions.Size = new System.Drawing.Size(511, 417);
+            this.tabControlOptions.Size = new System.Drawing.Size(511, 425);
             this.tabControlOptions.TabIndex = 5;
             this.tabControlOptions.Visible = false;
             this.tabControlOptions.SelectedIndexChanged += new System.EventHandler(this.tabControlOptions_SelectedIndexChanged);
@@ -208,8 +217,10 @@
             // pgFields
             // 
             this.pgFields.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(170)))), ((int)(((byte)(136)))));
+            this.pgFields.Controls.Add(this.chkIncludeEnglish);
             this.pgFields.Controls.Add(this.cmdCustomizeContent);
             this.pgFields.Controls.Add(this.panel2);
+            this.pgFields.Controls.Add(this.groupRoutingStyle);
             this.pgFields.Controls.Add(this.lblCurrentSurveyFields);
             this.pgFields.Controls.Add(this.dateBackend);
             this.pgFields.Controls.Add(this.lblBackend);
@@ -217,13 +228,13 @@
             this.pgFields.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pgFields.Name = "pgFields";
             this.pgFields.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.pgFields.Size = new System.Drawing.Size(503, 388);
+            this.pgFields.Size = new System.Drawing.Size(503, 396);
             this.pgFields.TabIndex = 1;
             this.pgFields.Text = "Survey Content";
             // 
             // cmdCustomizeContent
             // 
-            this.cmdCustomizeContent.Location = new System.Drawing.Point(7, 299);
+            this.cmdCustomizeContent.Location = new System.Drawing.Point(288, 51);
             this.cmdCustomizeContent.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdCustomizeContent.Name = "cmdCustomizeContent";
             this.cmdCustomizeContent.Size = new System.Drawing.Size(143, 28);
@@ -235,8 +246,10 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.cmdCommentFields);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.lstCommentTypes);
             this.panel2.Controls.Add(this.chkEnglishRouting);
-            this.panel2.Controls.Add(this.groupRoutingStyle);
             this.panel2.Controls.Add(this.lstTransFields);
             this.panel2.Controls.Add(this.lblTransFields);
             this.panel2.Controls.Add(this.lstExtraFields);
@@ -244,13 +257,44 @@
             this.panel2.Location = new System.Drawing.Point(7, 100);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(471, 191);
+            this.panel2.Size = new System.Drawing.Size(471, 208);
             this.panel2.TabIndex = 32;
+            // 
+            // cmdCommentFields
+            // 
+            this.cmdCommentFields.Location = new System.Drawing.Point(279, 168);
+            this.cmdCommentFields.Name = "cmdCommentFields";
+            this.cmdCommentFields.Size = new System.Drawing.Size(143, 26);
+            this.cmdCommentFields.TabIndex = 34;
+            this.cmdCommentFields.Text = "Comment Options...";
+            this.cmdCommentFields.UseVisualStyleBackColor = true;
+            this.cmdCommentFields.Click += new System.EventHandler(this.cmdCommentFields_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(312, 8);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(75, 16);
+            this.label1.TabIndex = 33;
+            this.label1.Text = "Comments";
+            // 
+            // lstCommentTypes
+            // 
+            this.lstCommentTypes.FormattingEnabled = true;
+            this.lstCommentTypes.ItemHeight = 16;
+            this.lstCommentTypes.Location = new System.Drawing.Point(279, 30);
+            this.lstCommentTypes.Name = "lstCommentTypes";
+            this.lstCommentTypes.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.lstCommentTypes.Size = new System.Drawing.Size(144, 132);
+            this.lstCommentTypes.TabIndex = 32;
+            this.lstCommentTypes.Click += new System.EventHandler(this.lstCommentTypes_Click);
             // 
             // chkEnglishRouting
             // 
             this.chkEnglishRouting.AutoSize = true;
-            this.chkEnglishRouting.Location = new System.Drawing.Point(295, 28);
+            this.chkEnglishRouting.Location = new System.Drawing.Point(126, 170);
             this.chkEnglishRouting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.chkEnglishRouting.Name = "chkEnglishRouting";
             this.chkEnglishRouting.Size = new System.Drawing.Size(139, 20);
@@ -259,68 +303,11 @@
             this.chkEnglishRouting.UseVisualStyleBackColor = true;
             this.chkEnglishRouting.Visible = false;
             // 
-            // groupRoutingStyle
-            // 
-            this.groupRoutingStyle.Controls.Add(this.optRoutingStyleNone);
-            this.groupRoutingStyle.Controls.Add(this.optRoutingStyleGrey);
-            this.groupRoutingStyle.Controls.Add(this.optRoutingStyleNormal);
-            this.groupRoutingStyle.Location = new System.Drawing.Point(295, 57);
-            this.groupRoutingStyle.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupRoutingStyle.Name = "groupRoutingStyle";
-            this.groupRoutingStyle.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupRoutingStyle.Size = new System.Drawing.Size(136, 80);
-            this.groupRoutingStyle.TabIndex = 30;
-            this.groupRoutingStyle.TabStop = false;
-            this.groupRoutingStyle.Text = "Routing Style";
-            // 
-            // optRoutingStyleNone
-            // 
-            this.optRoutingStyleNone.AutoSize = true;
-            this.optRoutingStyleNone.Location = new System.Drawing.Point(71, 53);
-            this.optRoutingStyleNone.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.optRoutingStyleNone.Name = "optRoutingStyleNone";
-            this.optRoutingStyleNone.Size = new System.Drawing.Size(55, 20);
-            this.optRoutingStyleNone.TabIndex = 2;
-            this.optRoutingStyleNone.TabStop = true;
-            this.optRoutingStyleNone.Tag = "3";
-            this.optRoutingStyleNone.Text = "None";
-            this.optRoutingStyleNone.UseVisualStyleBackColor = true;
-            this.optRoutingStyleNone.Visible = false;
-            this.optRoutingStyleNone.CheckedChanged += new System.EventHandler(this.RoutingStyle_CheckedChanged);
-            // 
-            // optRoutingStyleGrey
-            // 
-            this.optRoutingStyleGrey.AutoSize = true;
-            this.optRoutingStyleGrey.Location = new System.Drawing.Point(13, 53);
-            this.optRoutingStyleGrey.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.optRoutingStyleGrey.Name = "optRoutingStyleGrey";
-            this.optRoutingStyleGrey.Size = new System.Drawing.Size(52, 20);
-            this.optRoutingStyleGrey.TabIndex = 1;
-            this.optRoutingStyleGrey.TabStop = true;
-            this.optRoutingStyleGrey.Tag = "2";
-            this.optRoutingStyleGrey.Text = "Grey";
-            this.optRoutingStyleGrey.UseVisualStyleBackColor = true;
-            this.optRoutingStyleGrey.CheckedChanged += new System.EventHandler(this.RoutingStyle_CheckedChanged);
-            // 
-            // optRoutingStyleNormal
-            // 
-            this.optRoutingStyleNormal.AutoSize = true;
-            this.optRoutingStyleNormal.Location = new System.Drawing.Point(13, 25);
-            this.optRoutingStyleNormal.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.optRoutingStyleNormal.Name = "optRoutingStyleNormal";
-            this.optRoutingStyleNormal.Size = new System.Drawing.Size(67, 20);
-            this.optRoutingStyleNormal.TabIndex = 0;
-            this.optRoutingStyleNormal.TabStop = true;
-            this.optRoutingStyleNormal.Tag = "1";
-            this.optRoutingStyleNormal.Text = "Normal";
-            this.optRoutingStyleNormal.UseVisualStyleBackColor = true;
-            this.optRoutingStyleNormal.CheckedChanged += new System.EventHandler(this.RoutingStyle_CheckedChanged);
-            // 
             // lstTransFields
             // 
             this.lstTransFields.FormattingEnabled = true;
             this.lstTransFields.ItemHeight = 16;
-            this.lstTransFields.Location = new System.Drawing.Point(141, 37);
+            this.lstTransFields.Location = new System.Drawing.Point(126, 30);
             this.lstTransFields.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.lstTransFields.Name = "lstTransFields";
             this.lstTransFields.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
@@ -332,7 +319,7 @@
             // 
             this.lblTransFields.AutoSize = true;
             this.lblTransFields.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTransFields.Location = new System.Drawing.Point(138, 14);
+            this.lblTransFields.Location = new System.Drawing.Point(136, 8);
             this.lblTransFields.Name = "lblTransFields";
             this.lblTransFields.Size = new System.Drawing.Size(119, 16);
             this.lblTransFields.TabIndex = 15;
@@ -349,7 +336,7 @@
             "Content",
             "VarLabel",
             "Product"});
-            this.lstExtraFields.Location = new System.Drawing.Point(23, 37);
+            this.lstExtraFields.Location = new System.Drawing.Point(8, 30);
             this.lstExtraFields.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.lstExtraFields.Name = "lstExtraFields";
             this.lstExtraFields.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
@@ -361,11 +348,68 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(24, 15);
+            this.label8.Location = new System.Drawing.Point(16, 8);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(84, 16);
             this.label8.TabIndex = 26;
             this.label8.Text = "Other Fields";
+            // 
+            // groupRoutingStyle
+            // 
+            this.groupRoutingStyle.Controls.Add(this.optRoutingStyleNone);
+            this.groupRoutingStyle.Controls.Add(this.optRoutingStyleGrey);
+            this.groupRoutingStyle.Controls.Add(this.optRoutingStyleNormal);
+            this.groupRoutingStyle.Location = new System.Drawing.Point(17, 316);
+            this.groupRoutingStyle.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupRoutingStyle.Name = "groupRoutingStyle";
+            this.groupRoutingStyle.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupRoutingStyle.Size = new System.Drawing.Size(136, 72);
+            this.groupRoutingStyle.TabIndex = 30;
+            this.groupRoutingStyle.TabStop = false;
+            this.groupRoutingStyle.Text = "Routing Style";
+            // 
+            // optRoutingStyleNone
+            // 
+            this.optRoutingStyleNone.AutoSize = true;
+            this.optRoutingStyleNone.Location = new System.Drawing.Point(71, 45);
+            this.optRoutingStyleNone.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.optRoutingStyleNone.Name = "optRoutingStyleNone";
+            this.optRoutingStyleNone.Size = new System.Drawing.Size(55, 20);
+            this.optRoutingStyleNone.TabIndex = 2;
+            this.optRoutingStyleNone.TabStop = true;
+            this.optRoutingStyleNone.Tag = "3";
+            this.optRoutingStyleNone.Text = "None";
+            this.optRoutingStyleNone.UseVisualStyleBackColor = true;
+            this.optRoutingStyleNone.Visible = false;
+            this.optRoutingStyleNone.CheckedChanged += new System.EventHandler(this.RoutingStyle_CheckedChanged);
+            // 
+            // optRoutingStyleGrey
+            // 
+            this.optRoutingStyleGrey.AutoSize = true;
+            this.optRoutingStyleGrey.Location = new System.Drawing.Point(13, 44);
+            this.optRoutingStyleGrey.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.optRoutingStyleGrey.Name = "optRoutingStyleGrey";
+            this.optRoutingStyleGrey.Size = new System.Drawing.Size(52, 20);
+            this.optRoutingStyleGrey.TabIndex = 1;
+            this.optRoutingStyleGrey.TabStop = true;
+            this.optRoutingStyleGrey.Tag = "2";
+            this.optRoutingStyleGrey.Text = "Grey";
+            this.optRoutingStyleGrey.UseVisualStyleBackColor = true;
+            this.optRoutingStyleGrey.CheckedChanged += new System.EventHandler(this.RoutingStyle_CheckedChanged);
+            // 
+            // optRoutingStyleNormal
+            // 
+            this.optRoutingStyleNormal.AutoSize = true;
+            this.optRoutingStyleNormal.Location = new System.Drawing.Point(13, 22);
+            this.optRoutingStyleNormal.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.optRoutingStyleNormal.Name = "optRoutingStyleNormal";
+            this.optRoutingStyleNormal.Size = new System.Drawing.Size(67, 20);
+            this.optRoutingStyleNormal.TabIndex = 0;
+            this.optRoutingStyleNormal.TabStop = true;
+            this.optRoutingStyleNormal.Tag = "1";
+            this.optRoutingStyleNormal.Text = "Normal";
+            this.optRoutingStyleNormal.UseVisualStyleBackColor = true;
+            this.optRoutingStyleNormal.CheckedChanged += new System.EventHandler(this.RoutingStyle_CheckedChanged);
             // 
             // lblCurrentSurveyFields
             // 
@@ -385,7 +429,7 @@
             this.dateBackend.Name = "dateBackend";
             this.dateBackend.Size = new System.Drawing.Size(124, 23);
             this.dateBackend.TabIndex = 8;
-            this.dateBackend.Leave += new System.EventHandler(this.dateBackend_Leave);
+            this.dateBackend.CloseUp += new System.EventHandler(this.dateBackend_CloseUp);
             // 
             // lblBackend
             // 
@@ -406,7 +450,7 @@
             this.pgCompare.Location = new System.Drawing.Point(4, 25);
             this.pgCompare.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pgCompare.Name = "pgCompare";
-            this.pgCompare.Size = new System.Drawing.Size(503, 388);
+            this.pgCompare.Size = new System.Drawing.Size(503, 396);
             this.pgCompare.TabIndex = 2;
             this.pgCompare.Text = "Comparison";
             // 
@@ -441,7 +485,7 @@
             this.groupHighlightOptions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupHighlightOptions.Name = "groupHighlightOptions";
             this.groupHighlightOptions.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupHighlightOptions.Size = new System.Drawing.Size(196, 279);
+            this.groupHighlightOptions.Size = new System.Drawing.Size(196, 360);
             this.groupHighlightOptions.TabIndex = 11;
             this.groupHighlightOptions.TabStop = false;
             this.groupHighlightOptions.Text = "Highlight Options";
@@ -454,11 +498,14 @@
             this.flowHighlightOptions.Controls.Add(this.showDeletedFieldsCheckBox);
             this.flowHighlightOptions.Controls.Add(this.chkShowDeletedQuestions);
             this.flowHighlightOptions.Controls.Add(this.chkReInsertDeletions);
+            this.flowHighlightOptions.Controls.Add(this.chkHideReference);
+            this.flowHighlightOptions.Controls.Add(this.chkHideIdenticalWordings);
+            this.flowHighlightOptions.Controls.Add(this.chkHideIdenticalQs);
             this.flowHighlightOptions.Location = new System.Drawing.Point(10, 123);
             this.flowHighlightOptions.Margin = new System.Windows.Forms.Padding(0);
             this.flowHighlightOptions.Name = "flowHighlightOptions";
             this.flowHighlightOptions.Padding = new System.Windows.Forms.Padding(1);
-            this.flowHighlightOptions.Size = new System.Drawing.Size(173, 142);
+            this.flowHighlightOptions.Size = new System.Drawing.Size(173, 216);
             this.flowHighlightOptions.TabIndex = 10;
             // 
             // highlightNRCheckBox
@@ -521,6 +568,19 @@
             this.chkReInsertDeletions.TabIndex = 43;
             this.chkReInsertDeletions.Text = "Re-insert Deletions";
             this.chkReInsertDeletions.UseVisualStyleBackColor = true;
+            // 
+            // chkHideReference
+            // 
+            this.chkHideReference.AutoSize = true;
+            this.chkHideReference.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.compareBindingSource, "HidePrimary", true));
+            this.chkHideReference.Location = new System.Drawing.Point(1, 126);
+            this.chkHideReference.Margin = new System.Windows.Forms.Padding(0);
+            this.chkHideReference.Name = "chkHideReference";
+            this.chkHideReference.Padding = new System.Windows.Forms.Padding(1);
+            this.chkHideReference.Size = new System.Drawing.Size(159, 22);
+            this.chkHideReference.TabIndex = 50;
+            this.chkHideReference.Text = "Hide Reference Survey";
+            this.chkHideReference.UseVisualStyleBackColor = true;
             // 
             // groupHighlightStyle
             // 
@@ -589,7 +649,7 @@
             this.pgFileName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pgFileName.Name = "pgFileName";
             this.pgFileName.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.pgFileName.Size = new System.Drawing.Size(503, 388);
+            this.pgFileName.Size = new System.Drawing.Size(503, 396);
             this.pgFileName.TabIndex = 6;
             this.pgFileName.Text = "File Name";
             // 
@@ -690,7 +750,7 @@
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(28, 668);
+            this.lblStatus.Location = new System.Drawing.Point(28, 676);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(57, 16);
             this.lblStatus.TabIndex = 60;
@@ -700,7 +760,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.outputOptionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
@@ -731,26 +792,54 @@
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(108, 20);
+            this.optionsToolStripMenuItem.Text = "Report Options...";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+            // 
+            // outputOptionsToolStripMenuItem
+            // 
+            this.outputOptionsToolStripMenuItem.Name = "outputOptionsToolStripMenuItem";
+            this.outputOptionsToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
+            this.outputOptionsToolStripMenuItem.Text = "Output Options...";
+            this.outputOptionsToolStripMenuItem.Click += new System.EventHandler(this.outputOptionsToolStripMenuItem_Click);
+            // 
             // groupTemplate
             // 
+            this.groupTemplate.Controls.Add(this.optTranslator);
             this.groupTemplate.Controls.Add(this.optNoTemplate);
             this.groupTemplate.Controls.Add(this.optWebTransTemplate);
             this.groupTemplate.Controls.Add(this.optWebTemplate);
             this.groupTemplate.Controls.Add(this.optStdTransTemplate);
             this.groupTemplate.Controls.Add(this.optStdTemplate);
-            this.groupTemplate.Location = new System.Drawing.Point(321, 84);
+            this.groupTemplate.Location = new System.Drawing.Point(321, 72);
             this.groupTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupTemplate.Name = "groupTemplate";
             this.groupTemplate.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupTemplate.Size = new System.Drawing.Size(196, 140);
+            this.groupTemplate.Size = new System.Drawing.Size(196, 152);
             this.groupTemplate.TabIndex = 62;
             this.groupTemplate.TabStop = false;
             this.groupTemplate.Text = "Report Template";
             // 
+            // optTranslator
+            // 
+            this.optTranslator.AutoSize = true;
+            this.optTranslator.Location = new System.Drawing.Point(6, 104);
+            this.optTranslator.Name = "optTranslator";
+            this.optTranslator.Size = new System.Drawing.Size(85, 20);
+            this.optTranslator.TabIndex = 5;
+            this.optTranslator.TabStop = true;
+            this.optTranslator.Text = "Translator";
+            this.optTranslator.UseVisualStyleBackColor = true;
+            this.optTranslator.Visible = false;
+            this.optTranslator.CheckedChanged += new System.EventHandler(this.ReportTemplate_CheckChanged);
+            // 
             // optNoTemplate
             // 
             this.optNoTemplate.AutoSize = true;
-            this.optNoTemplate.Location = new System.Drawing.Point(24, 84);
+            this.optNoTemplate.Location = new System.Drawing.Point(6, 61);
             this.optNoTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optNoTemplate.Name = "optNoTemplate";
             this.optNoTemplate.Size = new System.Drawing.Size(69, 20);
@@ -764,7 +853,7 @@
             // optWebTransTemplate
             // 
             this.optWebTransTemplate.AutoSize = true;
-            this.optWebTransTemplate.Location = new System.Drawing.Point(24, 112);
+            this.optWebTransTemplate.Location = new System.Drawing.Point(6, 84);
             this.optWebTransTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optWebTransTemplate.Name = "optWebTransTemplate";
             this.optWebTransTemplate.Size = new System.Drawing.Size(237, 20);
@@ -779,7 +868,7 @@
             // optWebTemplate
             // 
             this.optWebTemplate.AutoSize = true;
-            this.optWebTemplate.Location = new System.Drawing.Point(104, 84);
+            this.optWebTemplate.Location = new System.Drawing.Point(14, 124);
             this.optWebTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optWebTemplate.Name = "optWebTemplate";
             this.optWebTemplate.Size = new System.Drawing.Size(52, 20);
@@ -794,7 +883,7 @@
             // optStdTransTemplate
             // 
             this.optStdTransTemplate.AutoSize = true;
-            this.optStdTransTemplate.Location = new System.Drawing.Point(24, 55);
+            this.optStdTransTemplate.Location = new System.Drawing.Point(6, 42);
             this.optStdTransTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optStdTransTemplate.Name = "optStdTransTemplate";
             this.optStdTransTemplate.Size = new System.Drawing.Size(165, 20);
@@ -808,7 +897,7 @@
             // optStdTemplate
             // 
             this.optStdTemplate.AutoSize = true;
-            this.optStdTemplate.Location = new System.Drawing.Point(24, 27);
+            this.optStdTemplate.Location = new System.Drawing.Point(6, 24);
             this.optStdTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optStdTemplate.Name = "optStdTemplate";
             this.optStdTemplate.Size = new System.Drawing.Size(78, 20);
@@ -821,7 +910,7 @@
             // 
             // cmdGenerate
             // 
-            this.cmdGenerate.Location = new System.Drawing.Point(421, 656);
+            this.cmdGenerate.Location = new System.Drawing.Point(421, 664);
             this.cmdGenerate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdGenerate.Name = "cmdGenerate";
             this.cmdGenerate.Size = new System.Drawing.Size(99, 41);
@@ -830,21 +919,50 @@
             this.cmdGenerate.UseVisualStyleBackColor = true;
             this.cmdGenerate.Click += new System.EventHandler(this.cmdQuickGenerate_Click);
             // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(108, 20);
-            this.optionsToolStripMenuItem.Text = "Report Options...";
-            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
-            // 
             // surveysBindingSource
             // 
             this.surveysBindingSource.DataMember = "Surveys";
             this.surveysBindingSource.DataSource = this.surveyReportBindingSource;
             // 
+            // chkHideIdenticalWordings
+            // 
+            this.chkHideIdenticalWordings.AutoSize = true;
+            this.chkHideIdenticalWordings.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.compareBindingSource, "HideIdenticalWordings", true));
+            this.chkHideIdenticalWordings.Location = new System.Drawing.Point(1, 148);
+            this.chkHideIdenticalWordings.Margin = new System.Windows.Forms.Padding(0);
+            this.chkHideIdenticalWordings.Name = "chkHideIdenticalWordings";
+            this.chkHideIdenticalWordings.Padding = new System.Windows.Forms.Padding(1);
+            this.chkHideIdenticalWordings.Size = new System.Drawing.Size(164, 22);
+            this.chkHideIdenticalWordings.TabIndex = 51;
+            this.chkHideIdenticalWordings.Text = "Hide Identical Wordings";
+            this.chkHideIdenticalWordings.UseVisualStyleBackColor = true;
+            // 
+            // chkHideIdenticalQs
+            // 
+            this.chkHideIdenticalQs.AutoSize = true;
+            this.chkHideIdenticalQs.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.compareBindingSource, "HideIdenticalQuestions", true));
+            this.chkHideIdenticalQs.Location = new System.Drawing.Point(1, 170);
+            this.chkHideIdenticalQs.Margin = new System.Windows.Forms.Padding(0);
+            this.chkHideIdenticalQs.Name = "chkHideIdenticalQs";
+            this.chkHideIdenticalQs.Padding = new System.Windows.Forms.Padding(1);
+            this.chkHideIdenticalQs.Size = new System.Drawing.Size(166, 22);
+            this.chkHideIdenticalQs.TabIndex = 52;
+            this.chkHideIdenticalQs.Text = "Hide Identical Questions";
+            this.chkHideIdenticalQs.UseVisualStyleBackColor = true;
+            // 
             // surveyReportBindingSource
             // 
             this.surveyReportBindingSource.DataSource = typeof(ITCLib.SurveyReport);
+            // 
+            // chkIncludeEnglish
+            // 
+            this.chkIncludeEnglish.AutoSize = true;
+            this.chkIncludeEnglish.Location = new System.Drawing.Point(292, 24);
+            this.chkIncludeEnglish.Name = "chkIncludeEnglish";
+            this.chkIncludeEnglish.Size = new System.Drawing.Size(112, 20);
+            this.chkIncludeEnglish.TabIndex = 34;
+            this.chkIncludeEnglish.Text = "Include English";
+            this.chkIncludeEnglish.UseVisualStyleBackColor = true;
             // 
             // SurveyReportForm
             // 
@@ -882,6 +1000,8 @@
             this.pgCompare.ResumeLayout(false);
             this.groupHighlightOptions.ResumeLayout(false);
             this.flowHighlightOptions.ResumeLayout(false);
+            this.flowHighlightOptions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).EndInit();
             this.groupHighlightStyle.ResumeLayout(false);
             this.groupHighlightStyle.PerformLayout();
             this.pgFileName.ResumeLayout(false);
@@ -890,7 +1010,6 @@
             this.menuStrip1.PerformLayout();
             this.groupTemplate.ResumeLayout(false);
             this.groupTemplate.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveysBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).EndInit();
@@ -967,6 +1086,15 @@
         private System.Windows.Forms.Button cmdGenerate;
         private System.Windows.Forms.Button cmdCustomizeContent;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.RadioButton optTranslator;
+        private System.Windows.Forms.Button cmdCommentFields;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListBox lstCommentTypes;
+        private System.Windows.Forms.ToolStripMenuItem outputOptionsToolStripMenuItem;
+        private System.Windows.Forms.CheckBox chkHideReference;
+        private System.Windows.Forms.CheckBox chkHideIdenticalWordings;
+        private System.Windows.Forms.CheckBox chkHideIdenticalQs;
+        private System.Windows.Forms.CheckBox chkIncludeEnglish;
     }
 }
 
