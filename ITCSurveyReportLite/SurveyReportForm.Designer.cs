@@ -40,6 +40,7 @@
             this.lstSelectedSurveys = new System.Windows.Forms.ListBox();
             this.tabControlOptions = new System.Windows.Forms.TabControl();
             this.pgFields = new System.Windows.Forms.TabPage();
+            this.chkIncludeEnglish = new System.Windows.Forms.CheckBox();
             this.cmdCustomizeContent = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.cmdCommentFields = new System.Windows.Forms.Button();
@@ -69,6 +70,8 @@
             this.chkShowDeletedQuestions = new System.Windows.Forms.CheckBox();
             this.chkReInsertDeletions = new System.Windows.Forms.CheckBox();
             this.chkHideReference = new System.Windows.Forms.CheckBox();
+            this.chkHideIdenticalWordings = new System.Windows.Forms.CheckBox();
+            this.chkHideIdenticalQs = new System.Windows.Forms.CheckBox();
             this.groupHighlightStyle = new System.Windows.Forms.GroupBox();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.highlightCheckBox = new System.Windows.Forms.CheckBox();
@@ -105,10 +108,8 @@
             this.cmdGenerate = new System.Windows.Forms.Button();
             this.reportLayoutBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.surveysBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.chkHideIdenticalWordings = new System.Windows.Forms.CheckBox();
-            this.chkHideIdenticalQs = new System.Windows.Forms.CheckBox();
+            this.optTopicContent = new System.Windows.Forms.RadioButton();
             this.surveyReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.chkIncludeEnglish = new System.Windows.Forms.CheckBox();
             detailsLabel = new System.Windows.Forms.Label();
             fileNameLabel = new System.Windows.Forms.Label();
             this.tabControlOptions.SuspendLayout();
@@ -134,7 +135,7 @@
             detailsLabel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             detailsLabel.Location = new System.Drawing.Point(99, 254);
             detailsLabel.Name = "detailsLabel";
-            detailsLabel.Size = new System.Drawing.Size(106, 16);
+            detailsLabel.Size = new System.Drawing.Size(105, 16);
             detailsLabel.TabIndex = 27;
             detailsLabel.Text = "Report Details:";
             // 
@@ -143,7 +144,7 @@
             fileNameLabel.AutoSize = true;
             fileNameLabel.Location = new System.Drawing.Point(13, 298);
             fileNameLabel.Name = "fileNameLabel";
-            fileNameLabel.Size = new System.Drawing.Size(101, 16);
+            fileNameLabel.Size = new System.Drawing.Size(100, 16);
             fileNameLabel.TabIndex = 33;
             fileNameLabel.Text = "Final File Name:";
             // 
@@ -232,6 +233,16 @@
             this.pgFields.TabIndex = 1;
             this.pgFields.Text = "Survey Content";
             // 
+            // chkIncludeEnglish
+            // 
+            this.chkIncludeEnglish.AutoSize = true;
+            this.chkIncludeEnglish.Location = new System.Drawing.Point(292, 24);
+            this.chkIncludeEnglish.Name = "chkIncludeEnglish";
+            this.chkIncludeEnglish.Size = new System.Drawing.Size(111, 20);
+            this.chkIncludeEnglish.TabIndex = 34;
+            this.chkIncludeEnglish.Text = "Include English";
+            this.chkIncludeEnglish.UseVisualStyleBackColor = true;
+            // 
             // cmdCustomizeContent
             // 
             this.cmdCustomizeContent.Location = new System.Drawing.Point(288, 51);
@@ -276,7 +287,7 @@
             this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(312, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 16);
+            this.label1.Size = new System.Drawing.Size(74, 16);
             this.label1.TabIndex = 33;
             this.label1.Text = "Comments";
             // 
@@ -297,7 +308,7 @@
             this.chkEnglishRouting.Location = new System.Drawing.Point(126, 170);
             this.chkEnglishRouting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.chkEnglishRouting.Name = "chkEnglishRouting";
-            this.chkEnglishRouting.Size = new System.Drawing.Size(139, 20);
+            this.chkEnglishRouting.Size = new System.Drawing.Size(138, 20);
             this.chkEnglishRouting.TabIndex = 31;
             this.chkEnglishRouting.Text = "Use English Routing";
             this.chkEnglishRouting.UseVisualStyleBackColor = true;
@@ -321,7 +332,7 @@
             this.lblTransFields.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTransFields.Location = new System.Drawing.Point(136, 8);
             this.lblTransFields.Name = "lblTransFields";
-            this.lblTransFields.Size = new System.Drawing.Size(119, 16);
+            this.lblTransFields.Size = new System.Drawing.Size(118, 16);
             this.lblTransFields.TabIndex = 15;
             this.lblTransFields.Text = "Translation Fields";
             // 
@@ -350,7 +361,7 @@
             this.label8.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.Location = new System.Drawing.Point(16, 8);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(84, 16);
+            this.label8.Size = new System.Drawing.Size(83, 16);
             this.label8.TabIndex = 26;
             this.label8.Text = "Other Fields";
             // 
@@ -374,7 +385,7 @@
             this.optRoutingStyleNone.Location = new System.Drawing.Point(71, 45);
             this.optRoutingStyleNone.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optRoutingStyleNone.Name = "optRoutingStyleNone";
-            this.optRoutingStyleNone.Size = new System.Drawing.Size(55, 20);
+            this.optRoutingStyleNone.Size = new System.Drawing.Size(54, 20);
             this.optRoutingStyleNone.TabIndex = 2;
             this.optRoutingStyleNone.TabStop = true;
             this.optRoutingStyleNone.Tag = "3";
@@ -389,7 +400,7 @@
             this.optRoutingStyleGrey.Location = new System.Drawing.Point(13, 44);
             this.optRoutingStyleGrey.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optRoutingStyleGrey.Name = "optRoutingStyleGrey";
-            this.optRoutingStyleGrey.Size = new System.Drawing.Size(52, 20);
+            this.optRoutingStyleGrey.Size = new System.Drawing.Size(51, 20);
             this.optRoutingStyleGrey.TabIndex = 1;
             this.optRoutingStyleGrey.TabStop = true;
             this.optRoutingStyleGrey.Tag = "2";
@@ -403,7 +414,7 @@
             this.optRoutingStyleNormal.Location = new System.Drawing.Point(13, 22);
             this.optRoutingStyleNormal.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optRoutingStyleNormal.Name = "optRoutingStyleNormal";
-            this.optRoutingStyleNormal.Size = new System.Drawing.Size(67, 20);
+            this.optRoutingStyleNormal.Size = new System.Drawing.Size(66, 20);
             this.optRoutingStyleNormal.TabIndex = 0;
             this.optRoutingStyleNormal.TabStop = true;
             this.optRoutingStyleNormal.Tag = "1";
@@ -417,7 +428,7 @@
             this.lblCurrentSurveyFields.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCurrentSurveyFields.Location = new System.Drawing.Point(17, 14);
             this.lblCurrentSurveyFields.Name = "lblCurrentSurveyFields";
-            this.lblCurrentSurveyFields.Size = new System.Drawing.Size(189, 16);
+            this.lblCurrentSurveyFields.Size = new System.Drawing.Size(188, 16);
             this.lblCurrentSurveyFields.TabIndex = 29;
             this.lblCurrentSurveyFields.Text = "Current Survey\'s Selections";
             // 
@@ -436,7 +447,7 @@
             this.lblBackend.AutoSize = true;
             this.lblBackend.Location = new System.Drawing.Point(17, 57);
             this.lblBackend.Name = "lblBackend";
-            this.lblBackend.Size = new System.Drawing.Size(84, 16);
+            this.lblBackend.Size = new System.Drawing.Size(83, 16);
             this.lblBackend.TabIndex = 9;
             this.lblBackend.Text = "Backend date";
             // 
@@ -577,10 +588,36 @@
             this.chkHideReference.Margin = new System.Windows.Forms.Padding(0);
             this.chkHideReference.Name = "chkHideReference";
             this.chkHideReference.Padding = new System.Windows.Forms.Padding(1);
-            this.chkHideReference.Size = new System.Drawing.Size(159, 22);
+            this.chkHideReference.Size = new System.Drawing.Size(158, 22);
             this.chkHideReference.TabIndex = 50;
             this.chkHideReference.Text = "Hide Reference Survey";
             this.chkHideReference.UseVisualStyleBackColor = true;
+            // 
+            // chkHideIdenticalWordings
+            // 
+            this.chkHideIdenticalWordings.AutoSize = true;
+            this.chkHideIdenticalWordings.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.compareBindingSource, "HideIdenticalWordings", true));
+            this.chkHideIdenticalWordings.Location = new System.Drawing.Point(1, 148);
+            this.chkHideIdenticalWordings.Margin = new System.Windows.Forms.Padding(0);
+            this.chkHideIdenticalWordings.Name = "chkHideIdenticalWordings";
+            this.chkHideIdenticalWordings.Padding = new System.Windows.Forms.Padding(1);
+            this.chkHideIdenticalWordings.Size = new System.Drawing.Size(163, 22);
+            this.chkHideIdenticalWordings.TabIndex = 51;
+            this.chkHideIdenticalWordings.Text = "Hide Identical Wordings";
+            this.chkHideIdenticalWordings.UseVisualStyleBackColor = true;
+            // 
+            // chkHideIdenticalQs
+            // 
+            this.chkHideIdenticalQs.AutoSize = true;
+            this.chkHideIdenticalQs.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.compareBindingSource, "HideIdenticalQuestions", true));
+            this.chkHideIdenticalQs.Location = new System.Drawing.Point(1, 170);
+            this.chkHideIdenticalQs.Margin = new System.Windows.Forms.Padding(0);
+            this.chkHideIdenticalQs.Name = "chkHideIdenticalQs";
+            this.chkHideIdenticalQs.Padding = new System.Windows.Forms.Padding(1);
+            this.chkHideIdenticalQs.Size = new System.Drawing.Size(165, 22);
+            this.chkHideIdenticalQs.TabIndex = 52;
+            this.chkHideIdenticalQs.Text = "Hide Identical Questions";
+            this.chkHideIdenticalQs.UseVisualStyleBackColor = true;
             // 
             // groupHighlightStyle
             // 
@@ -601,7 +638,7 @@
             this.radioButton1.Location = new System.Drawing.Point(12, 22);
             this.radioButton1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(117, 20);
+            this.radioButton1.Size = new System.Drawing.Size(116, 20);
             this.radioButton1.TabIndex = 0;
             this.radioButton1.TabStop = true;
             this.radioButton1.Tag = "1";
@@ -659,7 +696,7 @@
             this.label14.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.Location = new System.Drawing.Point(100, 122);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(105, 16);
+            this.label14.Size = new System.Drawing.Size(104, 16);
             this.label14.TabIndex = 37;
             this.label14.Text = "Main source(s)";
             // 
@@ -669,7 +706,7 @@
             this.label13.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.Location = new System.Drawing.Point(217, 180);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(27, 16);
+            this.label13.Size = new System.Drawing.Size(26, 16);
             this.label13.TabIndex = 36;
             this.label13.Text = "vs.";
             // 
@@ -679,7 +716,7 @@
             this.label12.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(14, 345);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(405, 16);
+            this.label12.Size = new System.Drawing.Size(404, 16);
             this.label12.TabIndex = 35;
             this.label12.Text = "Note: Date and Time will be appended to the above file name.";
             // 
@@ -752,7 +789,7 @@
             this.lblStatus.AutoSize = true;
             this.lblStatus.Location = new System.Drawing.Point(28, 676);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(57, 16);
+            this.lblStatus.Size = new System.Drawing.Size(56, 16);
             this.lblStatus.TabIndex = 60;
             this.lblStatus.Text = "lblStatus";
             // 
@@ -808,6 +845,7 @@
             // 
             // groupTemplate
             // 
+            this.groupTemplate.Controls.Add(this.optTopicContent);
             this.groupTemplate.Controls.Add(this.optTranslator);
             this.groupTemplate.Controls.Add(this.optNoTemplate);
             this.groupTemplate.Controls.Add(this.optWebTransTemplate);
@@ -826,9 +864,9 @@
             // optTranslator
             // 
             this.optTranslator.AutoSize = true;
-            this.optTranslator.Location = new System.Drawing.Point(6, 104);
+            this.optTranslator.Location = new System.Drawing.Point(71, 125);
             this.optTranslator.Name = "optTranslator";
-            this.optTranslator.Size = new System.Drawing.Size(85, 20);
+            this.optTranslator.Size = new System.Drawing.Size(84, 20);
             this.optTranslator.TabIndex = 5;
             this.optTranslator.TabStop = true;
             this.optTranslator.Text = "Translator";
@@ -839,10 +877,10 @@
             // optNoTemplate
             // 
             this.optNoTemplate.AutoSize = true;
-            this.optNoTemplate.Location = new System.Drawing.Point(6, 61);
+            this.optNoTemplate.Location = new System.Drawing.Point(6, 75);
             this.optNoTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optNoTemplate.Name = "optNoTemplate";
-            this.optNoTemplate.Size = new System.Drawing.Size(69, 20);
+            this.optNoTemplate.Size = new System.Drawing.Size(68, 20);
             this.optNoTemplate.TabIndex = 4;
             this.optNoTemplate.TabStop = true;
             this.optNoTemplate.Tag = "Custom";
@@ -853,10 +891,10 @@
             // optWebTransTemplate
             // 
             this.optWebTransTemplate.AutoSize = true;
-            this.optWebTransTemplate.Location = new System.Drawing.Point(6, 84);
+            this.optWebTransTemplate.Location = new System.Drawing.Point(6, 98);
             this.optWebTransTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optWebTransTemplate.Name = "optWebTransTemplate";
-            this.optWebTransTemplate.Size = new System.Drawing.Size(237, 20);
+            this.optWebTransTemplate.Size = new System.Drawing.Size(236, 20);
             this.optWebTransTemplate.TabIndex = 3;
             this.optWebTransTemplate.TabStop = true;
             this.optWebTransTemplate.Tag = "WebTrans";
@@ -871,7 +909,7 @@
             this.optWebTemplate.Location = new System.Drawing.Point(14, 124);
             this.optWebTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optWebTemplate.Name = "optWebTemplate";
-            this.optWebTemplate.Size = new System.Drawing.Size(52, 20);
+            this.optWebTemplate.Size = new System.Drawing.Size(51, 20);
             this.optWebTemplate.TabIndex = 2;
             this.optWebTemplate.TabStop = true;
             this.optWebTemplate.Tag = "Web";
@@ -883,10 +921,10 @@
             // optStdTransTemplate
             // 
             this.optStdTransTemplate.AutoSize = true;
-            this.optStdTransTemplate.Location = new System.Drawing.Point(6, 42);
+            this.optStdTransTemplate.Location = new System.Drawing.Point(6, 36);
             this.optStdTransTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optStdTransTemplate.Name = "optStdTransTemplate";
-            this.optStdTransTemplate.Size = new System.Drawing.Size(165, 20);
+            this.optStdTransTemplate.Size = new System.Drawing.Size(164, 20);
             this.optStdTransTemplate.TabIndex = 1;
             this.optStdTransTemplate.TabStop = true;
             this.optStdTransTemplate.Tag = "StdTrans";
@@ -897,10 +935,10 @@
             // optStdTemplate
             // 
             this.optStdTemplate.AutoSize = true;
-            this.optStdTemplate.Location = new System.Drawing.Point(6, 24);
+            this.optStdTemplate.Location = new System.Drawing.Point(6, 19);
             this.optStdTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optStdTemplate.Name = "optStdTemplate";
-            this.optStdTemplate.Size = new System.Drawing.Size(78, 20);
+            this.optStdTemplate.Size = new System.Drawing.Size(77, 20);
             this.optStdTemplate.TabIndex = 0;
             this.optStdTemplate.TabStop = true;
             this.optStdTemplate.Tag = "Std";
@@ -924,45 +962,22 @@
             this.surveysBindingSource.DataMember = "Surveys";
             this.surveysBindingSource.DataSource = this.surveyReportBindingSource;
             // 
-            // chkHideIdenticalWordings
+            // optTopicContent
             // 
-            this.chkHideIdenticalWordings.AutoSize = true;
-            this.chkHideIdenticalWordings.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.compareBindingSource, "HideIdenticalWordings", true));
-            this.chkHideIdenticalWordings.Location = new System.Drawing.Point(1, 148);
-            this.chkHideIdenticalWordings.Margin = new System.Windows.Forms.Padding(0);
-            this.chkHideIdenticalWordings.Name = "chkHideIdenticalWordings";
-            this.chkHideIdenticalWordings.Padding = new System.Windows.Forms.Padding(1);
-            this.chkHideIdenticalWordings.Size = new System.Drawing.Size(164, 22);
-            this.chkHideIdenticalWordings.TabIndex = 51;
-            this.chkHideIdenticalWordings.Text = "Hide Identical Wordings";
-            this.chkHideIdenticalWordings.UseVisualStyleBackColor = true;
-            // 
-            // chkHideIdenticalQs
-            // 
-            this.chkHideIdenticalQs.AutoSize = true;
-            this.chkHideIdenticalQs.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.compareBindingSource, "HideIdenticalQuestions", true));
-            this.chkHideIdenticalQs.Location = new System.Drawing.Point(1, 170);
-            this.chkHideIdenticalQs.Margin = new System.Windows.Forms.Padding(0);
-            this.chkHideIdenticalQs.Name = "chkHideIdenticalQs";
-            this.chkHideIdenticalQs.Padding = new System.Windows.Forms.Padding(1);
-            this.chkHideIdenticalQs.Size = new System.Drawing.Size(166, 22);
-            this.chkHideIdenticalQs.TabIndex = 52;
-            this.chkHideIdenticalQs.Text = "Hide Identical Questions";
-            this.chkHideIdenticalQs.UseVisualStyleBackColor = true;
+            this.optTopicContent.AutoSize = true;
+            this.optTopicContent.Location = new System.Drawing.Point(6, 55);
+            this.optTopicContent.Name = "optTopicContent";
+            this.optTopicContent.Size = new System.Drawing.Size(105, 20);
+            this.optTopicContent.TabIndex = 6;
+            this.optTopicContent.TabStop = true;
+            this.optTopicContent.Tag = "TC";
+            this.optTopicContent.Text = "Topic/Content";
+            this.optTopicContent.UseVisualStyleBackColor = true;
+            this.optTopicContent.CheckedChanged += new System.EventHandler(this.ReportTemplate_CheckChanged);
             // 
             // surveyReportBindingSource
             // 
             this.surveyReportBindingSource.DataSource = typeof(ITCLib.SurveyReport);
-            // 
-            // chkIncludeEnglish
-            // 
-            this.chkIncludeEnglish.AutoSize = true;
-            this.chkIncludeEnglish.Location = new System.Drawing.Point(292, 24);
-            this.chkIncludeEnglish.Name = "chkIncludeEnglish";
-            this.chkIncludeEnglish.Size = new System.Drawing.Size(112, 20);
-            this.chkIncludeEnglish.TabIndex = 34;
-            this.chkIncludeEnglish.Text = "Include English";
-            this.chkIncludeEnglish.UseVisualStyleBackColor = true;
             // 
             // SurveyReportForm
             // 
@@ -1095,6 +1110,7 @@
         private System.Windows.Forms.CheckBox chkHideIdenticalWordings;
         private System.Windows.Forms.CheckBox chkHideIdenticalQs;
         private System.Windows.Forms.CheckBox chkIncludeEnglish;
+        private System.Windows.Forms.RadioButton optTopicContent;
     }
 }
 
