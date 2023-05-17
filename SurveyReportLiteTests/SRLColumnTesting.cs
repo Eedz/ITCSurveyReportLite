@@ -41,7 +41,7 @@ namespace SurveyReportLiteTests
             SurveyQuestion q = new SurveyQuestion("AA000", "001");
             q.Translations.Add(new Translation()
             {
-                Language= "TestLang",
+                LanguageName = new Language() { LanguageName = "TestLang" },
                 TranslationText = "Translation Text"
             });
             s.AddQuestion(q);
@@ -72,12 +72,12 @@ namespace SurveyReportLiteTests
             SurveyQuestion q = new SurveyQuestion("AA000", "001");
             q.Translations.Add(new Translation()
             {
-                Language = "TestLang",
+                LanguageName = new Language() { LanguageName = "TestLang" },
                 TranslationText = "Translation Text"
             });
             q.Translations.Add(new Translation()
             {
-                Language = "TestLang2",
+                LanguageName = new Language() { LanguageName = "TestLang2" },
                 TranslationText = "Translation Text"
             });
             s.AddQuestion(q);

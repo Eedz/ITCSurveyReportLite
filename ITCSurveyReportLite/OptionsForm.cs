@@ -49,7 +49,20 @@ namespace ITCSurveyReportLite
                     break;
             }
 
+            switch (SR.Numbering)
+            {
+                case Enumeration.Qnum:
+                    optQnum.Checked = true; break;
+                case Enumeration.AltQnum:
+                    optAltQnum.Checked = true;
+                    break;
+                case Enumeration.Both:
+                    optBothQnums.Checked = true; break;
+            }
+
             chkBlankColumn.Checked = SR.LayoutOptions.BlankColumn;
+            chkIncludeImages.Checked = SR.IncludeImages;
+            chkImageAppendix.Checked = SR.ImageAppendix;
             chkSurveyNotes.Checked = SR.SurvNotes;
             chkVarChangesColumn.Checked = SR.VarChangesCol;
             chkVarChangesAppendix.Checked = SR.VarChangesApp;
@@ -90,7 +103,17 @@ namespace ITCSurveyReportLite
             else if (rbNRDRO.Checked)
                 SR.NrFormat = ReadOutOptions.DontReadOut;
 
+            if (optQnum.Checked)
+                SR.Numbering = Enumeration.Qnum;
+            else if (optAltQnum.Checked)
+                SR.Numbering = Enumeration.AltQnum;
+            else if (optBothQnums.Checked)
+                SR.Numbering = Enumeration.Both;
+
+
             SR.LayoutOptions.BlankColumn = chkBlankColumn.Checked;
+            SR.IncludeImages = chkIncludeImages.Checked;
+            SR.ImageAppendix = chkImageAppendix.Checked;
             SR.SurvNotes = chkSurveyNotes.Checked;
             SR.VarChangesCol = chkVarChangesColumn.Checked;
             SR.VarChangesApp = chkVarChangesAppendix.Checked;

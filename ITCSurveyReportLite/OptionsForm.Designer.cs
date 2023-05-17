@@ -54,14 +54,23 @@
             this.chkExcludeHiddenChanges = new System.Windows.Forms.CheckBox();
             this.chkBlankColumn = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.grpEnumeration = new System.Windows.Forms.GroupBox();
+            this.optBothQnums = new System.Windows.Forms.RadioButton();
+            this.optAltQnum = new System.Windows.Forms.RadioButton();
+            this.optQnum = new System.Windows.Forms.RadioButton();
+            this.grpImages = new System.Windows.Forms.GroupBox();
+            this.chkImageAppendix = new System.Windows.Forms.RadioButton();
+            this.chkIncludeImages = new System.Windows.Forms.RadioButton();
             this.panelInsertQnums.SuspendLayout();
             this.panelSubsetTables.SuspendLayout();
             this.groupNRFormat.SuspendLayout();
+            this.grpEnumeration.SuspendLayout();
+            this.grpImages.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmdOK
             // 
-            this.cmdOK.Location = new System.Drawing.Point(231, 333);
+            this.cmdOK.Location = new System.Drawing.Point(231, 299);
             this.cmdOK.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(87, 28);
@@ -72,7 +81,7 @@
             // 
             // cmdCancel
             // 
-            this.cmdCancel.Location = new System.Drawing.Point(339, 333);
+            this.cmdCancel.Location = new System.Drawing.Point(342, 299);
             this.cmdCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(87, 28);
@@ -86,7 +95,7 @@
             this.chkLongLists.AutoSize = true;
             this.chkLongLists.Location = new System.Drawing.Point(12, 36);
             this.chkLongLists.Name = "chkLongLists";
-            this.chkLongLists.Size = new System.Drawing.Size(119, 20);
+            this.chkLongLists.Size = new System.Drawing.Size(118, 20);
             this.chkLongLists.TabIndex = 2;
             this.chkLongLists.Text = "Show Long Lists";
             this.chkLongLists.UseVisualStyleBackColor = true;
@@ -96,7 +105,7 @@
             this.chkInsertQnums.AutoSize = true;
             this.chkInsertQnums.Location = new System.Drawing.Point(12, 63);
             this.chkInsertQnums.Name = "chkInsertQnums";
-            this.chkInsertQnums.Size = new System.Drawing.Size(104, 20);
+            this.chkInsertQnums.Size = new System.Drawing.Size(103, 20);
             this.chkInsertQnums.TabIndex = 3;
             this.chkInsertQnums.Text = "Insert Qnums";
             this.chkInsertQnums.UseVisualStyleBackColor = true;
@@ -107,7 +116,7 @@
             this.chkInsertCC.AutoSize = true;
             this.chkInsertCC.Location = new System.Drawing.Point(12, 128);
             this.chkInsertCC.Name = "chkInsertCC";
-            this.chkInsertCC.Size = new System.Drawing.Size(147, 20);
+            this.chkInsertCC.Size = new System.Drawing.Size(146, 20);
             this.chkInsertCC.TabIndex = 4;
             this.chkInsertCC.Text = "Insert Country Codes";
             this.chkInsertCC.UseVisualStyleBackColor = true;
@@ -117,7 +126,7 @@
             this.chkInlineRouting.AutoSize = true;
             this.chkInlineRouting.Location = new System.Drawing.Point(12, 154);
             this.chkInlineRouting.Name = "chkInlineRouting";
-            this.chkInlineRouting.Size = new System.Drawing.Size(110, 20);
+            this.chkInlineRouting.Size = new System.Drawing.Size(109, 20);
             this.chkInlineRouting.TabIndex = 5;
             this.chkInlineRouting.Text = "In-line Routing";
             this.chkInlineRouting.UseVisualStyleBackColor = true;
@@ -127,7 +136,7 @@
             this.chkSemiTelephone.AutoSize = true;
             this.chkSemiTelephone.Location = new System.Drawing.Point(12, 250);
             this.chkSemiTelephone.Name = "chkSemiTelephone";
-            this.chkSemiTelephone.Size = new System.Drawing.Size(121, 20);
+            this.chkSemiTelephone.Size = new System.Drawing.Size(120, 20);
             this.chkSemiTelephone.TabIndex = 6;
             this.chkSemiTelephone.Text = "Semi-Telephone";
             this.chkSemiTelephone.UseVisualStyleBackColor = true;
@@ -138,7 +147,7 @@
             this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(9, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(344, 16);
+            this.label2.Size = new System.Drawing.Size(343, 16);
             this.label2.TabIndex = 9;
             this.label2.Text = "These options will apply to all surveys in the report.";
             // 
@@ -147,7 +156,7 @@
             this.chkSubsetTables.AutoSize = true;
             this.chkSubsetTables.Location = new System.Drawing.Point(12, 180);
             this.chkSubsetTables.Name = "chkSubsetTables";
-            this.chkSubsetTables.Size = new System.Drawing.Size(145, 20);
+            this.chkSubsetTables.Size = new System.Drawing.Size(144, 20);
             this.chkSubsetTables.TabIndex = 10;
             this.chkSubsetTables.Text = "Insert Subset Tables";
             this.chkSubsetTables.UseVisualStyleBackColor = true;
@@ -168,7 +177,7 @@
             this.rbInsertAQN.AutoSize = true;
             this.rbInsertAQN.Location = new System.Drawing.Point(3, 19);
             this.rbInsertAQN.Name = "rbInsertAQN";
-            this.rbInsertAQN.Size = new System.Drawing.Size(75, 20);
+            this.rbInsertAQN.Size = new System.Drawing.Size(74, 20);
             this.rbInsertAQN.TabIndex = 1;
             this.rbInsertAQN.TabStop = true;
             this.rbInsertAQN.Text = "AltQnum";
@@ -179,7 +188,7 @@
             this.rbInsertQnum.AutoSize = true;
             this.rbInsertQnum.Location = new System.Drawing.Point(3, 0);
             this.rbInsertQnum.Name = "rbInsertQnum";
-            this.rbInsertQnum.Size = new System.Drawing.Size(60, 20);
+            this.rbInsertQnum.Size = new System.Drawing.Size(59, 20);
             this.rbInsertQnum.TabIndex = 0;
             this.rbInsertQnum.TabStop = true;
             this.rbInsertQnum.Text = "Qnum";
@@ -200,7 +209,7 @@
             this.rbTranslationSubsetTables.AutoSize = true;
             this.rbTranslationSubsetTables.Location = new System.Drawing.Point(6, 18);
             this.rbTranslationSubsetTables.Name = "rbTranslationSubsetTables";
-            this.rbTranslationSubsetTables.Size = new System.Drawing.Size(90, 20);
+            this.rbTranslationSubsetTables.Size = new System.Drawing.Size(89, 20);
             this.rbTranslationSubsetTables.TabIndex = 1;
             this.rbTranslationSubsetTables.TabStop = true;
             this.rbTranslationSubsetTables.Text = "Translation";
@@ -211,7 +220,7 @@
             this.rbEnglishSubsetTables.AutoSize = true;
             this.rbEnglishSubsetTables.Location = new System.Drawing.Point(6, 0);
             this.rbEnglishSubsetTables.Name = "rbEnglishSubsetTables";
-            this.rbEnglishSubsetTables.Size = new System.Drawing.Size(66, 20);
+            this.rbEnglishSubsetTables.Size = new System.Drawing.Size(65, 20);
             this.rbEnglishSubsetTables.TabIndex = 0;
             this.rbEnglishSubsetTables.TabStop = true;
             this.rbEnglishSubsetTables.Text = "English";
@@ -220,7 +229,7 @@
             // label4
             // 
             this.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label4.Location = new System.Drawing.Point(6, 328);
+            this.label4.Location = new System.Drawing.Point(6, 294);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(430, 2);
             this.label4.TabIndex = 16;
@@ -243,7 +252,7 @@
             this.rbNRDRO.AutoSize = true;
             this.rbNRDRO.Location = new System.Drawing.Point(7, 61);
             this.rbNRDRO.Name = "rbNRDRO";
-            this.rbNRDRO.Size = new System.Drawing.Size(112, 20);
+            this.rbNRDRO.Size = new System.Drawing.Size(111, 20);
             this.rbNRDRO.TabIndex = 2;
             this.rbNRDRO.Text = "Don\'t Read Out";
             this.rbNRDRO.UseVisualStyleBackColor = true;
@@ -253,7 +262,7 @@
             this.rbNRDR.AutoSize = true;
             this.rbNRDR.Location = new System.Drawing.Point(7, 40);
             this.rbNRDR.Name = "rbNRDR";
-            this.rbNRDR.Size = new System.Drawing.Size(88, 20);
+            this.rbNRDR.Size = new System.Drawing.Size(87, 20);
             this.rbNRDR.TabIndex = 1;
             this.rbNRDR.Text = "Don\'t Read";
             this.rbNRDR.UseVisualStyleBackColor = true;
@@ -264,7 +273,7 @@
             this.rbNRNormal.Checked = true;
             this.rbNRNormal.Location = new System.Drawing.Point(7, 19);
             this.rbNRNormal.Name = "rbNRNormal";
-            this.rbNRNormal.Size = new System.Drawing.Size(67, 20);
+            this.rbNRNormal.Size = new System.Drawing.Size(66, 20);
             this.rbNRNormal.TabIndex = 0;
             this.rbNRNormal.TabStop = true;
             this.rbNRNormal.Text = "Neither";
@@ -273,9 +282,9 @@
             // chkSurveyNotes
             // 
             this.chkSurveyNotes.AutoSize = true;
-            this.chkSurveyNotes.Location = new System.Drawing.Point(177, 179);
+            this.chkSurveyNotes.Location = new System.Drawing.Point(177, 178);
             this.chkSurveyNotes.Name = "chkSurveyNotes";
-            this.chkSurveyNotes.Size = new System.Drawing.Size(102, 20);
+            this.chkSurveyNotes.Size = new System.Drawing.Size(101, 20);
             this.chkSurveyNotes.TabIndex = 18;
             this.chkSurveyNotes.Text = "Survey Notes";
             this.chkSurveyNotes.UseVisualStyleBackColor = true;
@@ -283,9 +292,9 @@
             // chkVarChangesColumn
             // 
             this.chkVarChangesColumn.AutoSize = true;
-            this.chkVarChangesColumn.Location = new System.Drawing.Point(177, 205);
+            this.chkVarChangesColumn.Location = new System.Drawing.Point(177, 204);
             this.chkVarChangesColumn.Name = "chkVarChangesColumn";
-            this.chkVarChangesColumn.Size = new System.Drawing.Size(259, 20);
+            this.chkVarChangesColumn.Size = new System.Drawing.Size(258, 20);
             this.chkVarChangesColumn.TabIndex = 19;
             this.chkVarChangesColumn.Text = "VarName Changes (in VarName column)";
             this.chkVarChangesColumn.UseVisualStyleBackColor = true;
@@ -293,9 +302,9 @@
             // chkVarChangesAppendix
             // 
             this.chkVarChangesAppendix.AutoSize = true;
-            this.chkVarChangesAppendix.Location = new System.Drawing.Point(177, 231);
+            this.chkVarChangesAppendix.Location = new System.Drawing.Point(177, 230);
             this.chkVarChangesAppendix.Name = "chkVarChangesAppendix";
-            this.chkVarChangesAppendix.Size = new System.Drawing.Size(213, 20);
+            this.chkVarChangesAppendix.Size = new System.Drawing.Size(212, 20);
             this.chkVarChangesAppendix.TabIndex = 20;
             this.chkVarChangesAppendix.Text = "VarName Changes (in Appendix)";
             this.chkVarChangesAppendix.UseVisualStyleBackColor = true;
@@ -304,7 +313,7 @@
             // 
             this.chkExcludeHiddenChanges.Checked = true;
             this.chkExcludeHiddenChanges.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkExcludeHiddenChanges.Location = new System.Drawing.Point(195, 255);
+            this.chkExcludeHiddenChanges.Location = new System.Drawing.Point(195, 254);
             this.chkExcludeHiddenChanges.Name = "chkExcludeHiddenChanges";
             this.chkExcludeHiddenChanges.Size = new System.Drawing.Size(234, 38);
             this.chkExcludeHiddenChanges.TabIndex = 21;
@@ -314,9 +323,9 @@
             // chkBlankColumn
             // 
             this.chkBlankColumn.AutoSize = true;
-            this.chkBlankColumn.Location = new System.Drawing.Point(178, 153);
+            this.chkBlankColumn.Location = new System.Drawing.Point(177, 154);
             this.chkBlankColumn.Name = "chkBlankColumn";
-            this.chkBlankColumn.Size = new System.Drawing.Size(104, 20);
+            this.chkBlankColumn.Size = new System.Drawing.Size(103, 20);
             this.chkBlankColumn.TabIndex = 22;
             this.chkBlankColumn.Text = "Blank Column";
             this.chkBlankColumn.UseVisualStyleBackColor = true;
@@ -327,17 +336,98 @@
             this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(185, 132);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(98, 16);
+            this.label3.Size = new System.Drawing.Size(97, 16);
             this.label3.TabIndex = 23;
             this.label3.Text = "Extra Content";
+            // 
+            // grpEnumeration
+            // 
+            this.grpEnumeration.Controls.Add(this.optBothQnums);
+            this.grpEnumeration.Controls.Add(this.optAltQnum);
+            this.grpEnumeration.Controls.Add(this.optQnum);
+            this.grpEnumeration.Location = new System.Drawing.Point(319, 36);
+            this.grpEnumeration.Name = "grpEnumeration";
+            this.grpEnumeration.Size = new System.Drawing.Size(110, 89);
+            this.grpEnumeration.TabIndex = 25;
+            this.grpEnumeration.TabStop = false;
+            this.grpEnumeration.Text = "Enumeration";
+            // 
+            // optBothQnums
+            // 
+            this.optBothQnums.AutoSize = true;
+            this.optBothQnums.Location = new System.Drawing.Point(7, 61);
+            this.optBothQnums.Name = "optBothQnums";
+            this.optBothQnums.Size = new System.Drawing.Size(50, 20);
+            this.optBothQnums.TabIndex = 2;
+            this.optBothQnums.TabStop = true;
+            this.optBothQnums.Text = "Both";
+            this.optBothQnums.UseVisualStyleBackColor = true;
+            // 
+            // optAltQnum
+            // 
+            this.optAltQnum.AutoSize = true;
+            this.optAltQnum.Location = new System.Drawing.Point(7, 40);
+            this.optAltQnum.Name = "optAltQnum";
+            this.optAltQnum.Size = new System.Drawing.Size(75, 20);
+            this.optAltQnum.TabIndex = 1;
+            this.optAltQnum.TabStop = true;
+            this.optAltQnum.Text = "AltQNum";
+            this.optAltQnum.UseVisualStyleBackColor = true;
+            // 
+            // optQnum
+            // 
+            this.optQnum.AutoSize = true;
+            this.optQnum.Location = new System.Drawing.Point(7, 19);
+            this.optQnum.Name = "optQnum";
+            this.optQnum.Size = new System.Drawing.Size(59, 20);
+            this.optQnum.TabIndex = 0;
+            this.optQnum.TabStop = true;
+            this.optQnum.Text = "Qnum";
+            this.optQnum.UseVisualStyleBackColor = true;
+            // 
+            // grpImages
+            // 
+            this.grpImages.Controls.Add(this.chkImageAppendix);
+            this.grpImages.Controls.Add(this.chkIncludeImages);
+            this.grpImages.Location = new System.Drawing.Point(287, 145);
+            this.grpImages.Margin = new System.Windows.Forms.Padding(0);
+            this.grpImages.Name = "grpImages";
+            this.grpImages.Padding = new System.Windows.Forms.Padding(0);
+            this.grpImages.Size = new System.Drawing.Size(142, 56);
+            this.grpImages.TabIndex = 27;
+            this.grpImages.TabStop = false;
+            // 
+            // chkImageAppendix
+            // 
+            this.chkImageAppendix.AutoSize = true;
+            this.chkImageAppendix.Location = new System.Drawing.Point(3, 32);
+            this.chkImageAppendix.Name = "chkImageAppendix";
+            this.chkImageAppendix.Size = new System.Drawing.Size(117, 20);
+            this.chkImageAppendix.TabIndex = 28;
+            this.chkImageAppendix.TabStop = true;
+            this.chkImageAppendix.Text = "Image Appendix";
+            this.chkImageAppendix.UseVisualStyleBackColor = true;
+            // 
+            // chkIncludeImages
+            // 
+            this.chkIncludeImages.AutoSize = true;
+            this.chkIncludeImages.Location = new System.Drawing.Point(3, 9);
+            this.chkIncludeImages.Name = "chkIncludeImages";
+            this.chkIncludeImages.Size = new System.Drawing.Size(112, 20);
+            this.chkIncludeImages.TabIndex = 27;
+            this.chkIncludeImages.TabStop = true;
+            this.chkIncludeImages.Text = "Include Images";
+            this.chkIncludeImages.UseVisualStyleBackColor = true;
             // 
             // OptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(441, 372);
+            this.ClientSize = new System.Drawing.Size(441, 336);
             this.ControlBox = false;
+            this.Controls.Add(this.grpImages);
+            this.Controls.Add(this.grpEnumeration);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.chkBlankColumn);
             this.Controls.Add(this.chkExcludeHiddenChanges);
@@ -368,6 +458,10 @@
             this.panelSubsetTables.PerformLayout();
             this.groupNRFormat.ResumeLayout(false);
             this.groupNRFormat.PerformLayout();
+            this.grpEnumeration.ResumeLayout(false);
+            this.grpEnumeration.PerformLayout();
+            this.grpImages.ResumeLayout(false);
+            this.grpImages.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -401,5 +495,12 @@
         private System.Windows.Forms.CheckBox chkExcludeHiddenChanges;
         private System.Windows.Forms.CheckBox chkBlankColumn;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.GroupBox grpEnumeration;
+        private System.Windows.Forms.RadioButton optBothQnums;
+        private System.Windows.Forms.RadioButton optAltQnum;
+        private System.Windows.Forms.RadioButton optQnum;
+        private System.Windows.Forms.GroupBox grpImages;
+        private System.Windows.Forms.RadioButton chkImageAppendix;
+        private System.Windows.Forms.RadioButton chkIncludeImages;
     }
 }

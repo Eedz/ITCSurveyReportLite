@@ -40,6 +40,10 @@
             this.lstSelectedSurveys = new System.Windows.Forms.ListBox();
             this.tabControlOptions = new System.Windows.Forms.TabControl();
             this.pgFields = new System.Windows.Forms.TabPage();
+            this.groupTRoutingStyle = new System.Windows.Forms.GroupBox();
+            this.optTRoutingStyleNone = new System.Windows.Forms.RadioButton();
+            this.optTRoutingStyleGrey = new System.Windows.Forms.RadioButton();
+            this.optTRoutingStyleNormal = new System.Windows.Forms.RadioButton();
             this.chkIncludeEnglish = new System.Windows.Forms.CheckBox();
             this.cmdCustomizeContent = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -76,6 +80,7 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.highlightCheckBox = new System.Windows.Forms.CheckBox();
             this.chkCompare = new System.Windows.Forms.CheckBox();
+            this.surveyReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pgFileName = new System.Windows.Forms.TabPage();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -99,21 +104,24 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.outputOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupTemplate = new System.Windows.Forms.GroupBox();
+            this.cmdOpenTranslatorOptions = new System.Windows.Forms.Button();
+            this.chkStdWebTranslation = new System.Windows.Forms.CheckBox();
+            this.chkStdTranslation = new System.Windows.Forms.CheckBox();
+            this.optTopicContentProduct = new System.Windows.Forms.RadioButton();
+            this.optTopicContent = new System.Windows.Forms.RadioButton();
             this.optTranslator = new System.Windows.Forms.RadioButton();
             this.optNoTemplate = new System.Windows.Forms.RadioButton();
-            this.optWebTransTemplate = new System.Windows.Forms.RadioButton();
             this.optWebTemplate = new System.Windows.Forms.RadioButton();
-            this.optStdTransTemplate = new System.Windows.Forms.RadioButton();
             this.optStdTemplate = new System.Windows.Forms.RadioButton();
             this.cmdGenerate = new System.Windows.Forms.Button();
+            this.cmdOpenReportFolder = new System.Windows.Forms.Button();
             this.reportLayoutBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.surveysBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.optTopicContent = new System.Windows.Forms.RadioButton();
-            this.surveyReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
             detailsLabel = new System.Windows.Forms.Label();
             fileNameLabel = new System.Windows.Forms.Label();
             this.tabControlOptions.SuspendLayout();
             this.pgFields.SuspendLayout();
+            this.groupTRoutingStyle.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupRoutingStyle.SuspendLayout();
             this.pgCompare.SuspendLayout();
@@ -121,12 +129,12 @@
             this.flowHighlightOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).BeginInit();
             this.groupHighlightStyle.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).BeginInit();
             this.pgFileName.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupTemplate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveysBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // detailsLabel
@@ -152,11 +160,12 @@
             // 
             this.cboSurveys.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cboSurveys.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cboSurveys.BackColor = System.Drawing.SystemColors.Window;
             this.cboSurveys.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.cboSurveys.DisplayMember = "Survey";
             this.cboSurveys.FormattingEnabled = true;
             this.cboSurveys.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.cboSurveys.Location = new System.Drawing.Point(22, 91);
+            this.cboSurveys.Location = new System.Drawing.Point(22, 76);
             this.cboSurveys.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cboSurveys.Name = "cboSurveys";
             this.cboSurveys.Size = new System.Drawing.Size(110, 24);
@@ -166,7 +175,7 @@
             // 
             // cmdAddSurvey
             // 
-            this.cmdAddSurvey.Location = new System.Drawing.Point(138, 90);
+            this.cmdAddSurvey.Location = new System.Drawing.Point(138, 75);
             this.cmdAddSurvey.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdAddSurvey.Name = "cmdAddSurvey";
             this.cmdAddSurvey.Size = new System.Drawing.Size(45, 25);
@@ -178,7 +187,7 @@
             // 
             // cmdRemoveSurvey
             // 
-            this.cmdRemoveSurvey.Location = new System.Drawing.Point(138, 122);
+            this.cmdRemoveSurvey.Location = new System.Drawing.Point(138, 107);
             this.cmdRemoveSurvey.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdRemoveSurvey.Name = "cmdRemoveSurvey";
             this.cmdRemoveSurvey.Size = new System.Drawing.Size(45, 25);
@@ -193,7 +202,7 @@
             this.lstSelectedSurveys.DisplayMember = "SurveyCode";
             this.lstSelectedSurveys.FormattingEnabled = true;
             this.lstSelectedSurveys.ItemHeight = 16;
-            this.lstSelectedSurveys.Location = new System.Drawing.Point(189, 91);
+            this.lstSelectedSurveys.Location = new System.Drawing.Point(189, 76);
             this.lstSelectedSurveys.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.lstSelectedSurveys.Name = "lstSelectedSurveys";
             this.lstSelectedSurveys.Size = new System.Drawing.Size(124, 132);
@@ -206,11 +215,11 @@
             this.tabControlOptions.Controls.Add(this.pgFields);
             this.tabControlOptions.Controls.Add(this.pgCompare);
             this.tabControlOptions.Controls.Add(this.pgFileName);
-            this.tabControlOptions.Location = new System.Drawing.Point(14, 231);
+            this.tabControlOptions.Location = new System.Drawing.Point(14, 212);
             this.tabControlOptions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabControlOptions.Name = "tabControlOptions";
             this.tabControlOptions.SelectedIndex = 0;
-            this.tabControlOptions.Size = new System.Drawing.Size(511, 425);
+            this.tabControlOptions.Size = new System.Drawing.Size(511, 440);
             this.tabControlOptions.TabIndex = 5;
             this.tabControlOptions.Visible = false;
             this.tabControlOptions.SelectedIndexChanged += new System.EventHandler(this.tabControlOptions_SelectedIndexChanged);
@@ -218,6 +227,7 @@
             // pgFields
             // 
             this.pgFields.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(170)))), ((int)(((byte)(136)))));
+            this.pgFields.Controls.Add(this.groupTRoutingStyle);
             this.pgFields.Controls.Add(this.chkIncludeEnglish);
             this.pgFields.Controls.Add(this.cmdCustomizeContent);
             this.pgFields.Controls.Add(this.panel2);
@@ -229,9 +239,65 @@
             this.pgFields.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pgFields.Name = "pgFields";
             this.pgFields.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.pgFields.Size = new System.Drawing.Size(503, 396);
+            this.pgFields.Size = new System.Drawing.Size(503, 411);
             this.pgFields.TabIndex = 1;
             this.pgFields.Text = "Survey Content";
+            // 
+            // groupTRoutingStyle
+            // 
+            this.groupTRoutingStyle.Controls.Add(this.optTRoutingStyleNone);
+            this.groupTRoutingStyle.Controls.Add(this.optTRoutingStyleGrey);
+            this.groupTRoutingStyle.Controls.Add(this.optTRoutingStyleNormal);
+            this.groupTRoutingStyle.Enabled = false;
+            this.groupTRoutingStyle.Location = new System.Drawing.Point(197, 316);
+            this.groupTRoutingStyle.Name = "groupTRoutingStyle";
+            this.groupTRoutingStyle.Size = new System.Drawing.Size(178, 72);
+            this.groupTRoutingStyle.TabIndex = 35;
+            this.groupTRoutingStyle.TabStop = false;
+            this.groupTRoutingStyle.Text = "Translation Routing Style";
+            // 
+            // optTRoutingStyleNone
+            // 
+            this.optTRoutingStyleNone.AutoSize = true;
+            this.optTRoutingStyleNone.Location = new System.Drawing.Point(73, 45);
+            this.optTRoutingStyleNone.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.optTRoutingStyleNone.Name = "optTRoutingStyleNone";
+            this.optTRoutingStyleNone.Size = new System.Drawing.Size(54, 20);
+            this.optTRoutingStyleNone.TabIndex = 5;
+            this.optTRoutingStyleNone.TabStop = true;
+            this.optTRoutingStyleNone.Tag = "3";
+            this.optTRoutingStyleNone.Text = "None";
+            this.optTRoutingStyleNone.UseVisualStyleBackColor = true;
+            this.optTRoutingStyleNone.Visible = false;
+            this.optTRoutingStyleNone.CheckedChanged += new System.EventHandler(this.TRoutingStyle_CheckedChanged);
+            // 
+            // optTRoutingStyleGrey
+            // 
+            this.optTRoutingStyleGrey.AutoSize = true;
+            this.optTRoutingStyleGrey.Location = new System.Drawing.Point(15, 44);
+            this.optTRoutingStyleGrey.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.optTRoutingStyleGrey.Name = "optTRoutingStyleGrey";
+            this.optTRoutingStyleGrey.Size = new System.Drawing.Size(51, 20);
+            this.optTRoutingStyleGrey.TabIndex = 4;
+            this.optTRoutingStyleGrey.TabStop = true;
+            this.optTRoutingStyleGrey.Tag = "2";
+            this.optTRoutingStyleGrey.Text = "Grey";
+            this.optTRoutingStyleGrey.UseVisualStyleBackColor = true;
+            this.optTRoutingStyleGrey.CheckedChanged += new System.EventHandler(this.TRoutingStyle_CheckedChanged);
+            // 
+            // optTRoutingStyleNormal
+            // 
+            this.optTRoutingStyleNormal.AutoSize = true;
+            this.optTRoutingStyleNormal.Location = new System.Drawing.Point(15, 22);
+            this.optTRoutingStyleNormal.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.optTRoutingStyleNormal.Name = "optTRoutingStyleNormal";
+            this.optTRoutingStyleNormal.Size = new System.Drawing.Size(66, 20);
+            this.optTRoutingStyleNormal.TabIndex = 3;
+            this.optTRoutingStyleNormal.TabStop = true;
+            this.optTRoutingStyleNormal.Tag = "1";
+            this.optTRoutingStyleNormal.Text = "Normal";
+            this.optTRoutingStyleNormal.UseVisualStyleBackColor = true;
+            this.optTRoutingStyleNormal.CheckedChanged += new System.EventHandler(this.TRoutingStyle_CheckedChanged);
             // 
             // chkIncludeEnglish
             // 
@@ -346,7 +412,9 @@
             "Topic",
             "Content",
             "VarLabel",
-            "Product"});
+            "Product",
+            "AltQnum2",
+            "AltQnum3"});
             this.lstExtraFields.Location = new System.Drawing.Point(8, 30);
             this.lstExtraFields.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.lstExtraFields.Name = "lstExtraFields";
@@ -461,7 +529,7 @@
             this.pgCompare.Location = new System.Drawing.Point(4, 25);
             this.pgCompare.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pgCompare.Name = "pgCompare";
-            this.pgCompare.Size = new System.Drawing.Size(503, 396);
+            this.pgCompare.Size = new System.Drawing.Size(503, 411);
             this.pgCompare.TabIndex = 2;
             this.pgCompare.Text = "Comparison";
             // 
@@ -649,6 +717,7 @@
             // highlightCheckBox
             // 
             this.highlightCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.compareBindingSource, "Highlight", true));
+            this.highlightCheckBox.Enabled = false;
             this.highlightCheckBox.Location = new System.Drawing.Point(12, 23);
             this.highlightCheckBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.highlightCheckBox.Name = "highlightCheckBox";
@@ -669,6 +738,10 @@
             this.chkCompare.UseVisualStyleBackColor = true;
             this.chkCompare.CheckedChanged += new System.EventHandler(this.Compare_CheckedChanged);
             // 
+            // surveyReportBindingSource
+            // 
+            this.surveyReportBindingSource.DataSource = typeof(ITCLib.SurveyReport);
+            // 
             // pgFileName
             // 
             this.pgFileName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(170)))), ((int)(((byte)(136)))));
@@ -686,7 +759,7 @@
             this.pgFileName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pgFileName.Name = "pgFileName";
             this.pgFileName.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.pgFileName.Size = new System.Drawing.Size(503, 396);
+            this.pgFileName.Size = new System.Drawing.Size(503, 411);
             this.pgFileName.TabIndex = 6;
             this.pgFileName.Text = "File Name";
             // 
@@ -775,7 +848,7 @@
             // 
             // cmdSelfCompare
             // 
-            this.cmdSelfCompare.Location = new System.Drawing.Point(22, 122);
+            this.cmdSelfCompare.Location = new System.Drawing.Point(22, 107);
             this.cmdSelfCompare.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdSelfCompare.Name = "cmdSelfCompare";
             this.cmdSelfCompare.Size = new System.Drawing.Size(111, 28);
@@ -787,7 +860,7 @@
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(28, 676);
+            this.lblStatus.Location = new System.Drawing.Point(28, 668);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(56, 16);
             this.lblStatus.TabIndex = 60;
@@ -845,39 +918,100 @@
             // 
             // groupTemplate
             // 
+            this.groupTemplate.Controls.Add(this.cmdOpenTranslatorOptions);
+            this.groupTemplate.Controls.Add(this.chkStdWebTranslation);
+            this.groupTemplate.Controls.Add(this.chkStdTranslation);
+            this.groupTemplate.Controls.Add(this.optTopicContentProduct);
             this.groupTemplate.Controls.Add(this.optTopicContent);
             this.groupTemplate.Controls.Add(this.optTranslator);
             this.groupTemplate.Controls.Add(this.optNoTemplate);
-            this.groupTemplate.Controls.Add(this.optWebTransTemplate);
             this.groupTemplate.Controls.Add(this.optWebTemplate);
-            this.groupTemplate.Controls.Add(this.optStdTransTemplate);
             this.groupTemplate.Controls.Add(this.optStdTemplate);
-            this.groupTemplate.Location = new System.Drawing.Point(321, 72);
+            this.groupTemplate.Enabled = false;
+            this.groupTemplate.Location = new System.Drawing.Point(319, 62);
             this.groupTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupTemplate.Name = "groupTemplate";
             this.groupTemplate.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupTemplate.Size = new System.Drawing.Size(196, 152);
+            this.groupTemplate.Size = new System.Drawing.Size(200, 146);
             this.groupTemplate.TabIndex = 62;
             this.groupTemplate.TabStop = false;
             this.groupTemplate.Text = "Report Template";
             // 
+            // cmdOpenTranslatorOptions
+            // 
+            this.cmdOpenTranslatorOptions.Location = new System.Drawing.Point(93, 116);
+            this.cmdOpenTranslatorOptions.Name = "cmdOpenTranslatorOptions";
+            this.cmdOpenTranslatorOptions.Size = new System.Drawing.Size(38, 23);
+            this.cmdOpenTranslatorOptions.TabIndex = 10;
+            this.cmdOpenTranslatorOptions.Text = "...";
+            this.cmdOpenTranslatorOptions.UseVisualStyleBackColor = true;
+            this.cmdOpenTranslatorOptions.Click += new System.EventHandler(this.cmdOpenTranslatorOptions_Click);
+            // 
+            // chkStdWebTranslation
+            // 
+            this.chkStdWebTranslation.AutoSize = true;
+            this.chkStdWebTranslation.Enabled = false;
+            this.chkStdWebTranslation.Location = new System.Drawing.Point(59, 99);
+            this.chkStdWebTranslation.Name = "chkStdWebTranslation";
+            this.chkStdWebTranslation.Size = new System.Drawing.Size(109, 20);
+            this.chkStdWebTranslation.TabIndex = 9;
+            this.chkStdWebTranslation.Text = "w/ Translation";
+            this.chkStdWebTranslation.UseVisualStyleBackColor = true;
+            // 
+            // chkStdTranslation
+            // 
+            this.chkStdTranslation.AutoSize = true;
+            this.chkStdTranslation.Enabled = false;
+            this.chkStdTranslation.Location = new System.Drawing.Point(85, 39);
+            this.chkStdTranslation.Name = "chkStdTranslation";
+            this.chkStdTranslation.Size = new System.Drawing.Size(109, 20);
+            this.chkStdTranslation.TabIndex = 8;
+            this.chkStdTranslation.Text = "w/ Translation";
+            this.chkStdTranslation.UseVisualStyleBackColor = true;
+            // 
+            // optTopicContentProduct
+            // 
+            this.optTopicContentProduct.AutoSize = true;
+            this.optTopicContentProduct.Location = new System.Drawing.Point(6, 78);
+            this.optTopicContentProduct.Name = "optTopicContentProduct";
+            this.optTopicContentProduct.Size = new System.Drawing.Size(153, 20);
+            this.optTopicContentProduct.TabIndex = 7;
+            this.optTopicContentProduct.TabStop = true;
+            this.optTopicContentProduct.Tag = "TCP";
+            this.optTopicContentProduct.Text = "Topic/Content/Product";
+            this.optTopicContentProduct.UseVisualStyleBackColor = true;
+            this.optTopicContentProduct.CheckedChanged += new System.EventHandler(this.ReportTemplate_CheckChanged);
+            // 
+            // optTopicContent
+            // 
+            this.optTopicContent.AutoSize = true;
+            this.optTopicContent.Location = new System.Drawing.Point(6, 58);
+            this.optTopicContent.Name = "optTopicContent";
+            this.optTopicContent.Size = new System.Drawing.Size(105, 20);
+            this.optTopicContent.TabIndex = 6;
+            this.optTopicContent.TabStop = true;
+            this.optTopicContent.Tag = "TC";
+            this.optTopicContent.Text = "Topic/Content";
+            this.optTopicContent.UseVisualStyleBackColor = true;
+            this.optTopicContent.CheckedChanged += new System.EventHandler(this.ReportTemplate_CheckChanged);
+            // 
             // optTranslator
             // 
             this.optTranslator.AutoSize = true;
-            this.optTranslator.Location = new System.Drawing.Point(71, 125);
+            this.optTranslator.Location = new System.Drawing.Point(6, 117);
             this.optTranslator.Name = "optTranslator";
             this.optTranslator.Size = new System.Drawing.Size(84, 20);
             this.optTranslator.TabIndex = 5;
             this.optTranslator.TabStop = true;
+            this.optTranslator.Tag = "Translator";
             this.optTranslator.Text = "Translator";
             this.optTranslator.UseVisualStyleBackColor = true;
-            this.optTranslator.Visible = false;
             this.optTranslator.CheckedChanged += new System.EventHandler(this.ReportTemplate_CheckChanged);
             // 
             // optNoTemplate
             // 
             this.optNoTemplate.AutoSize = true;
-            this.optNoTemplate.Location = new System.Drawing.Point(6, 75);
+            this.optNoTemplate.Location = new System.Drawing.Point(6, 18);
             this.optNoTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optNoTemplate.Name = "optNoTemplate";
             this.optNoTemplate.Size = new System.Drawing.Size(68, 20);
@@ -888,25 +1022,10 @@
             this.optNoTemplate.UseVisualStyleBackColor = true;
             this.optNoTemplate.CheckedChanged += new System.EventHandler(this.ReportTemplate_CheckChanged);
             // 
-            // optWebTransTemplate
-            // 
-            this.optWebTransTemplate.AutoSize = true;
-            this.optWebTransTemplate.Location = new System.Drawing.Point(6, 98);
-            this.optWebTransTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.optWebTransTemplate.Name = "optWebTransTemplate";
-            this.optWebTransTemplate.Size = new System.Drawing.Size(236, 20);
-            this.optWebTransTemplate.TabIndex = 3;
-            this.optWebTransTemplate.TabStop = true;
-            this.optWebTransTemplate.Tag = "WebTrans";
-            this.optWebTransTemplate.Text = "Web w/ Translation (CATI/web only)";
-            this.optWebTransTemplate.UseVisualStyleBackColor = true;
-            this.optWebTransTemplate.Visible = false;
-            this.optWebTransTemplate.CheckedChanged += new System.EventHandler(this.ReportTemplate_CheckChanged);
-            // 
             // optWebTemplate
             // 
             this.optWebTemplate.AutoSize = true;
-            this.optWebTemplate.Location = new System.Drawing.Point(14, 124);
+            this.optWebTemplate.Location = new System.Drawing.Point(6, 98);
             this.optWebTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optWebTemplate.Name = "optWebTemplate";
             this.optWebTemplate.Size = new System.Drawing.Size(51, 20);
@@ -915,27 +1034,12 @@
             this.optWebTemplate.Tag = "Web";
             this.optWebTemplate.Text = "Web";
             this.optWebTemplate.UseVisualStyleBackColor = true;
-            this.optWebTemplate.Visible = false;
             this.optWebTemplate.CheckedChanged += new System.EventHandler(this.ReportTemplate_CheckChanged);
-            // 
-            // optStdTransTemplate
-            // 
-            this.optStdTransTemplate.AutoSize = true;
-            this.optStdTransTemplate.Location = new System.Drawing.Point(6, 36);
-            this.optStdTransTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.optStdTransTemplate.Name = "optStdTransTemplate";
-            this.optStdTransTemplate.Size = new System.Drawing.Size(164, 20);
-            this.optStdTransTemplate.TabIndex = 1;
-            this.optStdTransTemplate.TabStop = true;
-            this.optStdTransTemplate.Tag = "StdTrans";
-            this.optStdTransTemplate.Text = "Standard w/ Translation";
-            this.optStdTransTemplate.UseVisualStyleBackColor = true;
-            this.optStdTransTemplate.CheckedChanged += new System.EventHandler(this.ReportTemplate_CheckChanged);
             // 
             // optStdTemplate
             // 
             this.optStdTemplate.AutoSize = true;
-            this.optStdTemplate.Location = new System.Drawing.Point(6, 19);
+            this.optStdTemplate.Location = new System.Drawing.Point(6, 38);
             this.optStdTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optStdTemplate.Name = "optStdTemplate";
             this.optStdTemplate.Size = new System.Drawing.Size(77, 20);
@@ -948,7 +1052,7 @@
             // 
             // cmdGenerate
             // 
-            this.cmdGenerate.Location = new System.Drawing.Point(421, 664);
+            this.cmdGenerate.Location = new System.Drawing.Point(421, 656);
             this.cmdGenerate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdGenerate.Name = "cmdGenerate";
             this.cmdGenerate.Size = new System.Drawing.Size(99, 41);
@@ -957,34 +1061,29 @@
             this.cmdGenerate.UseVisualStyleBackColor = true;
             this.cmdGenerate.Click += new System.EventHandler(this.cmdQuickGenerate_Click);
             // 
+            // cmdOpenReportFolder
+            // 
+            this.cmdOpenReportFolder.Image = global::ITCSurveyReportLite.Properties.Resources.FolderOpened;
+            this.cmdOpenReportFolder.Location = new System.Drawing.Point(378, 656);
+            this.cmdOpenReportFolder.Name = "cmdOpenReportFolder";
+            this.cmdOpenReportFolder.Size = new System.Drawing.Size(37, 41);
+            this.cmdOpenReportFolder.TabIndex = 63;
+            this.cmdOpenReportFolder.UseVisualStyleBackColor = true;
+            this.cmdOpenReportFolder.Visible = false;
+            this.cmdOpenReportFolder.Click += new System.EventHandler(this.cmdOpenReportFolder_Click);
+            // 
             // surveysBindingSource
             // 
             this.surveysBindingSource.DataMember = "Surveys";
             this.surveysBindingSource.DataSource = this.surveyReportBindingSource;
-            // 
-            // optTopicContent
-            // 
-            this.optTopicContent.AutoSize = true;
-            this.optTopicContent.Location = new System.Drawing.Point(6, 55);
-            this.optTopicContent.Name = "optTopicContent";
-            this.optTopicContent.Size = new System.Drawing.Size(105, 20);
-            this.optTopicContent.TabIndex = 6;
-            this.optTopicContent.TabStop = true;
-            this.optTopicContent.Tag = "TC";
-            this.optTopicContent.Text = "Topic/Content";
-            this.optTopicContent.UseVisualStyleBackColor = true;
-            this.optTopicContent.CheckedChanged += new System.EventHandler(this.ReportTemplate_CheckChanged);
-            // 
-            // surveyReportBindingSource
-            // 
-            this.surveyReportBindingSource.DataSource = typeof(ITCLib.SurveyReport);
             // 
             // SurveyReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(537, 716);
+            this.ClientSize = new System.Drawing.Size(537, 712);
+            this.Controls.Add(this.cmdOpenReportFolder);
             this.Controls.Add(this.cmdGenerate);
             this.Controls.Add(this.groupTemplate);
             this.Controls.Add(this.lblStatus);
@@ -1008,6 +1107,8 @@
             this.tabControlOptions.ResumeLayout(false);
             this.pgFields.ResumeLayout(false);
             this.pgFields.PerformLayout();
+            this.groupTRoutingStyle.ResumeLayout(false);
+            this.groupTRoutingStyle.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.groupRoutingStyle.ResumeLayout(false);
@@ -1019,6 +1120,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).EndInit();
             this.groupHighlightStyle.ResumeLayout(false);
             this.groupHighlightStyle.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).EndInit();
             this.pgFileName.ResumeLayout(false);
             this.pgFileName.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -1027,7 +1129,6 @@
             this.groupTemplate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveysBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1093,15 +1194,11 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ListBox lstExtraFields;
         private System.Windows.Forms.GroupBox groupTemplate;
-        private System.Windows.Forms.RadioButton optNoTemplate;
-        private System.Windows.Forms.RadioButton optWebTransTemplate;
         private System.Windows.Forms.RadioButton optWebTemplate;
-        private System.Windows.Forms.RadioButton optStdTransTemplate;
         private System.Windows.Forms.RadioButton optStdTemplate;
         private System.Windows.Forms.Button cmdGenerate;
         private System.Windows.Forms.Button cmdCustomizeContent;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.RadioButton optTranslator;
         private System.Windows.Forms.Button cmdCommentFields;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox lstCommentTypes;
@@ -1111,6 +1208,17 @@
         private System.Windows.Forms.CheckBox chkHideIdenticalQs;
         private System.Windows.Forms.CheckBox chkIncludeEnglish;
         private System.Windows.Forms.RadioButton optTopicContent;
+        private System.Windows.Forms.RadioButton optTopicContentProduct;
+        private System.Windows.Forms.CheckBox chkStdWebTranslation;
+        private System.Windows.Forms.CheckBox chkStdTranslation;
+        private System.Windows.Forms.RadioButton optTranslator;
+        private System.Windows.Forms.RadioButton optNoTemplate;
+        private System.Windows.Forms.GroupBox groupTRoutingStyle;
+        private System.Windows.Forms.RadioButton optTRoutingStyleNone;
+        private System.Windows.Forms.RadioButton optTRoutingStyleGrey;
+        private System.Windows.Forms.RadioButton optTRoutingStyleNormal;
+        private System.Windows.Forms.Button cmdOpenReportFolder;
+        private System.Windows.Forms.Button cmdOpenTranslatorOptions;
     }
 }
 

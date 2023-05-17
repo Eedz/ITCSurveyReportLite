@@ -88,6 +88,7 @@
     <Compile Include="CustomizeForm.Designer.cs">
       <DependentUpon>CustomizeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Globals.cs" />
     <Compile Include="OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,6 +109,18 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TemplateSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TemplateSelector.Designer.cs">
+      <DependentUpon>TemplateSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TranslatorTemplateOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TranslatorTemplateOptions.Designer.cs">
+      <DependentUpon>TranslatorTemplateOptions.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CommentOptions.resx">
       <DependentUpon>CommentOptions.cs</DependentUpon>
     </EmbeddedResource>
@@ -132,6 +145,12 @@
     </Compile>
     <EmbeddedResource Include="SurveyReportForm.resx">
       <DependentUpon>SurveyReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TemplateSelector.resx">
+      <DependentUpon>TemplateSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TranslatorTemplateOptions.resx">
+      <DependentUpon>TranslatorTemplateOptions.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.Debug.config">
       <DependentUpon>App.config</DependentUpon>
@@ -201,6 +220,7 @@
     <Content Include="7za.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\FolderOpened.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\DataAccessLayer\DataAccessLayer\DataAccessLayer.csproj">

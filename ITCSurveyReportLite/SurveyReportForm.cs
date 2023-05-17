@@ -20,7 +20,6 @@ namespace ITCSurveyReportLite
     /// </summary>
     public partial class SurveyReportForm : Form
     {
-        
         SurveyBasedReport SR;
         // this report survey is just to hold the question filter selections. Just before the report is run, the filters will be copied to each report survey object in the report's list.
         ReportSurvey questionFilters;
@@ -31,6 +30,10 @@ namespace ITCSurveyReportLite
         ReportSurvey CurrentSurvey;
         TabPage pgCompareTab;
         ReportTemplate CurrentTemplate;
+
+        ReportSurvey TranslatorReference;
+
+
         //BindingSource ReportBindingSource;
 
         // background color RGB values
@@ -77,10 +80,11 @@ namespace ITCSurveyReportLite
         /// <param name="e"></param>
         private void SurveyReportForm_Load(object sender, EventArgs e)
         {
+            Globals.CreateWorld();
             // fill the survey drop down
-            cboSurveys.ValueMember = "Survey";
-            cboSurveys.DisplayMember = "Survey";
-            cboSurveys.DataSource = DBAction.GetSurveyList();
+            cboSurveys.ValueMember = "SID";
+            cboSurveys.DisplayMember = "SurveyCode";
+            cboSurveys.DataSource = new List<Survey>(Globals.FullSurveyList);
 
             // add tooltips for the quick reports
             // toolTipStandard.SetToolTip(this.optStd, standardToolTipText);
@@ -113,7 +117,10 @@ namespace ITCSurveyReportLite
 
             lblStatus.Visible = false;
             lblStatus.Text = "Ready.";
+            cmdOpenReportFolder.Visible = false;
             cmdGenerate.Visible = false;
+
+            
         }
 
 
@@ -138,30 +145,33 @@ namespace ITCSurveyReportLite
 
         private void ReportTemplate_CheckChanged(object sender, EventArgs e)
         {
+
             RadioButton rb = (RadioButton)sender;
             string tag = rb.Tag.ToString();
             if (rb.Checked)
             {
+                chkStdTranslation.Enabled = false;
+                chkStdWebTranslation.Enabled = false;
+                cmdOpenTranslatorOptions.Enabled = false;
+                
                 switch (tag)
                 {
                     case "Std":
                         CurrentTemplate = ReportTemplate.Standard;
-                        break;
-                    case "StdTrans":
-                        CurrentTemplate = ReportTemplate.StandardTranslation;
+                        chkStdTranslation.Enabled = true;
                         break;
                     case "Web":
                         CurrentTemplate = ReportTemplate.Website;
-                        break;
-                    case "WebTranslation":
-                        CurrentTemplate = ReportTemplate.WebsiteTranslation;
-                        break;
+                        chkStdWebTranslation.Enabled = true;
+                           break;
                     case "TC":
                         CurrentTemplate = ReportTemplate.Standard;
-                        
                         break;
                     case "Translator":
+                        
                         CurrentTemplate = ReportTemplate.Translator;
+                        cmdOpenTranslatorOptions.Enabled = true;
+
                         break;
                     case "Custom":
                         CurrentTemplate = ReportTemplate.Custom;
@@ -173,9 +183,44 @@ namespace ITCSurveyReportLite
                 foreach (TabPage p in tabControlOptions.TabPages)
                     p.Enabled = CurrentTemplate == ReportTemplate.Custom;
             }
-            
-            
-            
+        }
+        
+        
+
+        private void cmdOpenTranslatorOptions_Click(object sender, EventArgs e)
+        {
+            TranslatorTemplateOptions frm = new TranslatorTemplateOptions(SR);
+            frm.StartPosition = FormStartPosition.Manual;
+            frm.Location = new Point(MousePosition.X, MousePosition.Y); 
+           
+            frm.ShowDialog();
+
+            TranslatorReference = frm.ReferenceSurvey;
+
+            if (TranslatorReference != null)
+            {
+                SR.AddSurvey(TranslatorReference);
+            }
+
+            bool useMain = frm.UseMain;
+            Language language = frm.PrimaryLanguage;
+            if (language != null)
+            {
+                if (useMain)
+                {
+                    SR.QnumSurvey().TransFields.Add(language.LanguageName);
+                }else
+                {
+                    SR.PrimarySurvey().TransFields.Add(language.LanguageName);
+                }
+            }
+            else
+                SR.PrimarySurvey().TransFields = DBAction.ListLanguages(SR.QnumSurvey()).Select(x=>x.LanguageName).ToList();
+        }
+
+        private void cmdOpenReportFolder_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(@"\\psychfile\psych$\psych-lab-gfong\SMG\SDI\Reports\ISR");
         }
 
         private void cmdQuickGenerate_Click(object sender, EventArgs e)
@@ -193,30 +238,18 @@ namespace ITCSurveyReportLite
 
             if (optStdTemplate.Checked)
             {
-                RunStandardReport();
+                RunStandardReport(chkStdTranslation.Checked);
 
-            }else if (optStdTransTemplate.Checked)
-            {
-                RunStandardReport(true);
             }
             else if (optWebTemplate.Checked)
             {
-                RunWebReport();
+                RunWebReport(chkStdWebTranslation.Checked);
 
                 if (SR.Surveys.Count > 1)
                 {
                     MessageBox.Show("All selected surveys have been generated. They can be found in the Reports folder under ISR.");
                 }
 
-            }
-            else if (optWebTransTemplate.Checked)
-            {
-                RunWebReport(true);
-
-                if (SR.Surveys.Count > 1)
-                {
-                    MessageBox.Show("All selected surveys have been generated. They can be found in the Reports folder under ISR.");
-                }
             }
             else if (optTopicContent.Checked)
             {
@@ -228,20 +261,40 @@ namespace ITCSurveyReportLite
                 }
                 RunTopicContentReport();
             }
+            else if (optTopicContentProduct.Checked)
+            {
+                if (SR.Surveys.GroupBy(x => x.SID).Any(grp => grp.Count() > 1))
+                {
+                    MessageBox.Show("Topic/Content reports cannot contain duplicate surveys or self-comparisons.");
+                    return;
+                }
+                foreach (ReportSurvey rs in SR.Surveys)
+                {
+                    rs.StdFieldsChosen = new List<string>() { "PreP", "PreI", "PreA", "LitQ", "RespOptions", "NRCodes", "PstI" };
+                }
+                SR.LayoutOptions.BlankColumn = true;
+                RunTopicContentProductReport();
+            }
             else if (optTranslator.Checked)
             {
-
+                if (SR.Surveys.Count>2)
+                {
+                    MessageBox.Show("Translator template requires 1 or 2 surveys.");
+                    return;
+                }
+                RunTranslatorReport();
             }
             else if (optNoTemplate.Checked)
             {
-                
-
                 RunSurveyReport();
             }
             else
             {
                 // no option checked
+                MessageBox.Show("Error: unknown selection.");
             }
+
+            GC.Collect();
         }
 
         private void RunSurveyReport()
@@ -255,6 +308,9 @@ namespace ITCSurveyReportLite
             {
                 SurveyCompare = compare
             };
+
+            if (SR.Surveys.Count == 1 && (SR.IncludeImages || SR.ImageAppendix))
+                survReport.Images = DBAction.GetSurveyImagesFromFolder(SR.Surveys[0]);
 
             // bind status label to survey report's status property
             lblStatus.DataBindings.Clear();
@@ -308,15 +364,14 @@ namespace ITCSurveyReportLite
                 compare.ShowDeletedFields = true;
                 compare.ReInsertDeletions = true;
                 compare.Highlight = true;
-
-
+                
             }
 
             if (withTranslation)
             {
                 foreach (ReportSurvey rs in SR.Surveys)
                 {
-                    List<string> langs = DBAction.GetLanguages(rs);
+                    List<string> langs = DBAction.ListLanguages(rs).Select(x=>x.LanguageName).ToList();
                     langs.Remove("English");
                     rs.TransFields = langs;
                 }
@@ -403,7 +458,7 @@ namespace ITCSurveyReportLite
             {
                 foreach (ReportSurvey rs in SR.Surveys)
                 {
-                    rs.TransFields = DBAction.GetLanguages(rs);
+                    rs.TransFields = DBAction.ListLanguages(rs).Select(x=>x.LanguageName).ToList();
                 }
             }
 
@@ -466,46 +521,67 @@ namespace ITCSurveyReportLite
             topicContentReport.OutputReportTableXML();
         }
 
+        private void RunTopicContentProductReport()
+        {
+            int result;
+
+            // get the survey data for all chosen surveys
+            PopulateSurveys();
+
+            TopicContentReport topicContentReport = new TopicContentReport(SR);
+            topicContentReport.ProductCrosstab = true;
+            // bind status label to survey report's status property
+            lblStatus.DataBindings.Clear();
+            lblStatus.DataBindings.Add(new Binding("Text", topicContentReport, "ReportStatus"));
+
+            result = topicContentReport.GenerateLabelReport();
+
+            switch (result)
+            {
+                case 1:
+                    MessageBox.Show("One or more surveys contain no records.");
+                    // TODO if a backup was chosen, show a form for selecting a different survey code from that date
+                    break;
+                default:
+                    break;
+            }
+
+
+            // output report to Word/PDF
+            topicContentReport.OutputReportTableXML();
+        }
+
         private void RunTranslatorReport()
         {
             string mode;
-            bool englishRouting;
-
+            SR.TranslatorInstructions = true;
             mode = SR.Surveys[0].Mode.ModeAbbrev;
-            if (SR.Surveys.Count == 1)
-            {
+          
+            SR.Surveys[0].Qnum = true;
+            SR.Surveys[0].RoutingFormat = RoutingStyle.Grey;
+            SR.Surveys[0].GreyDerived = true;
 
-                englishRouting = SR.Surveys[0].EnglishRouting;
+            //if (cboRefSurv.SelectedItem != null)
+            //{
+            //    ReportSurvey reference = new ReportSurvey((Survey)cboRefSurv.SelectedItem);
+            //    if (reference != null)
+            //        SR.AddSurvey(reference);
+            //}
+            //Language language = (Language) cboLang.SelectedItem;
 
-                SR.Surveys[0].Qnum = true;
-            }
-            else
-            {
+            //if (language != null)
+            //    SR.PrimarySurvey().TransFields.Add(language.LanguageName);
+            //else
+            //    SR.PrimarySurvey().TransFields = DBAction.GetLanguages(SR.QnumSurvey());
 
-                int primeID = 0;
-                if (SR.Surveys.Count >= 3)
-                    primeID = 1;
-                else
-                    primeID = 2;
-
-                SR.SetPrimary(primeID);
-
-                SR.Surveys[0].Qnum = true;
-
-                SR.CompareWordings = true;
-                compare.ShowDeletedQuestions = true;
-                compare.ShowDeletedFields = true;
-                compare.ReInsertDeletions = true;
-                compare.Highlight = true;
+            SR.PrimarySurvey().EnglishRouting = false;
+            SR.PrimarySurvey().TranslationRoutingFormat = RoutingStyle.Grey;
+            SR.PrimarySurvey().RoutingFormat = RoutingStyle.Grey;
+            SR.PrimarySurvey().GreyDerived = true;
 
 
-            }
-
-            
-            foreach (ReportSurvey rs in SR.Surveys)
-            {
-                rs.TransFields = DBAction.GetLanguages(rs);
-            }
+            compare.ShowDeletedQuestions = true;
+            compare.ReInsertDeletions = true;
             
 
             switch (mode)
@@ -525,10 +601,12 @@ namespace ITCSurveyReportLite
                     break;
             }
 
+            SR.ShowLongLists = true;
             SR.LayoutOptions.BlankColumn = true;
+            SR.LayoutOptions.PaperSize = PaperSizes.Legal;
             SR.VarChangesCol = true;
             SR.ExcludeTempChanges = true;
-            SR.Details = "";
+            SR.Details = string.Empty;
 
             // get the survey data for all chosen surveys
             PopulateSurveys();
@@ -571,16 +649,23 @@ namespace ITCSurveyReportLite
                 rs.SurveyNotes.Clear();
                 rs.VarChanges.Clear();
 
+
                 // questions
                 if (rs.Backend.Date != DateTime.Today)
                     rs.AddQuestions(new BindingList<SurveyQuestion>(DBAction.GetBackupQuestions(rs, rs.Backend)));
                 else
-                    DBAction.FillQuestions(rs);
+                    rs.AddQuestions(new BindingList<SurveyQuestion>(DBAction.GetSurveyQuestions(rs)));
+
+                var timeframes = DBAction.GetTimeFrames(rs.SurveyCode);
+                foreach (SurveyQuestion question in rs.Questions)
+                {
+                    question.TimeFrames.Where(x => x.QID == question.ID);
+                }
 
                 // correct questions // TODO should we only get corrected for current data?
                 if (rs.Corrected)
                 {
-                    DBAction.FillCorrectedQuestions(rs);
+                    rs.CorrectedQuestions = DBAction.GetCorrectedWordings(rs);
                     rs.CorrectWordings();
                 }
 
@@ -598,7 +683,7 @@ namespace ITCSurveyReportLite
 
                 // survey notes
                 if (SR.SurvNotes)
-                    rs.SurveyNotes = DBAction.GetSurvCommentsBySurvey(rs.SID);
+                    rs.SurveyNotes = DBAction.GetSurvCommentsBySurvey(rs);
 
                 // comments
                 if (rs.CommentFields.Count > 0)
@@ -608,10 +693,18 @@ namespace ITCSurveyReportLite
 
                 // translations
                 if (rs.Backend.Date != DateTime.Today)
-                        DBAction.FillBackupTranslation(rs, rs.Backend.Date, rs.TransFields);
-                else 
+                    DBAction.FillBackupTranslation(rs, rs.Backend.Date, rs.TransFields);
+                else
+                {
                     foreach (string language in rs.TransFields)
-                        DBAction.FillTranslationsBySurvey(rs, language);
+                    {
+                        var translations = DBAction.GetSurveyTranslation(rs.SurveyCode, language);
+
+                        foreach (Translation t in translations)
+                            rs.QuestionByID(t.QID).Translations.Add(t);
+                    }
+                }
+                        
 
                 // filters
                 if (rs.FilterCol)
@@ -620,12 +713,14 @@ namespace ITCSurveyReportLite
                 // varchanges (for appendix)
                 if (SR.VarChangesApp)
                     rs.VarChanges = new List<VarNameChange> (DBAction.GetVarNameChangeBySurvey(rs.SurveyCode).Where(x=>x.PreFWChange != SR.ExcludeTempChanges));
+
+                
             }
         }
 
         private void UpdateColumnOrder()
         {
-            
+            SR.UpdateColumnOrder();
         }
 
         #region Top of Form (Add and Remove surveys, quick reports)
@@ -635,7 +730,7 @@ namespace ITCSurveyReportLite
             ReportSurvey s;
             try
             {
-                s = new ReportSurvey(DBAction.GetSurveyInfo(cboSurveys.SelectedItem.ToString()));
+                s = new ReportSurvey((Survey)cboSurveys.SelectedItem);
             }
             catch (Exception)
             {
@@ -663,9 +758,9 @@ namespace ITCSurveyReportLite
                 BackupConnection bkp = new BackupConnection(DateTime.Today.AddDays(-1));
                 s.Backend = bkp.GetNextBackup();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Survey not found.");
+                MessageBox.Show(ex.Message);
                 return;
             }
 
@@ -698,8 +793,10 @@ namespace ITCSurveyReportLite
             if (lstSelectedSurveys.Items.Count > 0)
             {
                 lblStatus.Visible = true;
+                cmdOpenReportFolder.Visible = true;
                 cmdGenerate.Visible = true;
                 //tabControlOptions.Enabled = CurrentTemplate == ReportTemplate.Custom;
+                groupTemplate.Enabled = true;
                 foreach (TabPage p in tabControlOptions.TabPages)
                     p.Enabled = CurrentTemplate == ReportTemplate.Custom;
 
@@ -708,7 +805,6 @@ namespace ITCSurveyReportLite
             }
 
             // update report defaults
-            ShowTranslationSubsetTableOption();
             UpdateDefaultOptions();
             UpdateFileNameTab();
             UpdateReportDetails();
@@ -741,12 +837,13 @@ namespace ITCSurveyReportLite
             if (lstSelectedSurveys.Items.Count < 1)
             {
                 lblStatus.Visible = false;
+                cmdOpenReportFolder.Visible = false;
                 cmdGenerate.Visible = false;
                 tabControlOptions.Visible = false;
+                groupTemplate.Enabled = false;
             }
 
             // update report defaults
-            ShowTranslationSubsetTableOption();
             UpdateDefaultOptions();
             UpdateFileNameTab();
             UpdateReportDetails();
@@ -766,6 +863,7 @@ namespace ITCSurveyReportLite
         {
             if (e.KeyCode == Keys.Return)
             {
+                cboSurveys.DroppedDown = false;
                 cmdAddSurvey.PerformClick();
                 cboSurveys.Focus();
             }
@@ -825,10 +923,10 @@ namespace ITCSurveyReportLite
                     case "Product":
                         lstExtraFields.SetSelected(i, CurrentSurvey.ProductLabelCol);
                         break;
-                    case "AltQNum 2":
+                    case "AltQnum2":
                         lstExtraFields.SetSelected(i, CurrentSurvey.AltQnum2Col);
                         break;
-                    case "AltQNum 3":
+                    case "AltQnum3":
                         lstExtraFields.SetSelected(i, CurrentSurvey.AltQnum3Col);
                         break;
                 }
@@ -861,6 +959,19 @@ namespace ITCSurveyReportLite
                     break;
             }
 
+            switch (CurrentSurvey.TranslationRoutingFormat)
+            {
+                case RoutingStyle.Normal:
+                    optTRoutingStyleNormal.Checked = true;
+                    break;
+                case RoutingStyle.Grey:
+                    optTRoutingStyleGrey.Checked = true;
+                    break;
+                case RoutingStyle.None:
+                    optTRoutingStyleNone.Checked = true;
+                    break;
+            }
+
             chkEnglishRouting.DataBindings.Clear();
             chkEnglishRouting.DataBindings.Add("Checked", CurrentSurvey, "EnglishRouting");
 
@@ -869,7 +980,7 @@ namespace ITCSurveyReportLite
         private void LoadExtraFields(Survey survey)
         {
             // load translation languages
-            List<string> langs = DBAction.GetLanguages(survey);
+            List<string> langs = DBAction.ListLanguages(survey).Select(x => x.LanguageName).ToList();
 
             lstTransFields.Items.Clear();
             foreach (string s in langs)
@@ -892,9 +1003,8 @@ namespace ITCSurveyReportLite
         {
             SR.Surveys.Clear();
             SR.LayoutOptions = new ReportLayout();
-            
+            SR.LayoutOptions.ToC = TableOfContents.PageNums;
             // update report defaults
-            ShowTranslationSubsetTableOption();
             UpdateDefaultOptions();
             UpdateFileNameTab();
             UpdateReportDetails();
@@ -902,6 +1012,7 @@ namespace ITCSurveyReportLite
             UpdateCurrentSurvey();
 
             lblStatus.Visible = false;
+            cmdOpenReportFolder.Visible = false;
             cmdGenerate.Visible = false;
             tabControlOptions.Visible = false;
 
@@ -975,11 +1086,6 @@ namespace ITCSurveyReportLite
                 SR.SubsetTablesTranslation = false;
                
             }
-        }
-
-        private void ShowTranslationSubsetTableOption()
-        {
-            
         }
 
         private void UpdateGrids()
@@ -1118,19 +1224,27 @@ namespace ITCSurveyReportLite
                 return;
 
             string filePath = dateBackend.Value.ToString("yyyy-MM-dd");
-
-            BackupConnection bkp = new BackupConnection(dateBackend.Value);
-
-            if (!bkp.IsValidBackup())
+            try
             {
+                BackupConnection bkp = new BackupConnection(dateBackend.Value);
 
-                MessageBox.Show("No backup found for this date. Getting nearest valid date");
-                dateBackend.Value = bkp.GetNearestBackup();
+                if (!bkp.IsValidBackup())
+                {
+
+                    MessageBox.Show("No backup found for this date. Getting nearest valid date");
+                    dateBackend.Value = bkp.GetNearestBackup();
+                }
+
+                CurrentSurvey.Backend = dateBackend.Value;
+                UpdateReportColumns(null, null);
+                UpdateFileNameTab();
+                UpdateCurrentSurvey();
             }
-            CurrentSurvey.Backend = dateBackend.Value;
-            UpdateReportColumns(null, null);
-            UpdateFileNameTab();
-            UpdateCurrentSurvey();
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         /// <summary>
@@ -1147,9 +1261,11 @@ namespace ITCSurveyReportLite
             }
 
             if (lstTransFields.SelectedItems.Count > 0 & CurrentSurvey.EnglishRouting)
+            {
+                groupTRoutingStyle.Enabled = true;
                 chkEnglishRouting.Visible = true;
+            }
 
-            ShowTranslationSubsetTableOption();
             UpdateReportColumns(sender, e);
         }
 
@@ -1198,10 +1314,10 @@ namespace ITCSurveyReportLite
                     case "Product":
                         CurrentSurvey.ProductLabelCol = true;
                         break;
-                    case "AltQNum 2":
+                    case "AltQnum2":
                         CurrentSurvey.AltQnum2Col = true;
                         break;
-                    case "AltQNum 3":
+                    case "AltQnum3":
                         CurrentSurvey.AltQnum3Col = true;
                         break;
                     
@@ -1216,6 +1332,14 @@ namespace ITCSurveyReportLite
             int sel = Convert.ToInt32(r.Tag);
 
             CurrentSurvey.RoutingFormat = (RoutingStyle)sel;
+        }
+
+        private void TRoutingStyle_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton r = sender as RadioButton;
+            int sel = Convert.ToInt32(r.Tag);
+
+            CurrentSurvey.TranslationRoutingFormat = (RoutingStyle)sel;
         }
 
         private void cmdCustomizeContent_Click(object sender, EventArgs e)
@@ -1358,5 +1482,7 @@ namespace ITCSurveyReportLite
             OutputOptionsForm frm = new OutputOptionsForm(SR);
             frm.ShowDialog();
         }
+
+        
     }
 }
