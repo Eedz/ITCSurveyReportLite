@@ -46,6 +46,8 @@ namespace ITCSurveyReportLite
         {
             List<QuestionComment> comments = DBAction.GetQuesCommentsBySurvey(TheSurvey.SID);
 
+            if (comments == null)
+                return;
             var types = comments.GroupBy(x => x.NoteType.ID).Select(grp => grp.ToList()).ToList();
 
             foreach (var type in types)

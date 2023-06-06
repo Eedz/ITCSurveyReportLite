@@ -28,12 +28,22 @@ namespace ITCSurveyReportLite
             SR = sr;
 
             chkLongLists.Checked = SR.ShowLongLists;
+
+            chkInsertQnums.Checked = SR.QNInsertion || SR.AQNInsertion;
             rbInsertQnum.Checked = SR.QNInsertion;
             rbInsertAQN.Checked = SR.AQNInsertion;
+
+            ToggleQnumInsertionOptions();
+
             chkInsertCC.Checked = SR.CCInsertion;
             chkInlineRouting.Checked = SR.InlineRouting;
+
+            chkSubsetTables.Checked = SR.SubsetTables || SR.SubsetTablesTranslation;
             rbEnglishSubsetTables.Checked = SR.SubsetTables;
             rbTranslationSubsetTables.Checked = SR.SubsetTablesTranslation;
+
+            ToggleSubsetTableOptions();
+
             chkSemiTelephone.Checked = SR.SemiTel;
 
             switch (SR.NrFormat)
@@ -92,7 +102,7 @@ namespace ITCSurveyReportLite
             SR.AQNInsertion = rbInsertAQN.Checked;
             SR.CCInsertion = chkInsertCC.Checked;
             SR.InlineRouting = chkInlineRouting.Checked;
-            SR.SubsetTables = rbEnglishSubsetTables.Checked;
+            SR.SubsetTables = rbEnglishSubsetTables.Checked || rbTranslationSubsetTables.Checked;
             SR.SubsetTablesTranslation = rbTranslationSubsetTables.Checked;
             SR.SemiTel = chkSemiTelephone.Checked;
 
@@ -123,19 +133,31 @@ namespace ITCSurveyReportLite
 
         private void chkInsertQnums_Click(object sender, EventArgs e)
         {
+            ToggleQnumInsertionOptions();
+        }
+
+        private void ToggleQnumInsertionOptions()
+        {
             panelInsertQnums.Enabled = chkInsertQnums.Checked;
             if (!chkInsertQnums.Checked)
             {
                 rbInsertQnum.Checked = false;
                 rbInsertAQN.Checked = false;
-            }else
-            {
-                rbInsertQnum.Checked = true;
             }
-
+            else
+            {
+                // if neither are true, set the default
+                if (!SR.QNInsertion && !SR.AQNInsertion)
+                    rbInsertQnum.Checked = true;
+            }
         }
 
         private void chkSubsetTables_Click(object sender, EventArgs e)
+        {
+            ToggleSubsetTableOptions();
+        }
+
+        private void ToggleSubsetTableOptions()
         {
             panelSubsetTables.Enabled = chkSubsetTables.Checked;
             if (!chkSubsetTables.Checked)
@@ -145,7 +167,9 @@ namespace ITCSurveyReportLite
             }
             else
             {
-                rbEnglishSubsetTables.Checked = true;
+                // if neither are true, set the default
+                if (!SR.SubsetTables && !SR.SubsetTablesTranslation)
+                    rbEnglishSubsetTables.Checked = true;
             }
         }
 

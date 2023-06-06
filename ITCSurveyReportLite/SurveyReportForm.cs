@@ -251,30 +251,6 @@ namespace ITCSurveyReportLite
                 }
 
             }
-            else if (optTopicContent.Checked)
-            {
-                
-                if (SR.Surveys.GroupBy(x => x.SID).Any(grp => grp.Count() > 1))
-                {
-                    MessageBox.Show("Topic/Content reports cannot contain duplicate surveys or self-comparisons.");
-                    return;
-                }
-                RunTopicContentReport();
-            }
-            else if (optTopicContentProduct.Checked)
-            {
-                if (SR.Surveys.GroupBy(x => x.SID).Any(grp => grp.Count() > 1))
-                {
-                    MessageBox.Show("Topic/Content reports cannot contain duplicate surveys or self-comparisons.");
-                    return;
-                }
-                foreach (ReportSurvey rs in SR.Surveys)
-                {
-                    rs.StdFieldsChosen = new List<string>() { "PreP", "PreI", "PreA", "LitQ", "RespOptions", "NRCodes", "PstI" };
-                }
-                SR.LayoutOptions.BlankColumn = true;
-                RunTopicContentProductReport();
-            }
             else if (optTranslator.Checked)
             {
                 if (SR.Surveys.Count>2)
@@ -491,66 +467,6 @@ namespace ITCSurveyReportLite
             survReport.OutputReportTableXML();
         }
 
-        private void RunTopicContentReport()
-        {
-            int result;
-
-            // get the survey data for all chosen surveys
-            PopulateSurveys();
-
-            TopicContentReport topicContentReport = new TopicContentReport(SR);
-
-            // bind status label to survey report's status property
-            lblStatus.DataBindings.Clear();
-            lblStatus.DataBindings.Add(new Binding("Text", topicContentReport, "ReportStatus"));
-
-            result =  topicContentReport.GenerateLabelReport();
-
-            switch (result)
-            {
-                case 1:
-                    MessageBox.Show("One or more surveys contain no records.");
-                    // TODO if a backup was chosen, show a form for selecting a different survey code from that date
-                    break;
-                default:
-                    break;
-            }
-
-
-            // output report to Word/PDF
-            topicContentReport.OutputReportTableXML();
-        }
-
-        private void RunTopicContentProductReport()
-        {
-            int result;
-
-            // get the survey data for all chosen surveys
-            PopulateSurveys();
-
-            TopicContentReport topicContentReport = new TopicContentReport(SR);
-            topicContentReport.ProductCrosstab = true;
-            // bind status label to survey report's status property
-            lblStatus.DataBindings.Clear();
-            lblStatus.DataBindings.Add(new Binding("Text", topicContentReport, "ReportStatus"));
-
-            result = topicContentReport.GenerateLabelReport();
-
-            switch (result)
-            {
-                case 1:
-                    MessageBox.Show("One or more surveys contain no records.");
-                    // TODO if a backup was chosen, show a form for selecting a different survey code from that date
-                    break;
-                default:
-                    break;
-            }
-
-
-            // output report to Word/PDF
-            topicContentReport.OutputReportTableXML();
-        }
-
         private void RunTranslatorReport()
         {
             string mode;
@@ -656,10 +572,10 @@ namespace ITCSurveyReportLite
                 else
                     rs.AddQuestions(new BindingList<SurveyQuestion>(DBAction.GetSurveyQuestions(rs)));
 
-                var timeframes = DBAction.GetTimeFrames(rs.SurveyCode);
+                List<QuestionTimeFrame> timeframes = DBAction.GetTimeFrames(rs.SurveyCode);
                 foreach (SurveyQuestion question in rs.Questions)
                 {
-                    question.TimeFrames.Where(x => x.QID == question.ID);
+                    question.TimeFrames = timeframes.Where(x => x.QID == question.ID).ToList();
                 }
 
                 // correct questions // TODO should we only get corrected for current data?
