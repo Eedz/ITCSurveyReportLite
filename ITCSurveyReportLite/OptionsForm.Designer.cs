@@ -58,14 +58,12 @@
             this.optBothQnums = new System.Windows.Forms.RadioButton();
             this.optAltQnum = new System.Windows.Forms.RadioButton();
             this.optQnum = new System.Windows.Forms.RadioButton();
-            this.grpImages = new System.Windows.Forms.GroupBox();
-            this.chkImageAppendix = new System.Windows.Forms.RadioButton();
-            this.chkIncludeImages = new System.Windows.Forms.RadioButton();
+            this.chkIncludeImages = new System.Windows.Forms.CheckBox();
+            this.chkImageAppendix = new System.Windows.Forms.CheckBox();
             this.panelInsertQnums.SuspendLayout();
             this.panelSubsetTables.SuspendLayout();
             this.groupNRFormat.SuspendLayout();
             this.grpEnumeration.SuspendLayout();
-            this.grpImages.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmdOK
@@ -385,39 +383,25 @@
             this.optQnum.Text = "Qnum";
             this.optQnum.UseVisualStyleBackColor = true;
             // 
-            // grpImages
+            // chkIncludeImages
             // 
-            this.grpImages.Controls.Add(this.chkImageAppendix);
-            this.grpImages.Controls.Add(this.chkIncludeImages);
-            this.grpImages.Location = new System.Drawing.Point(287, 145);
-            this.grpImages.Margin = new System.Windows.Forms.Padding(0);
-            this.grpImages.Name = "grpImages";
-            this.grpImages.Padding = new System.Windows.Forms.Padding(0);
-            this.grpImages.Size = new System.Drawing.Size(142, 56);
-            this.grpImages.TabIndex = 27;
-            this.grpImages.TabStop = false;
+            this.chkIncludeImages.AutoSize = true;
+            this.chkIncludeImages.Location = new System.Drawing.Point(304, 152);
+            this.chkIncludeImages.Name = "chkIncludeImages";
+            this.chkIncludeImages.Size = new System.Drawing.Size(122, 20);
+            this.chkIncludeImages.TabIndex = 26;
+            this.chkIncludeImages.Text = "Question Images";
+            this.chkIncludeImages.UseVisualStyleBackColor = true;
             // 
             // chkImageAppendix
             // 
             this.chkImageAppendix.AutoSize = true;
-            this.chkImageAppendix.Location = new System.Drawing.Point(3, 32);
+            this.chkImageAppendix.Location = new System.Drawing.Point(304, 178);
             this.chkImageAppendix.Name = "chkImageAppendix";
-            this.chkImageAppendix.Size = new System.Drawing.Size(117, 20);
-            this.chkImageAppendix.TabIndex = 28;
-            this.chkImageAppendix.TabStop = true;
+            this.chkImageAppendix.Size = new System.Drawing.Size(118, 20);
+            this.chkImageAppendix.TabIndex = 27;
             this.chkImageAppendix.Text = "Image Appendix";
             this.chkImageAppendix.UseVisualStyleBackColor = true;
-            // 
-            // chkIncludeImages
-            // 
-            this.chkIncludeImages.AutoSize = true;
-            this.chkIncludeImages.Location = new System.Drawing.Point(3, 9);
-            this.chkIncludeImages.Name = "chkIncludeImages";
-            this.chkIncludeImages.Size = new System.Drawing.Size(112, 20);
-            this.chkIncludeImages.TabIndex = 27;
-            this.chkIncludeImages.TabStop = true;
-            this.chkIncludeImages.Text = "Include Images";
-            this.chkIncludeImages.UseVisualStyleBackColor = true;
             // 
             // OptionsForm
             // 
@@ -426,7 +410,8 @@
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(441, 336);
             this.ControlBox = false;
-            this.Controls.Add(this.grpImages);
+            this.Controls.Add(this.chkImageAppendix);
+            this.Controls.Add(this.chkIncludeImages);
             this.Controls.Add(this.grpEnumeration);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.chkBlankColumn);
@@ -460,8 +445,6 @@
             this.groupNRFormat.PerformLayout();
             this.grpEnumeration.ResumeLayout(false);
             this.grpEnumeration.PerformLayout();
-            this.grpImages.ResumeLayout(false);
-            this.grpImages.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -499,8 +482,7 @@
         private System.Windows.Forms.RadioButton optBothQnums;
         private System.Windows.Forms.RadioButton optAltQnum;
         private System.Windows.Forms.RadioButton optQnum;
-        private System.Windows.Forms.GroupBox grpImages;
-        private System.Windows.Forms.RadioButton chkImageAppendix;
-        private System.Windows.Forms.RadioButton chkIncludeImages;
+        private System.Windows.Forms.CheckBox chkIncludeImages;
+        private System.Windows.Forms.CheckBox chkImageAppendix;
     }
 }

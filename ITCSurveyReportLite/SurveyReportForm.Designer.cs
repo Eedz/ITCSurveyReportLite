@@ -80,6 +80,7 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.highlightCheckBox = new System.Windows.Forms.CheckBox();
             this.chkCompare = new System.Windows.Forms.CheckBox();
+            this.surveyReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pgFileName = new System.Windows.Forms.TabPage();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -114,7 +115,6 @@
             this.cmdOpenReportFolder = new System.Windows.Forms.Button();
             this.reportLayoutBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.surveysBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.surveyReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
             detailsLabel = new System.Windows.Forms.Label();
             fileNameLabel = new System.Windows.Forms.Label();
             this.tabControlOptions.SuspendLayout();
@@ -127,12 +127,12 @@
             this.flowHighlightOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).BeginInit();
             this.groupHighlightStyle.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).BeginInit();
             this.pgFileName.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupTemplate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveysBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // detailsLabel
@@ -156,7 +156,7 @@
             // 
             // cboSurveys
             // 
-            this.cboSurveys.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cboSurveys.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
             this.cboSurveys.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cboSurveys.BackColor = System.Drawing.SystemColors.Window;
             this.cboSurveys.Cursor = System.Windows.Forms.Cursors.Arrow;
@@ -736,6 +736,10 @@
             this.chkCompare.UseVisualStyleBackColor = true;
             this.chkCompare.CheckedChanged += new System.EventHandler(this.Compare_CheckedChanged);
             // 
+            // surveyReportBindingSource
+            // 
+            this.surveyReportBindingSource.DataSource = typeof(ITCLib.SurveyReport);
+            // 
             // pgFileName
             // 
             this.pgFileName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(170)))), ((int)(((byte)(136)))));
@@ -1043,10 +1047,6 @@
             this.surveysBindingSource.DataMember = "Surveys";
             this.surveysBindingSource.DataSource = this.surveyReportBindingSource;
             // 
-            // surveyReportBindingSource
-            // 
-            this.surveyReportBindingSource.DataSource = typeof(ITCLib.SurveyReport);
-            // 
             // SurveyReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -1090,6 +1090,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).EndInit();
             this.groupHighlightStyle.ResumeLayout(false);
             this.groupHighlightStyle.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).EndInit();
             this.pgFileName.ResumeLayout(false);
             this.pgFileName.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -1098,7 +1099,6 @@
             this.groupTemplate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveysBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -57,7 +57,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icon - ISR.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\icon - ISR.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
@@ -223,7 +223,7 @@
     <Content Include="7za.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="icon - ISR.ico" />
+    <Content Include="Resources\icon - ISR.ico" />
     <None Include="Resources\FolderOpened.png" />
   </ItemGroup>
   <ItemGroup>

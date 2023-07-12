@@ -249,7 +249,6 @@ namespace ITCSurveyReportLite
                 {
                     MessageBox.Show("All selected surveys have been generated. They can be found in the Reports folder under ISR.");
                 }
-
             }
             else if (optTranslator.Checked)
             {
@@ -779,9 +778,10 @@ namespace ITCSurveyReportLite
         {
             if (e.KeyCode == Keys.Return)
             {
-                cboSurveys.DroppedDown = false;
-                cmdAddSurvey.PerformClick();
-                cboSurveys.Focus();
+               // cboSurveys.DroppedDown = false;
+               // cboSurveys.SelectedItem = null;
+               cmdAddSurvey.PerformClick();
+               cboSurveys.Focus();
             }
         }
 
