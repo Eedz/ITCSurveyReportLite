@@ -54,16 +54,11 @@
             this.chkExcludeHiddenChanges = new System.Windows.Forms.CheckBox();
             this.chkBlankColumn = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.grpEnumeration = new System.Windows.Forms.GroupBox();
-            this.optBothQnums = new System.Windows.Forms.RadioButton();
-            this.optAltQnum = new System.Windows.Forms.RadioButton();
-            this.optQnum = new System.Windows.Forms.RadioButton();
             this.chkIncludeImages = new System.Windows.Forms.CheckBox();
             this.chkImageAppendix = new System.Windows.Forms.CheckBox();
             this.panelInsertQnums.SuspendLayout();
             this.panelSubsetTables.SuspendLayout();
             this.groupNRFormat.SuspendLayout();
-            this.grpEnumeration.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmdOK
@@ -338,51 +333,6 @@
             this.label3.TabIndex = 23;
             this.label3.Text = "Extra Content";
             // 
-            // grpEnumeration
-            // 
-            this.grpEnumeration.Controls.Add(this.optBothQnums);
-            this.grpEnumeration.Controls.Add(this.optAltQnum);
-            this.grpEnumeration.Controls.Add(this.optQnum);
-            this.grpEnumeration.Location = new System.Drawing.Point(319, 36);
-            this.grpEnumeration.Name = "grpEnumeration";
-            this.grpEnumeration.Size = new System.Drawing.Size(110, 89);
-            this.grpEnumeration.TabIndex = 25;
-            this.grpEnumeration.TabStop = false;
-            this.grpEnumeration.Text = "Enumeration";
-            // 
-            // optBothQnums
-            // 
-            this.optBothQnums.AutoSize = true;
-            this.optBothQnums.Location = new System.Drawing.Point(7, 61);
-            this.optBothQnums.Name = "optBothQnums";
-            this.optBothQnums.Size = new System.Drawing.Size(50, 20);
-            this.optBothQnums.TabIndex = 2;
-            this.optBothQnums.TabStop = true;
-            this.optBothQnums.Text = "Both";
-            this.optBothQnums.UseVisualStyleBackColor = true;
-            // 
-            // optAltQnum
-            // 
-            this.optAltQnum.AutoSize = true;
-            this.optAltQnum.Location = new System.Drawing.Point(7, 40);
-            this.optAltQnum.Name = "optAltQnum";
-            this.optAltQnum.Size = new System.Drawing.Size(75, 20);
-            this.optAltQnum.TabIndex = 1;
-            this.optAltQnum.TabStop = true;
-            this.optAltQnum.Text = "AltQNum";
-            this.optAltQnum.UseVisualStyleBackColor = true;
-            // 
-            // optQnum
-            // 
-            this.optQnum.AutoSize = true;
-            this.optQnum.Location = new System.Drawing.Point(7, 19);
-            this.optQnum.Name = "optQnum";
-            this.optQnum.Size = new System.Drawing.Size(59, 20);
-            this.optQnum.TabIndex = 0;
-            this.optQnum.TabStop = true;
-            this.optQnum.Text = "Qnum";
-            this.optQnum.UseVisualStyleBackColor = true;
-            // 
             // chkIncludeImages
             // 
             this.chkIncludeImages.AutoSize = true;
@@ -412,7 +362,6 @@
             this.ControlBox = false;
             this.Controls.Add(this.chkImageAppendix);
             this.Controls.Add(this.chkIncludeImages);
-            this.Controls.Add(this.grpEnumeration);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.chkBlankColumn);
             this.Controls.Add(this.chkExcludeHiddenChanges);
@@ -443,8 +392,6 @@
             this.panelSubsetTables.PerformLayout();
             this.groupNRFormat.ResumeLayout(false);
             this.groupNRFormat.PerformLayout();
-            this.grpEnumeration.ResumeLayout(false);
-            this.grpEnumeration.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -478,10 +425,6 @@
         private System.Windows.Forms.CheckBox chkExcludeHiddenChanges;
         private System.Windows.Forms.CheckBox chkBlankColumn;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.GroupBox grpEnumeration;
-        private System.Windows.Forms.RadioButton optBothQnums;
-        private System.Windows.Forms.RadioButton optAltQnum;
-        private System.Windows.Forms.RadioButton optQnum;
         private System.Windows.Forms.CheckBox chkIncludeImages;
         private System.Windows.Forms.CheckBox chkImageAppendix;
     }

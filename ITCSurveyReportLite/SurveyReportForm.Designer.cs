@@ -247,7 +247,7 @@
             this.groupTRoutingStyle.Controls.Add(this.optTRoutingStyleGrey);
             this.groupTRoutingStyle.Controls.Add(this.optTRoutingStyleNormal);
             this.groupTRoutingStyle.Enabled = false;
-            this.groupTRoutingStyle.Location = new System.Drawing.Point(197, 316);
+            this.groupTRoutingStyle.Location = new System.Drawing.Point(197, 329);
             this.groupTRoutingStyle.Name = "groupTRoutingStyle";
             this.groupTRoutingStyle.Size = new System.Drawing.Size(178, 72);
             this.groupTRoutingStyle.TabIndex = 35;
@@ -332,12 +332,12 @@
             this.panel2.Location = new System.Drawing.Point(7, 100);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(471, 208);
+            this.panel2.Size = new System.Drawing.Size(471, 221);
             this.panel2.TabIndex = 32;
             // 
             // cmdCommentFields
             // 
-            this.cmdCommentFields.Location = new System.Drawing.Point(279, 168);
+            this.cmdCommentFields.Location = new System.Drawing.Point(279, 185);
             this.cmdCommentFields.Name = "cmdCommentFields";
             this.cmdCommentFields.Size = new System.Drawing.Size(143, 26);
             this.cmdCommentFields.TabIndex = 34;
@@ -362,14 +362,14 @@
             this.lstCommentTypes.Location = new System.Drawing.Point(279, 30);
             this.lstCommentTypes.Name = "lstCommentTypes";
             this.lstCommentTypes.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.lstCommentTypes.Size = new System.Drawing.Size(144, 132);
+            this.lstCommentTypes.Size = new System.Drawing.Size(144, 148);
             this.lstCommentTypes.TabIndex = 32;
             this.lstCommentTypes.Click += new System.EventHandler(this.lstCommentTypes_Click);
             // 
             // chkEnglishRouting
             // 
             this.chkEnglishRouting.AutoSize = true;
-            this.chkEnglishRouting.Location = new System.Drawing.Point(126, 170);
+            this.chkEnglishRouting.Location = new System.Drawing.Point(126, 187);
             this.chkEnglishRouting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.chkEnglishRouting.Name = "chkEnglishRouting";
             this.chkEnglishRouting.Size = new System.Drawing.Size(138, 20);
@@ -386,7 +386,7 @@
             this.lstTransFields.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.lstTransFields.Name = "lstTransFields";
             this.lstTransFields.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.lstTransFields.Size = new System.Drawing.Size(136, 132);
+            this.lstTransFields.Size = new System.Drawing.Size(136, 148);
             this.lstTransFields.TabIndex = 14;
             this.lstTransFields.Click += new System.EventHandler(this.TransFields_Click);
             // 
@@ -411,13 +411,14 @@
             "Content",
             "VarLabel",
             "Product",
+            "AltQnum",
             "AltQnum2",
             "AltQnum3"});
             this.lstExtraFields.Location = new System.Drawing.Point(8, 30);
             this.lstExtraFields.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.lstExtraFields.Name = "lstExtraFields";
             this.lstExtraFields.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.lstExtraFields.Size = new System.Drawing.Size(100, 132);
+            this.lstExtraFields.Size = new System.Drawing.Size(100, 148);
             this.lstExtraFields.TabIndex = 29;
             this.lstExtraFields.Click += new System.EventHandler(this.lstExtraFields_Click);
             // 
@@ -436,7 +437,7 @@
             this.groupRoutingStyle.Controls.Add(this.optRoutingStyleNone);
             this.groupRoutingStyle.Controls.Add(this.optRoutingStyleGrey);
             this.groupRoutingStyle.Controls.Add(this.optRoutingStyleNormal);
-            this.groupRoutingStyle.Location = new System.Drawing.Point(17, 316);
+            this.groupRoutingStyle.Location = new System.Drawing.Point(17, 329);
             this.groupRoutingStyle.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupRoutingStyle.Name = "groupRoutingStyle";
             this.groupRoutingStyle.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);

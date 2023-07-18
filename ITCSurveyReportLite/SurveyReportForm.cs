@@ -839,6 +839,9 @@ namespace ITCSurveyReportLite
                     case "Product":
                         lstExtraFields.SetSelected(i, CurrentSurvey.ProductLabelCol);
                         break;
+                    case "AltQnum":
+                        lstExtraFields.SetSelected(i, CurrentSurvey.AltQnumCol);
+                        break;
                     case "AltQnum2":
                         lstExtraFields.SetSelected(i, CurrentSurvey.AltQnum2Col);
                         break;
@@ -854,12 +857,20 @@ namespace ITCSurveyReportLite
             // translations
             // list them
             LoadExtraFields(CurrentSurvey);
-            // select them
+            // select translations
             foreach (object item in CurrentSurvey.TransFields)
             {
                 for (int i = 0; i < lstTransFields.Items.Count; i++)
                     if (item.ToString().Equals(lstTransFields.Items[i].ToString()))
                         lstTransFields.SetSelected(i, true);
+            }
+
+            // select comments
+            foreach (object item in CurrentSurvey.CommentFields)
+            {
+                for (int i = 0; i < lstCommentTypes.Items.Count; i++)
+                    if (item.ToString().Equals(lstCommentTypes.Items[i].ToString()))
+                        lstCommentTypes.SetSelected(i, true);
             }
 
             switch (CurrentSurvey.RoutingFormat)
@@ -1229,6 +1240,9 @@ namespace ITCSurveyReportLite
                         break;
                     case "Product":
                         CurrentSurvey.ProductLabelCol = true;
+                        break;
+                    case "AltQnum":
+                        CurrentSurvey.AltQnumCol = true;
                         break;
                     case "AltQnum2":
                         CurrentSurvey.AltQnum2Col = true;
