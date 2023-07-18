@@ -59,17 +59,6 @@ namespace ITCSurveyReportLite
                     break;
             }
 
-            switch (SR.Numbering)
-            {
-                case Enumeration.Qnum:
-                    optQnum.Checked = true; break;
-                case Enumeration.AltQnum:
-                    optAltQnum.Checked = true;
-                    break;
-                case Enumeration.Both:
-                    optBothQnums.Checked = true; break;
-            }
-
             chkBlankColumn.Checked = SR.LayoutOptions.BlankColumn;
             chkIncludeImages.Checked = SR.IncludeImages;
             chkImageAppendix.Checked = SR.ImageAppendix;

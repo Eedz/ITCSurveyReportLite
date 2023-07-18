@@ -270,7 +270,7 @@ namespace ITCSurveyReportLite
                 case FilterBy.Heading:
                     foreach (string s in lstFilterType.SelectedItems)
                         foreach (SurveyQuestion sq in SurveyContent)
-                            if (sq.VarName.RefVarName.Equals(s.Substring(s.IndexOf(" - ") + 3)))
+                            if (sq.VarName.RefVarName.Equals(s.Substring(s.LastIndexOf(" - ") + 3)))
                             {
                                 Heading h = new Heading(sq.Qnum, sq.PreP);
                                 h.VarName = new VariableName(sq.VarName.VarName);
@@ -310,7 +310,7 @@ namespace ITCSurveyReportLite
             foreach (string s in lstFilterType.SelectedItems)
             {
                 inSection = false;
-                string headingVar = s.Substring(s.IndexOf(" - ") + 3);
+                string headingVar = s.Substring(s.LastIndexOf(" - ") + 3);
                 foreach (SurveyQuestion sq in SurveyContent)
                 {
                     string currentVar = sq.VarName.RefVarName;
@@ -338,7 +338,7 @@ namespace ITCSurveyReportLite
         private void UpdateQnumRangeVars()
         {
             List<SurveyQuestion> varList = new List<SurveyQuestion>();
-            bool low = Int32.TryParse(txtLowerQnum.Text, out int lower);
+          bool low = Int32.TryParse(txtLowerQnum.Text, out int lower);
             bool high = Int32.TryParse(txtUpperQnum.Text, out int upper);
             if (low && high)
                 varList.AddRange(SurveyContent.Where(x => x.GetQnumValue() >= lower && x.GetQnumValue() <= upper));
