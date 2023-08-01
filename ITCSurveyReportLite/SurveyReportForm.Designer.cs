@@ -739,7 +739,7 @@
             // 
             // surveyReportBindingSource
             // 
-            this.surveyReportBindingSource.DataSource = typeof(ITCLib.SurveyReport);
+            this.surveyReportBindingSource.DataSource = typeof(ITCReportLib.SurveyReport);
             // 
             // pgFileName
             // 

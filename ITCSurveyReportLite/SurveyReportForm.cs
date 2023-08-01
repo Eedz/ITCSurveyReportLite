@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
 using ITCLib;
+using ITCReportLib;
+
 using static System.Net.Mime.MediaTypeNames;
 
 namespace ITCSurveyReportLite
@@ -111,9 +113,9 @@ namespace ITCSurveyReportLite
             optNoTemplate.Checked = true;
 
             // bind selected surveys to the list of surveys in SR
-            lstSelectedSurveys.DataSource = SR.Surveys;
             lstSelectedSurveys.ValueMember = "ID";
             lstSelectedSurveys.DisplayMember = "SurveyCode";
+            lstSelectedSurveys.DataSource = SR.Surveys;
 
             lblStatus.Visible = false;
             lblStatus.Text = "Ready.";
@@ -662,7 +664,7 @@ namespace ITCSurveyReportLite
         private void SelfCompare_Click(object sender, EventArgs e)
         {
             // add another survey with the already selected survey code
-
+            if (lstSelectedSurveys.SelectedItem == null) return;
             ReportSurvey s;
             Survey item = lstSelectedSurveys.SelectedItem as Survey;
             try
@@ -928,24 +930,33 @@ namespace ITCSurveyReportLite
 
         private void NewReport()
         {
-            SR.Surveys.Clear();
-            SR.LayoutOptions = new ReportLayout();
-            SR.LayoutOptions.ToC = TableOfContents.PageNums;
-            // update report defaults
-            UpdateDefaultOptions();
-            UpdateFileNameTab();
-            UpdateReportDetails();
-            // set current survey
-            UpdateCurrentSurvey();
+            // reset form controls
+            optNoTemplate.Checked = true;
+            chkStdWebTranslation.Checked = false;
+            chkStdTranslation.Checked = false;
 
             lblStatus.Visible = false;
             cmdOpenReportFolder.Visible = false;
             cmdGenerate.Visible = false;
             tabControlOptions.Visible = false;
 
+            // reset report settings
+            SR = new SurveyBasedReport();
+            SR.LayoutOptions.ToC = TableOfContents.PageNums;
+
+            lstSelectedSurveys.DataSource = null;
+            lstSelectedSurveys.DataSource = SR.Surveys;
+            lstSelectedSurveys.ValueMember = "ID";
+            lstSelectedSurveys.DisplayMember = "SurveyCode";
+
+            // update report defaults
+            UpdateDefaultOptions();
+            UpdateFileNameTab();
+            UpdateReportDetails();
+            // set current survey
+            UpdateCurrentSurvey();
             // load survey specific options
             LoadSurveyOptions();
-
         }
 
         private void UpdateCurrentSurvey()
