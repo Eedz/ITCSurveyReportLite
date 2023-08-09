@@ -7,12 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-using System.Configuration;
 using ITCLib;
 using ITCReportLib;
-
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ITCSurveyReportLite
 {
@@ -234,6 +230,13 @@ namespace ITCSurveyReportLite
                 MessageBox.Show("No surveys selected.");
                 return;
             }
+
+            if (SR.Surveys.Any(x=>x.TransFields.Count==0) && SR.SubsetTablesTranslation)
+            {
+                MessageBox.Show("You have selected Translation Subset Tables but no translation language was selected.");
+                return;
+            }
+
             UpdateColumnOrder();
             // set file name to the user's report path
             SR.FileName = UP.ReportPath;
@@ -418,9 +421,11 @@ namespace ITCSurveyReportLite
             SR.LayoutOptions.CoverPage = true;
             SR.VarChangesCol = true;
             SR.ExcludeTempChanges = true;
+            SR.SurvNotes = false;
             SR.VarChangesApp = true;
             SR.Details = "";
             SR.ShowLongLists = true;
+            SR.ImageAppendix = true;
 
             switch (mode)
             {
@@ -436,17 +441,23 @@ namespace ITCSurveyReportLite
                 foreach (ReportSurvey rs in SR.Surveys)
                 {
                     rs.TransFields = DBAction.ListLanguages(rs).Select(x=>x.LanguageName).ToList();
+                    rs.TransFields.Remove("English");
                 }
             }
 
             // get the survey data for all chosen surveys
             PopulateSurveys();
 
+            
+
             int result;
             SurveyReport survReport = new SurveyReport(SR)
             {
                 SurveyCompare = compare
             };
+
+            if (SR.IncludeImages || SR.ImageAppendix)
+                survReport.Images = DBAction.GetSurveyImagesFromFolder(SR.Surveys[0]);
 
             // bind status label to survey report's status property
             lblStatus.DataBindings.Clear();
@@ -467,6 +478,51 @@ namespace ITCSurveyReportLite
             // output report to Word/PDF
             survReport.OutputReportTableXML();
         }
+
+        private void RunWebReport2(bool withTranslation = false)
+        {
+            ReportSurvey survey =  PopulateWebsiteReport("English");
+
+            WebsiteSurveyReport report = new WebsiteSurveyReport(survey, withTranslation);
+
+            try
+            {
+                report.CreateReport();
+            }
+            catch
+            {
+                MessageBox.Show("Error generating this report.");
+            }
+        }
+
+        /// <summary>
+        /// Returns a ReportSurvey object populated with the appropriate data for a website survey. All questions with previous names and, optionally a translation.
+        /// </summary>
+        /// <param name="language"></param>
+        /// <returns></returns>
+        private ReportSurvey PopulateWebsiteReport(string language)
+        {
+            ReportSurvey survey = new ReportSurvey();
+
+            survey.AddQuestions(DBAction.GetSurveyQuestions(survey));
+
+            // previous VarNames
+            DBAction.FillPreviousNames(survey, true);
+
+            if (!language.Equals("English"))
+            {
+                var translations = DBAction.GetSurveyTranslation(survey.SurveyCode, language);
+
+                foreach (Translation t in translations)
+                    survey.QuestionByID(t.QID).Translations.Add(t);
+            }
+
+            survey.VarChanges = new List<VarNameChange>(DBAction.GetVarNameChanges(survey).Where(x => !x.PreFWChange));
+
+            survey.LastUpdate = DBAction.GetSurveyLastUpdate(survey);
+            return survey;
+        }
+
 
         private void RunTranslatorReport()
         {
@@ -629,9 +685,9 @@ namespace ITCSurveyReportLite
 
                 // varchanges (for appendix)
                 if (SR.VarChangesApp)
-                    rs.VarChanges = new List<VarNameChange> (DBAction.GetVarNameChangeBySurvey(rs.SurveyCode).Where(x=>x.PreFWChange != SR.ExcludeTempChanges));
+                    rs.VarChanges = new List<VarNameChange> (DBAction.GetVarNameChanges(rs).Where(x=>x.PreFWChange != SR.ExcludeTempChanges));
 
-                
+                rs.LastUpdate = DBAction.GetSurveyLastUpdate(rs);
             }
         }
 
@@ -669,8 +725,8 @@ namespace ITCSurveyReportLite
             Survey item = lstSelectedSurveys.SelectedItem as Survey;
             try
             {
-                
-                s = new ReportSurvey(DBAction.GetSurveyInfo(item.SurveyCode));
+
+                s = new ReportSurvey(item);
 
                 BackupConnection bkp = new BackupConnection(DateTime.Today.AddDays(-1));
                 s.Backend = bkp.GetNextBackup();
