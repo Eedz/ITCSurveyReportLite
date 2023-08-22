@@ -105,7 +105,6 @@
             this.outputOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupTemplate = new System.Windows.Forms.GroupBox();
             this.cmdOpenTranslatorOptions = new System.Windows.Forms.Button();
-            this.chkStdWebTranslation = new System.Windows.Forms.CheckBox();
             this.chkStdTranslation = new System.Windows.Forms.CheckBox();
             this.optTranslator = new System.Windows.Forms.RadioButton();
             this.optNoTemplate = new System.Windows.Forms.RadioButton();
@@ -115,6 +114,7 @@
             this.cmdOpenReportFolder = new System.Windows.Forms.Button();
             this.reportLayoutBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.surveysBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.cmdOpenWebsiteOptions = new System.Windows.Forms.Button();
             detailsLabel = new System.Windows.Forms.Label();
             fileNameLabel = new System.Windows.Forms.Label();
             this.tabControlOptions.SuspendLayout();
@@ -917,8 +917,8 @@
             // 
             // groupTemplate
             // 
+            this.groupTemplate.Controls.Add(this.cmdOpenWebsiteOptions);
             this.groupTemplate.Controls.Add(this.cmdOpenTranslatorOptions);
-            this.groupTemplate.Controls.Add(this.chkStdWebTranslation);
             this.groupTemplate.Controls.Add(this.chkStdTranslation);
             this.groupTemplate.Controls.Add(this.optTranslator);
             this.groupTemplate.Controls.Add(this.optNoTemplate);
@@ -929,14 +929,14 @@
             this.groupTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupTemplate.Name = "groupTemplate";
             this.groupTemplate.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupTemplate.Size = new System.Drawing.Size(200, 107);
+            this.groupTemplate.Size = new System.Drawing.Size(200, 146);
             this.groupTemplate.TabIndex = 62;
             this.groupTemplate.TabStop = false;
             this.groupTemplate.Text = "Report Template";
             // 
             // cmdOpenTranslatorOptions
             // 
-            this.cmdOpenTranslatorOptions.Location = new System.Drawing.Point(93, 77);
+            this.cmdOpenTranslatorOptions.Location = new System.Drawing.Point(93, 108);
             this.cmdOpenTranslatorOptions.Name = "cmdOpenTranslatorOptions";
             this.cmdOpenTranslatorOptions.Size = new System.Drawing.Size(38, 23);
             this.cmdOpenTranslatorOptions.TabIndex = 10;
@@ -944,22 +944,11 @@
             this.cmdOpenTranslatorOptions.UseVisualStyleBackColor = true;
             this.cmdOpenTranslatorOptions.Click += new System.EventHandler(this.cmdOpenTranslatorOptions_Click);
             // 
-            // chkStdWebTranslation
-            // 
-            this.chkStdWebTranslation.AutoSize = true;
-            this.chkStdWebTranslation.Enabled = false;
-            this.chkStdWebTranslation.Location = new System.Drawing.Point(59, 60);
-            this.chkStdWebTranslation.Name = "chkStdWebTranslation";
-            this.chkStdWebTranslation.Size = new System.Drawing.Size(109, 20);
-            this.chkStdWebTranslation.TabIndex = 9;
-            this.chkStdWebTranslation.Text = "w/ Translation";
-            this.chkStdWebTranslation.UseVisualStyleBackColor = true;
-            // 
             // chkStdTranslation
             // 
             this.chkStdTranslation.AutoSize = true;
             this.chkStdTranslation.Enabled = false;
-            this.chkStdTranslation.Location = new System.Drawing.Point(85, 39);
+            this.chkStdTranslation.Location = new System.Drawing.Point(85, 48);
             this.chkStdTranslation.Name = "chkStdTranslation";
             this.chkStdTranslation.Size = new System.Drawing.Size(109, 20);
             this.chkStdTranslation.TabIndex = 8;
@@ -969,7 +958,7 @@
             // optTranslator
             // 
             this.optTranslator.AutoSize = true;
-            this.optTranslator.Location = new System.Drawing.Point(6, 78);
+            this.optTranslator.Location = new System.Drawing.Point(6, 108);
             this.optTranslator.Name = "optTranslator";
             this.optTranslator.Size = new System.Drawing.Size(84, 20);
             this.optTranslator.TabIndex = 5;
@@ -996,7 +985,7 @@
             // optWebTemplate
             // 
             this.optWebTemplate.AutoSize = true;
-            this.optWebTemplate.Location = new System.Drawing.Point(6, 59);
+            this.optWebTemplate.Location = new System.Drawing.Point(6, 78);
             this.optWebTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optWebTemplate.Name = "optWebTemplate";
             this.optWebTemplate.Size = new System.Drawing.Size(51, 20);
@@ -1010,7 +999,7 @@
             // optStdTemplate
             // 
             this.optStdTemplate.AutoSize = true;
-            this.optStdTemplate.Location = new System.Drawing.Point(6, 38);
+            this.optStdTemplate.Location = new System.Drawing.Point(6, 48);
             this.optStdTemplate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.optStdTemplate.Name = "optStdTemplate";
             this.optStdTemplate.Size = new System.Drawing.Size(77, 20);
@@ -1047,6 +1036,16 @@
             // 
             this.surveysBindingSource.DataMember = "Surveys";
             this.surveysBindingSource.DataSource = this.surveyReportBindingSource;
+            // 
+            // cmdOpenWebsiteOptions
+            // 
+            this.cmdOpenWebsiteOptions.Location = new System.Drawing.Point(93, 78);
+            this.cmdOpenWebsiteOptions.Name = "cmdOpenWebsiteOptions";
+            this.cmdOpenWebsiteOptions.Size = new System.Drawing.Size(38, 23);
+            this.cmdOpenWebsiteOptions.TabIndex = 11;
+            this.cmdOpenWebsiteOptions.Text = "...";
+            this.cmdOpenWebsiteOptions.UseVisualStyleBackColor = true;
+            this.cmdOpenWebsiteOptions.Click += new System.EventHandler(this.cmdOpenWebsiteOptions_Click);
             // 
             // SurveyReportForm
             // 
@@ -1178,7 +1177,6 @@
         private System.Windows.Forms.CheckBox chkHideIdenticalWordings;
         private System.Windows.Forms.CheckBox chkHideIdenticalQs;
         private System.Windows.Forms.CheckBox chkIncludeEnglish;
-        private System.Windows.Forms.CheckBox chkStdWebTranslation;
         private System.Windows.Forms.CheckBox chkStdTranslation;
         private System.Windows.Forms.RadioButton optTranslator;
         private System.Windows.Forms.RadioButton optNoTemplate;
@@ -1188,6 +1186,7 @@
         private System.Windows.Forms.RadioButton optTRoutingStyleNormal;
         private System.Windows.Forms.Button cmdOpenReportFolder;
         private System.Windows.Forms.Button cmdOpenTranslatorOptions;
+        private System.Windows.Forms.Button cmdOpenWebsiteOptions;
     }
 }
 

@@ -45,7 +45,7 @@ namespace ITCSurveyReportLite
 
         private void LoadLists()
         {
-            List<QuestionComment> comments = DBAction.GetQuesCommentsBySurvey(TheSurvey.SID);
+            List<QuestionComment> comments = DBAction.GetQuesComments(TheSurvey);
 
             if (comments == null)
                 return;
