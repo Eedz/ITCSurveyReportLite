@@ -104,6 +104,7 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.outputOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupTemplate = new System.Windows.Forms.GroupBox();
+            this.cmdOpenWebsiteOptions = new System.Windows.Forms.Button();
             this.cmdOpenTranslatorOptions = new System.Windows.Forms.Button();
             this.chkStdTranslation = new System.Windows.Forms.CheckBox();
             this.optTranslator = new System.Windows.Forms.RadioButton();
@@ -114,7 +115,6 @@
             this.cmdOpenReportFolder = new System.Windows.Forms.Button();
             this.reportLayoutBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.surveysBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cmdOpenWebsiteOptions = new System.Windows.Forms.Button();
             detailsLabel = new System.Windows.Forms.Label();
             fileNameLabel = new System.Windows.Forms.Label();
             this.tabControlOptions.SuspendLayout();
@@ -413,12 +413,14 @@
             "Product",
             "AltQnum",
             "AltQnum2",
-            "AltQnum3"});
+            "AltQnum3",
+            "Parallel Vars",
+            "Survey Groups"});
             this.lstExtraFields.Location = new System.Drawing.Point(8, 30);
             this.lstExtraFields.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.lstExtraFields.Name = "lstExtraFields";
             this.lstExtraFields.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.lstExtraFields.Size = new System.Drawing.Size(100, 148);
+            this.lstExtraFields.Size = new System.Drawing.Size(100, 180);
             this.lstExtraFields.TabIndex = 29;
             this.lstExtraFields.Click += new System.EventHandler(this.lstExtraFields_Click);
             // 
@@ -934,6 +936,16 @@
             this.groupTemplate.TabStop = false;
             this.groupTemplate.Text = "Report Template";
             // 
+            // cmdOpenWebsiteOptions
+            // 
+            this.cmdOpenWebsiteOptions.Location = new System.Drawing.Point(93, 78);
+            this.cmdOpenWebsiteOptions.Name = "cmdOpenWebsiteOptions";
+            this.cmdOpenWebsiteOptions.Size = new System.Drawing.Size(38, 23);
+            this.cmdOpenWebsiteOptions.TabIndex = 11;
+            this.cmdOpenWebsiteOptions.Text = "...";
+            this.cmdOpenWebsiteOptions.UseVisualStyleBackColor = true;
+            this.cmdOpenWebsiteOptions.Click += new System.EventHandler(this.cmdOpenWebsiteOptions_Click);
+            // 
             // cmdOpenTranslatorOptions
             // 
             this.cmdOpenTranslatorOptions.Location = new System.Drawing.Point(93, 108);
@@ -1036,16 +1048,6 @@
             // 
             this.surveysBindingSource.DataMember = "Surveys";
             this.surveysBindingSource.DataSource = this.surveyReportBindingSource;
-            // 
-            // cmdOpenWebsiteOptions
-            // 
-            this.cmdOpenWebsiteOptions.Location = new System.Drawing.Point(93, 78);
-            this.cmdOpenWebsiteOptions.Name = "cmdOpenWebsiteOptions";
-            this.cmdOpenWebsiteOptions.Size = new System.Drawing.Size(38, 23);
-            this.cmdOpenWebsiteOptions.TabIndex = 11;
-            this.cmdOpenWebsiteOptions.Text = "...";
-            this.cmdOpenWebsiteOptions.UseVisualStyleBackColor = true;
-            this.cmdOpenWebsiteOptions.Click += new System.EventHandler(this.cmdOpenWebsiteOptions_Click);
             // 
             // SurveyReportForm
             // 

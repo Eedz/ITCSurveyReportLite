@@ -545,20 +545,26 @@ namespace ITCSurveyReportLite
                 rs.SurveyNotes.Clear();
                 rs.VarChanges.Clear();
 
-
                 // questions
                 if (rs.Backend.Date != DateTime.Today)
-                    rs.AddQuestions(new BindingList<SurveyQuestion>(DBAction.GetBackupQuestions(rs, rs.Backend)));
-                else
-                    rs.AddQuestions(new BindingList<SurveyQuestion>(DBAction.GetSurveyQuestions(rs)));
-
-                List<QuestionTimeFrame> timeframes = DBAction.GetTimeFrames(rs.SurveyCode);
-                foreach (SurveyQuestion question in rs.Questions)
                 {
-                    question.TimeFrames = timeframes.Where(x => x.QID == question.ID).ToList();
+                    rs.AddQuestions(new List<SurveyQuestion>(DBAction.GetBackupQuestions(rs, rs.Backend)));
+                    List<QuestionTimeFrame> timeframes = DBAction.GetTimeFrames(rs.SurveyCode);
+                    foreach (SurveyQuestion question in rs.Questions)
+                    {
+                        question.TimeFrames = timeframes.Where(x => x.QID == question.ID).ToList();
+                    }
+                }
+                else
+                    rs.AddQuestions(DBAction.GetSurveyQuestions(rs));               
+
+                foreach (SurveyQuestion q in rs.Questions)
+                {
+                    string groups = DBAction.GetSurveyGroups(rs.SurveyCode, q.VarName.RefVarName);
+                    rs.ProjectGroups.Add(q, groups);
                 }
 
-                // correct questions // TODO should we only get corrected for current data?
+                // correct questions
                 if (rs.Corrected)
                 {
                     rs.CorrectedQuestions = DBAction.GetCorrectedWordings(rs);
@@ -574,7 +580,6 @@ namespace ITCSurveyReportLite
                     {
                         sq.VarName.VarName = DBAction.GetCurrentName(rs.SurveyCode, sq.VarName.VarName, rs.Backend);
                     }
-
                 }
 
                 // survey notes
@@ -828,6 +833,12 @@ namespace ITCSurveyReportLite
                         break;
                     case "AltQnum3":
                         lstExtraFields.SetSelected(i, CurrentSurvey.AltQnum3Col);
+                        break;
+                    case "Parallel Vars":
+                        lstExtraFields.SetSelected(i, CurrentSurvey.ParallelVarsCol);
+                        break;
+                    case "Survey Groups":
+                        lstExtraFields.SetSelected(i, CurrentSurvey.SurveyGroupCol);
                         break;
                 }
             }
@@ -1246,6 +1257,8 @@ namespace ITCSurveyReportLite
             CurrentSurvey.ProductLabelCol = false;
             CurrentSurvey.AltQnum2Col = false;
             CurrentSurvey.AltQnum3Col = false;
+            CurrentSurvey.ParallelVarsCol = false;
+            CurrentSurvey.SurveyGroupCol = false;
 
             for (int i =0;i <lstExtraFields.SelectedItems.Count; i++)
             {
@@ -1279,7 +1292,13 @@ namespace ITCSurveyReportLite
                     case "AltQnum3":
                         CurrentSurvey.AltQnum3Col = true;
                         break;
-                    
+                    case "Parallel Vars":
+                        CurrentSurvey.ParallelVarsCol = true;
+                        break;
+                    case "Survey Groups":
+                        CurrentSurvey.SurveyGroupCol = true;
+                        break;
+
                 }
             }
             SR.UpdateColumnOrder();
