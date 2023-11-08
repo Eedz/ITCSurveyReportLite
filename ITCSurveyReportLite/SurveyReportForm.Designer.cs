@@ -80,7 +80,6 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.highlightCheckBox = new System.Windows.Forms.CheckBox();
             this.chkCompare = new System.Windows.Forms.CheckBox();
-            this.surveyReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pgFileName = new System.Windows.Forms.TabPage();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -115,6 +114,8 @@
             this.cmdOpenReportFolder = new System.Windows.Forms.Button();
             this.reportLayoutBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.surveysBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.chkTranslationFirst = new System.Windows.Forms.CheckBox();
+            this.surveyReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
             detailsLabel = new System.Windows.Forms.Label();
             fileNameLabel = new System.Windows.Forms.Label();
             this.tabControlOptions.SuspendLayout();
@@ -127,12 +128,12 @@
             this.flowHighlightOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).BeginInit();
             this.groupHighlightStyle.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).BeginInit();
             this.pgFileName.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupTemplate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveysBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // detailsLabel
@@ -217,7 +218,7 @@
             this.tabControlOptions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabControlOptions.Name = "tabControlOptions";
             this.tabControlOptions.SelectedIndex = 0;
-            this.tabControlOptions.Size = new System.Drawing.Size(511, 440);
+            this.tabControlOptions.Size = new System.Drawing.Size(511, 453);
             this.tabControlOptions.TabIndex = 5;
             this.tabControlOptions.Visible = false;
             this.tabControlOptions.SelectedIndexChanged += new System.EventHandler(this.tabControlOptions_SelectedIndexChanged);
@@ -237,7 +238,7 @@
             this.pgFields.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pgFields.Name = "pgFields";
             this.pgFields.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.pgFields.Size = new System.Drawing.Size(503, 411);
+            this.pgFields.Size = new System.Drawing.Size(503, 424);
             this.pgFields.TabIndex = 1;
             this.pgFields.Text = "Survey Content";
             // 
@@ -247,7 +248,7 @@
             this.groupTRoutingStyle.Controls.Add(this.optTRoutingStyleGrey);
             this.groupTRoutingStyle.Controls.Add(this.optTRoutingStyleNormal);
             this.groupTRoutingStyle.Enabled = false;
-            this.groupTRoutingStyle.Location = new System.Drawing.Point(197, 329);
+            this.groupTRoutingStyle.Location = new System.Drawing.Point(197, 346);
             this.groupTRoutingStyle.Name = "groupTRoutingStyle";
             this.groupTRoutingStyle.Size = new System.Drawing.Size(178, 72);
             this.groupTRoutingStyle.TabIndex = 35;
@@ -321,6 +322,7 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.chkTranslationFirst);
             this.panel2.Controls.Add(this.cmdCommentFields);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.lstCommentTypes);
@@ -332,7 +334,7 @@
             this.panel2.Location = new System.Drawing.Point(7, 100);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(471, 221);
+            this.panel2.Size = new System.Drawing.Size(471, 238);
             this.panel2.TabIndex = 32;
             // 
             // cmdCommentFields
@@ -369,7 +371,7 @@
             // chkEnglishRouting
             // 
             this.chkEnglishRouting.AutoSize = true;
-            this.chkEnglishRouting.Location = new System.Drawing.Point(126, 187);
+            this.chkEnglishRouting.Location = new System.Drawing.Point(126, 185);
             this.chkEnglishRouting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.chkEnglishRouting.Name = "chkEnglishRouting";
             this.chkEnglishRouting.Size = new System.Drawing.Size(138, 20);
@@ -420,7 +422,7 @@
             this.lstExtraFields.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.lstExtraFields.Name = "lstExtraFields";
             this.lstExtraFields.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.lstExtraFields.Size = new System.Drawing.Size(100, 180);
+            this.lstExtraFields.Size = new System.Drawing.Size(100, 196);
             this.lstExtraFields.TabIndex = 29;
             this.lstExtraFields.Click += new System.EventHandler(this.lstExtraFields_Click);
             // 
@@ -439,7 +441,7 @@
             this.groupRoutingStyle.Controls.Add(this.optRoutingStyleNone);
             this.groupRoutingStyle.Controls.Add(this.optRoutingStyleGrey);
             this.groupRoutingStyle.Controls.Add(this.optRoutingStyleNormal);
-            this.groupRoutingStyle.Location = new System.Drawing.Point(17, 329);
+            this.groupRoutingStyle.Location = new System.Drawing.Point(17, 346);
             this.groupRoutingStyle.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupRoutingStyle.Name = "groupRoutingStyle";
             this.groupRoutingStyle.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -530,7 +532,7 @@
             this.pgCompare.Location = new System.Drawing.Point(4, 25);
             this.pgCompare.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pgCompare.Name = "pgCompare";
-            this.pgCompare.Size = new System.Drawing.Size(503, 411);
+            this.pgCompare.Size = new System.Drawing.Size(503, 424);
             this.pgCompare.TabIndex = 2;
             this.pgCompare.Text = "Comparison";
             // 
@@ -739,10 +741,6 @@
             this.chkCompare.UseVisualStyleBackColor = true;
             this.chkCompare.CheckedChanged += new System.EventHandler(this.Compare_CheckedChanged);
             // 
-            // surveyReportBindingSource
-            // 
-            this.surveyReportBindingSource.DataSource = typeof(ITCReportLib.SurveyReport);
-            // 
             // pgFileName
             // 
             this.pgFileName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(170)))), ((int)(((byte)(136)))));
@@ -760,7 +758,7 @@
             this.pgFileName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pgFileName.Name = "pgFileName";
             this.pgFileName.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.pgFileName.Size = new System.Drawing.Size(503, 411);
+            this.pgFileName.Size = new System.Drawing.Size(503, 424);
             this.pgFileName.TabIndex = 6;
             this.pgFileName.Text = "File Name";
             // 
@@ -861,7 +859,7 @@
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(28, 668);
+            this.lblStatus.Location = new System.Drawing.Point(28, 684);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(56, 16);
             this.lblStatus.TabIndex = 60;
@@ -1024,7 +1022,7 @@
             // 
             // cmdGenerate
             // 
-            this.cmdGenerate.Location = new System.Drawing.Point(421, 656);
+            this.cmdGenerate.Location = new System.Drawing.Point(421, 672);
             this.cmdGenerate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdGenerate.Name = "cmdGenerate";
             this.cmdGenerate.Size = new System.Drawing.Size(99, 41);
@@ -1036,7 +1034,7 @@
             // cmdOpenReportFolder
             // 
             this.cmdOpenReportFolder.Image = global::ITCSurveyReportLite.Properties.Resources.FolderOpened;
-            this.cmdOpenReportFolder.Location = new System.Drawing.Point(378, 656);
+            this.cmdOpenReportFolder.Location = new System.Drawing.Point(378, 672);
             this.cmdOpenReportFolder.Name = "cmdOpenReportFolder";
             this.cmdOpenReportFolder.Size = new System.Drawing.Size(37, 41);
             this.cmdOpenReportFolder.TabIndex = 63;
@@ -1049,12 +1047,27 @@
             this.surveysBindingSource.DataMember = "Surveys";
             this.surveysBindingSource.DataSource = this.surveyReportBindingSource;
             // 
+            // chkTranslationFirst
+            // 
+            this.chkTranslationFirst.AutoSize = true;
+            this.chkTranslationFirst.Location = new System.Drawing.Point(126, 206);
+            this.chkTranslationFirst.Name = "chkTranslationFirst";
+            this.chkTranslationFirst.Size = new System.Drawing.Size(119, 20);
+            this.chkTranslationFirst.TabIndex = 35;
+            this.chkTranslationFirst.Text = "Translation First";
+            this.chkTranslationFirst.UseVisualStyleBackColor = true;
+            this.chkTranslationFirst.Visible = false;
+            // 
+            // surveyReportBindingSource
+            // 
+            this.surveyReportBindingSource.DataSource = typeof(ITCReportLib.SurveyReport);
+            // 
             // SurveyReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(537, 712);
+            this.ClientSize = new System.Drawing.Size(537, 722);
             this.Controls.Add(this.cmdOpenReportFolder);
             this.Controls.Add(this.cmdGenerate);
             this.Controls.Add(this.groupTemplate);
@@ -1092,7 +1105,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).EndInit();
             this.groupHighlightStyle.ResumeLayout(false);
             this.groupHighlightStyle.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).EndInit();
             this.pgFileName.ResumeLayout(false);
             this.pgFileName.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -1101,6 +1113,7 @@
             this.groupTemplate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveysBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1189,6 +1202,7 @@
         private System.Windows.Forms.Button cmdOpenReportFolder;
         private System.Windows.Forms.Button cmdOpenTranslatorOptions;
         private System.Windows.Forms.Button cmdOpenWebsiteOptions;
+        private System.Windows.Forms.CheckBox chkTranslationFirst;
     }
 }
 

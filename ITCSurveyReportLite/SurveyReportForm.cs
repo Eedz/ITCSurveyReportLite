@@ -222,6 +222,8 @@ namespace ITCSurveyReportLite
         {
             int result;
 
+            
+
             // get the survey data for all chosen surveys
             PopulateSurveys();
 
@@ -237,6 +239,11 @@ namespace ITCSurveyReportLite
             lblStatus.DataBindings.Clear();
             lblStatus.DataBindings.Add(new Binding("Text", survReport, "ReportStatus"));
 
+            if (chkTranslationFirst.Checked)
+            {
+                survReport.UpdateColumnOrder(true);
+            }
+
             result = survReport.GenerateReport();
             switch (result)
             {
@@ -248,10 +255,16 @@ namespace ITCSurveyReportLite
                     break;
             }
 
+            if (survReport.LayoutOptions.PaperSize == PaperSizes.Letter)
+            {
+                if (survReport.ColumnOrder.Count >= 6)
+                    survReport.LayoutOptions.PaperSize = PaperSizes.Eleven17;
+                else if (survReport.ColumnOrder.Count >= 4)
+                    survReport.LayoutOptions.PaperSize = PaperSizes.Legal;
+            }
 
             // output report to Word/PDF
             survReport.OutputReportTableXML();
-
         }
 
         private void RunStandardReport(bool withTranslation = false)
@@ -1226,6 +1239,8 @@ namespace ITCSurveyReportLite
             {
                 CurrentSurvey.TransFields.Add(lstTransFields.SelectedItems[i].ToString());
             }
+            
+            chkTranslationFirst.Visible = lstTransFields.SelectedItems.Count > 0;
 
             if (lstTransFields.SelectedItems.Count > 0 & CurrentSurvey.EnglishRouting)
             {

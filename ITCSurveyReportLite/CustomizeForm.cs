@@ -80,7 +80,7 @@ namespace ITCSurveyReportLite
         {
             SaveFilter();
             SaveFieldInfo();
-            Survey.RemoveOtherSpecify = chkRemoveOtherSpecify.Checked;
+            Survey.ContentOptions.RemoveOtherSpecify = chkRemoveOtherSpecify.Checked;
 
             Close();
         }
@@ -162,11 +162,33 @@ namespace ITCSurveyReportLite
 
         private void LoadHeadings()
         {
+            Heading h = null;
             foreach (SurveyQuestion q in SurveyContent)
             {
+
                 if (q.IsHeading() || q.IsSubHeading())
-                    lstFilterType.Items.Add(q.PreP + " - " + q.VarName.RefVarName);
+                {
+                    if (h != null)
+                    {
+                        h.EndQnum = q.Qnum;
+                        lstFilterType.Items.Add(h);
+                    }
+
+                    h = new Heading(q.Qnum, q.PreP)
+                    {
+                        StartQnum = q.Qnum,
+                        VarName = q.VarName
+                    };
+                }
+
+                    
             }
+            if (h != null)
+            {
+                h.EndQnum = SurveyContent.Last().Qnum;
+                lstFilterType.Items.Add(h);
+            }
+            
         }
 
         private void LoadProducts()
@@ -206,34 +228,34 @@ namespace ITCSurveyReportLite
 
         private void SelectFilters()
         {
-            if (Survey.Prefixes.Count > 0)
+            if (Survey.ContentOptions.Prefixes.Count > 0)
             {
                 rbPrefix.Checked = true;
                 FilterType = FilterBy.Prefix;
                 UpdateFilterType();
-                foreach (string p in Survey.Prefixes)
+                foreach (string p in Survey.ContentOptions.Prefixes)
                 {
                     int index = lstFilterType.FindStringExact(p);
                     lstFilterType.SetSelected(index, true);
                 }
 
             }
-            else if (Survey.QRangeHigh != 0)
+            else if (Survey.ContentOptions.QRangeHigh != 0)
             {
                 rbQnum.Checked = true;
                 FilterType = FilterBy.Qnum;
                 UpdateFilterType();
-                txtLowerQnum.Text = Survey.QRangeLow.ToString();
-                txtUpperQnum.Text = Survey.QRangeHigh.ToString();
+                txtLowerQnum.Text = Survey.ContentOptions.QRangeLow.ToString();
+                txtUpperQnum.Text = Survey.ContentOptions.QRangeHigh.ToString();
             }
-            else if (Survey.Headings.Count > 0)
+            else if (Survey.ContentOptions.Headings.Count > 0)
             {
                 rbHeading.Checked = true;
                 FilterType = FilterBy.Heading;
                 UpdateFilterType();
-                foreach (Heading h in Survey.Headings)
+                foreach (Heading h in Survey.ContentOptions.Headings)
                 {
-                    int index = lstFilterType.FindStringExact(h.PreP + " - " + h.VarName.RefVarName);
+                    int index = lstFilterType.FindStringExact(h.ToString());
                     lstFilterType.SetSelected(index, true);
                 }
             }
@@ -247,7 +269,7 @@ namespace ITCSurveyReportLite
 
         private void SelectVarNames()
         {
-            foreach(VariableName v in Survey.Varnames)
+            foreach(VariableName v in Survey.ContentOptions.Varnames)
             {
                 int index = lstVarName.FindStringExact(v.RefVarName);
                 lstVarName.SetSelected(index, true);
@@ -256,47 +278,47 @@ namespace ITCSurveyReportLite
 
         private void SaveFilter()
         {
-            Survey.Prefixes.Clear();
-            Survey.Headings.Clear();
-            Survey.Products.Clear();
-            Survey.QRangeHigh = 0;
-            Survey.QRangeLow = 0;
+            Survey.ContentOptions.Prefixes.Clear();
+            Survey.ContentOptions.Headings.Clear();
+            Survey.ContentOptions.Products.Clear();
+            Survey.ContentOptions.QRangeHigh = 0;
+            Survey.ContentOptions.QRangeLow = 0;
 
             // apply filter choices to provided survey object
             switch (FilterType)
             {
                 case FilterBy.Prefix:
-                    Survey.Prefixes.AddRange(lstFilterType.SelectedItems.Cast<string>().ToList());
+                    Survey.ContentOptions.Prefixes.AddRange(lstFilterType.SelectedItems.Cast<string>().ToList());
                     break;
                 case FilterBy.Heading:
-                    foreach (string s in lstFilterType.SelectedItems)
+                    foreach (Heading s in lstFilterType.SelectedItems)
                         foreach (SurveyQuestion sq in SurveyContent)
-                            if (sq.VarName.RefVarName.Equals(s.Substring(s.LastIndexOf(" - ") + 3)))
+                            if (sq.VarName.RefVarName.Equals(s.VarName.RefVarName))
                             {
-                                Heading h = new Heading(sq.Qnum, sq.PreP);
-                                h.VarName = new VariableName(sq.VarName.VarName);
-                                Survey.Headings.Add(h);
+                                ////Heading h = new Heading(sq.Qnum, sq.PreP);
+                                //h.VarName = new VariableName(sq.VarName.VarName);
+                                Survey.ContentOptions.Headings.Add(s);
                             }
                     break;
                 case FilterBy.Qnum:
                     if (Int32.TryParse(txtLowerQnum.Text, out int low))
-                        Survey.QRangeLow = low;
+                        Survey.ContentOptions.QRangeLow = low;
 
                     if (Int32.TryParse(txtUpperQnum.Text, out int high))
-                        Survey.QRangeHigh = high;
+                        Survey.ContentOptions.QRangeHigh = high;
 
                     break;
 
                 case FilterBy.Product:
                     foreach (string s in lstFilterType.SelectedItems)
-                        Survey.Products.Add(new ProductLabel(0, s));
+                        Survey.ContentOptions.Products.Add(new ProductLabel(0, s));
                     break;
 
             }
 
 
             foreach (SurveyQuestion sq in lstVarName.SelectedItems)
-                Survey.Varnames.Add(sq.VarName);
+                Survey.ContentOptions.Varnames.Add(sq.VarName);
         }
 
         private void SaveFieldInfo()
@@ -308,14 +330,14 @@ namespace ITCSurveyReportLite
         {
             List<SurveyQuestion> varList = new List<SurveyQuestion>();
             bool inSection;
-            foreach (string s in lstFilterType.SelectedItems)
+            foreach (Heading s in lstFilterType.SelectedItems)
             {
                 inSection = false;
-                string headingVar = s.Substring(s.LastIndexOf(" - ") + 3);
+                //string headingVar = s.Substring(s.LastIndexOf(" - ") + 3);
                 foreach (SurveyQuestion sq in SurveyContent)
                 {
                     string currentVar = sq.VarName.RefVarName;
-                    if (sq.VarName.RefVarName.Equals(headingVar))
+                    if (s.VarName.VarName.Equals(sq.VarName.VarName))
                     {
                         inSection = true;
                         continue;
@@ -324,7 +346,7 @@ namespace ITCSurveyReportLite
                     {
                         break;
                     }
-                    else if (sq.IsSubHeading() && headingVar.EndsWith("s") && inSection)
+                    else if (sq.IsSubHeading() && s.IsSubHeading() && inSection)
                     {
                         break;
                     }

@@ -75,7 +75,7 @@
             this.panel1.Location = new System.Drawing.Point(8, 80);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(301, 476);
+            this.panel1.Size = new System.Drawing.Size(301, 474);
             this.panel1.TabIndex = 1;
             // 
             // panelQnumRange
@@ -158,7 +158,7 @@
             this.rbProduct.Location = new System.Drawing.Point(6, 67);
             this.rbProduct.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbProduct.Name = "rbProduct";
-            this.rbProduct.Size = new System.Drawing.Size(69, 20);
+            this.rbProduct.Size = new System.Drawing.Size(68, 20);
             this.rbProduct.TabIndex = 3;
             this.rbProduct.TabStop = true;
             this.rbProduct.Text = "Product";
@@ -172,7 +172,7 @@
             this.rbHeading.Location = new System.Drawing.Point(6, 47);
             this.rbHeading.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbHeading.Name = "rbHeading";
-            this.rbHeading.Size = new System.Drawing.Size(72, 20);
+            this.rbHeading.Size = new System.Drawing.Size(71, 20);
             this.rbHeading.TabIndex = 2;
             this.rbHeading.TabStop = true;
             this.rbHeading.Text = "Heading";
@@ -185,7 +185,7 @@
             this.rbQnum.Location = new System.Drawing.Point(6, 27);
             this.rbQnum.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbQnum.Name = "rbQnum";
-            this.rbQnum.Size = new System.Drawing.Size(60, 20);
+            this.rbQnum.Size = new System.Drawing.Size(59, 20);
             this.rbQnum.TabIndex = 1;
             this.rbQnum.TabStop = true;
             this.rbQnum.Text = "Qnum";
@@ -198,7 +198,7 @@
             this.rbPrefix.Location = new System.Drawing.Point(6, 7);
             this.rbPrefix.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbPrefix.Name = "rbPrefix";
-            this.rbPrefix.Size = new System.Drawing.Size(58, 20);
+            this.rbPrefix.Size = new System.Drawing.Size(57, 20);
             this.rbPrefix.TabIndex = 0;
             this.rbPrefix.TabStop = true;
             this.rbPrefix.Text = "Prefix";
@@ -210,7 +210,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(105, 56);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 16);
+            this.label2.Size = new System.Drawing.Size(65, 16);
             this.label2.TabIndex = 2;
             this.label2.Text = "Filter by...";
             // 
@@ -239,7 +239,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(421, 56);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(95, 16);
+            this.label3.Size = new System.Drawing.Size(94, 16);
             this.label3.TabIndex = 4;
             this.label3.Text = "Question Fields";
             // 
@@ -258,7 +258,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(329, 56);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 16);
+            this.label4.Size = new System.Drawing.Size(66, 16);
             this.label4.TabIndex = 6;
             this.label4.Text = "VarNames";
             // 
@@ -289,7 +289,7 @@
             this.chkRemoveOtherSpecify.AutoSize = true;
             this.chkRemoveOtherSpecify.Location = new System.Drawing.Point(313, 554);
             this.chkRemoveOtherSpecify.Name = "chkRemoveOtherSpecify";
-            this.chkRemoveOtherSpecify.Size = new System.Drawing.Size(162, 20);
+            this.chkRemoveOtherSpecify.Size = new System.Drawing.Size(161, 20);
             this.chkRemoveOtherSpecify.TabIndex = 9;
             this.chkRemoveOtherSpecify.Text = "Remove Other (specify)";
             this.chkRemoveOtherSpecify.UseVisualStyleBackColor = true;
