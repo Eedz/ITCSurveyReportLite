@@ -42,7 +42,7 @@
             // 
             // cmdOK
             // 
-            this.cmdOK.Location = new System.Drawing.Point(124, 179);
+            this.cmdOK.Location = new System.Drawing.Point(124, 156);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(41, 23);
             this.cmdOK.TabIndex = 16;
@@ -109,13 +109,14 @@
             // optUseRef
             // 
             this.optUseRef.AutoSize = true;
-            this.optUseRef.Location = new System.Drawing.Point(81, 156);
+            this.optUseRef.Location = new System.Drawing.Point(12, 133);
             this.optUseRef.Name = "optUseRef";
             this.optUseRef.Size = new System.Drawing.Size(112, 17);
             this.optUseRef.TabIndex = 23;
             this.optUseRef.TabStop = true;
             this.optUseRef.Text = "Reference Survey";
             this.optUseRef.UseVisualStyleBackColor = true;
+            this.optUseRef.Visible = false;
             // 
             // optUseMain
             // 
@@ -128,6 +129,7 @@
             this.optUseMain.TabStop = true;
             this.optUseMain.Text = "Main Survey";
             this.optUseMain.UseVisualStyleBackColor = true;
+            this.optUseMain.Visible = false;
             // 
             // label4
             // 
@@ -137,12 +139,13 @@
             this.label4.Size = new System.Drawing.Size(117, 13);
             this.label4.TabIndex = 25;
             this.label4.Text = "Include language from ";
+            this.label4.Visible = false;
             // 
             // TranslatorTemplateOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(193, 207);
+            this.ClientSize = new System.Drawing.Size(193, 184);
             this.ControlBox = false;
             this.Controls.Add(this.label4);
             this.Controls.Add(this.optUseMain);

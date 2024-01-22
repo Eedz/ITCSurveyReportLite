@@ -269,9 +269,12 @@ namespace ITCSurveyReportLite
 
         private void SelectVarNames()
         {
+
             foreach(VariableName v in Survey.ContentOptions.Varnames)
             {
                 int index = lstVarName.FindStringExact(v.RefVarName);
+                if (index == -1)
+                    continue;
                 lstVarName.SetSelected(index, true);
             }
         }

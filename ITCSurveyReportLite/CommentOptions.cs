@@ -73,44 +73,44 @@ namespace ITCSurveyReportLite
 
         private void LoadSurveyOptions()
         {
-            foreach (string s in TheSurvey.CommentFields)
+            foreach (string s in TheSurvey.ContentOptions.CommentOptions.CommentFields)
             {
                 lstType.SetSelected(lstType.FindStringExact(s), true);
             }
 
-            foreach (Person p in TheSurvey.CommentAuthors)
+            foreach (Person p in TheSurvey.ContentOptions.CommentOptions.CommentAuthors)
             {
                 lstAuthor.SetSelected(lstAuthor.FindStringExact(p.Name), true);
             }
 
-            foreach (string s in TheSurvey.CommentSources)
+            foreach (string s in TheSurvey.ContentOptions.CommentOptions.CommentSources)
             {
                 lstAuthor.SetSelected(lstAuthority.FindStringExact(s), true);
             }
 
-            if (TheSurvey.CommentDate != null)
-                dtpCommentsSince.Value = TheSurvey.CommentDate.Value;
+            if (TheSurvey.ContentOptions.CommentOptions.CommentDate != null)
+                dtpCommentsSince.Value = TheSurvey.ContentOptions.CommentOptions.CommentDate.Value;
 
-            if (!string.IsNullOrEmpty(TheSurvey.CommentText))
-                txtCommentFilter.Text = TheSurvey.CommentText;
+            if (!string.IsNullOrEmpty(TheSurvey.ContentOptions.CommentOptions.CommentText))
+                txtCommentFilter.Text = TheSurvey.ContentOptions.CommentOptions.CommentText;
         }
 
         private void SaveSelections()
         {
             foreach (string type in lstType.SelectedItems)
-                TheSurvey.CommentFields.Add(type);
+                TheSurvey.ContentOptions.CommentOptions.CommentFields.Add(type);
 
             foreach (Person author in lstAuthor.SelectedItems)
-                TheSurvey.CommentAuthors.Add(author);
+                TheSurvey.ContentOptions.CommentOptions.CommentAuthors.Add(author);
 
             foreach (string author in lstAuthority.SelectedItems)
-                TheSurvey.CommentSources.Add(author);
+                TheSurvey.ContentOptions.CommentOptions.CommentSources.Add(author);
 
             if (dtpCommentsSince.Checked)
-                TheSurvey.CommentDate = dtpCommentsSince.Value;
+                TheSurvey.ContentOptions.CommentOptions.CommentDate = dtpCommentsSince.Value;
 
             if (!string.IsNullOrEmpty(txtCommentFilter.Text))
-                TheSurvey.CommentText = txtCommentFilter.Text;
+                TheSurvey.ContentOptions.CommentOptions.CommentText = txtCommentFilter.Text;
         }
         
     }

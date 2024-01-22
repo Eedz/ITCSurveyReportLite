@@ -1,4 +1,5 @@
 ﻿using System;
+using CommunityToolkit.Mvvm;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ITCLib;
 using System.Data;
@@ -46,7 +47,7 @@ namespace SurveyReportLiteTests
                 TranslationText = "Translation Text"
             });
             s.AddQuestion(q);
-            s.TransFields.Add("TestLang");
+            s.ContentOptions.TranslationOptions.TransFields.Add("TestLang");
             SR.AddSurvey(s);
 
             SR.GenerateReport();
@@ -56,7 +57,7 @@ namespace SurveyReportLiteTests
             bool hasQnumCol = dt.Columns[0].ColumnName.Equals("Qnum");
             bool hasVarNameCol = dt.Columns[1].ColumnName.Equals("VarName");
             bool hasQuestionCol = dt.Columns[2].ColumnName.Equals(s.SurveyCode);
-            bool hasTranslationCol = dt.Columns[3].ColumnName.Equals(s.SurveyCode + " " + s.TransFields[0]);
+            bool hasTranslationCol = dt.Columns[3].ColumnName.Equals(s.SurveyCode + " " + s.ContentOptions.TranslationOptions.TransFields[0]);
             bool hasRows = dt.Rows.Count == s.Questions.Count;
 
             bool hasAllColumns = hasQnumCol && hasVarNameCol && hasQuestionCol && hasTranslationCol;
@@ -82,8 +83,8 @@ namespace SurveyReportLiteTests
                 TranslationText = "Translation Text"
             });
             s.AddQuestion(q);
-            s.TransFields.Add("TestLang");
-            s.TransFields.Add("TestLang2");
+            s.ContentOptions.TranslationOptions.TransFields.Add("TestLang");
+            s.ContentOptions.TranslationOptions.TransFields.Add("TestLang2");
             SR.AddSurvey(s);
 
             SR.GenerateReport();
@@ -93,8 +94,8 @@ namespace SurveyReportLiteTests
             bool hasQnumCol = dt.Columns[0].ColumnName.Equals("Qnum");
             bool hasVarNameCol = dt.Columns[1].ColumnName.Equals("VarName");
             bool hasQuestionCol = dt.Columns[2].ColumnName.Equals(s.SurveyCode);
-            bool hasTranslationCol = dt.Columns[3].ColumnName.Equals(s.SurveyCode + " " + s.TransFields[0]);
-            bool hasTranslationCol2 = dt.Columns[4].ColumnName.Equals(s.SurveyCode + " " + s.TransFields[1]);
+            bool hasTranslationCol = dt.Columns[3].ColumnName.Equals(s.SurveyCode + " " + s.ContentOptions.TranslationOptions.TransFields[0]);
+            bool hasTranslationCol2 = dt.Columns[4].ColumnName.Equals(s.SurveyCode + " " + s.ContentOptions.TranslationOptions.TransFields[1]);
             bool hasRows = dt.Rows.Count == s.Questions.Count;
 
             bool hasAllColumns = hasQnumCol && hasVarNameCol && hasQuestionCol && hasTranslationCol && hasTranslationCol2;

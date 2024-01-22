@@ -44,7 +44,6 @@
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.chkIncludeFilterDescription = new System.Windows.Forms.CheckBox();
             this.grpToC.SuspendLayout();
             this.grpPaperSize.SuspendLayout();
             this.grpFormat.SuspendLayout();
@@ -55,7 +54,7 @@
             this.grpToC.Controls.Add(this.rbTOCQnums);
             this.grpToC.Controls.Add(this.rbTOCPages);
             this.grpToC.Controls.Add(this.rbTOCNone);
-            this.grpToC.Location = new System.Drawing.Point(22, 56);
+            this.grpToC.Location = new System.Drawing.Point(22, 37);
             this.grpToC.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpToC.Name = "grpToC";
             this.grpToC.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -106,7 +105,7 @@
             this.grpPaperSize.Controls.Add(this.rbSize11x17);
             this.grpPaperSize.Controls.Add(this.rbSizeLegal);
             this.grpPaperSize.Controls.Add(this.rbSizeLetter);
-            this.grpPaperSize.Location = new System.Drawing.Point(22, 153);
+            this.grpPaperSize.Location = new System.Drawing.Point(22, 134);
             this.grpPaperSize.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpPaperSize.Name = "grpPaperSize";
             this.grpPaperSize.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -178,7 +177,7 @@
             // 
             this.grpFormat.Controls.Add(this.rbFormatPDF);
             this.grpFormat.Controls.Add(this.rbFormatDOC);
-            this.grpFormat.Location = new System.Drawing.Point(22, 278);
+            this.grpFormat.Location = new System.Drawing.Point(22, 259);
             this.grpFormat.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpFormat.Name = "grpFormat";
             this.grpFormat.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -213,7 +212,7 @@
             // 
             // cmdOK
             // 
-            this.cmdOK.Location = new System.Drawing.Point(17, 372);
+            this.cmdOK.Location = new System.Drawing.Point(17, 354);
             this.cmdOK.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(56, 28);
@@ -224,7 +223,7 @@
             // 
             // cmdCancel
             // 
-            this.cmdCancel.Location = new System.Drawing.Point(96, 372);
+            this.cmdCancel.Location = new System.Drawing.Point(96, 354);
             this.cmdCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(61, 28);
@@ -236,29 +235,18 @@
             // label4
             // 
             this.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label4.Location = new System.Drawing.Point(8, 359);
+            this.label4.Location = new System.Drawing.Point(8, 341);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(160, 2);
             this.label4.TabIndex = 17;
             this.label4.Text = "label4";
             // 
-            // chkIncludeFilterDescription
-            // 
-            this.chkIncludeFilterDescription.AutoSize = true;
-            this.chkIncludeFilterDescription.Location = new System.Drawing.Point(24, 30);
-            this.chkIncludeFilterDescription.Name = "chkIncludeFilterDescription";
-            this.chkIncludeFilterDescription.Size = new System.Drawing.Size(128, 20);
-            this.chkIncludeFilterDescription.TabIndex = 18;
-            this.chkIncludeFilterDescription.Text = "Filter Descriptions";
-            this.chkIncludeFilterDescription.UseVisualStyleBackColor = true;
-            // 
             // OutputOptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(176, 408);
+            this.ClientSize = new System.Drawing.Size(176, 392);
             this.ControlBox = false;
-            this.Controls.Add(this.chkIncludeFilterDescription);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cmdCancel);
             this.Controls.Add(this.cmdOK);
@@ -300,6 +288,5 @@
         private System.Windows.Forms.RadioButton rbFormatPDF;
         private System.Windows.Forms.RadioButton rbFormatDOC;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox chkIncludeFilterDescription;
     }
 }
