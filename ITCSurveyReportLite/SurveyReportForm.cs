@@ -20,7 +20,8 @@ namespace ITCSurveyReportLite
     public partial class SurveyReportForm : Form
     {
         SurveyBasedReport SR;
-
+        BindingList<ReportSurvey> Surveys;
+        StandardFormattingOptions ReportOptions;
         Comparison compare;
         
         UserPrefs UserPreferences;
@@ -43,7 +44,7 @@ namespace ITCSurveyReportLite
             InitializeComponent();
 
             Globals.CreateWorld();
-
+            
             // add arrow symbol to add/remove buttons
             cmdAddSurvey.Text = char.ConvertFromUtf32(0x2192);
             cmdRemoveSurvey.Text = char.ConvertFromUtf32(0x2190);
@@ -55,9 +56,9 @@ namespace ITCSurveyReportLite
 
             // add tooltips for the quick reports
             // toolTipStandard.SetToolTip(this.optStd, standardToolTipText);
-            toolTipStandard.ShowAlways = true;
-            toolTipStandard.AutomaticDelay = 0;
-            toolTipStandard.AutoPopDelay = 30000;
+            //toolTipStandard.ShowAlways = true;
+            //toolTipStandard.AutomaticDelay = 0;
+            //toolTipStandard.AutoPopDelay = 30000;
 
             // hide the comparison tab until it is needed
             pgCompareTab = pgCompare;
@@ -80,7 +81,7 @@ namespace ITCSurveyReportLite
             // bind selected surveys to the list of surveys in SR
             lstSelectedSurveys.ValueMember = "ID";
             lstSelectedSurveys.DisplayMember = "SurveyCode";
-            lstSelectedSurveys.DataSource = SR.Surveys;
+            lstSelectedSurveys.DataSource = Surveys;
 
             lblStatus.Visible = false;
             lblStatus.Text = "Ready.";
@@ -206,6 +207,9 @@ namespace ITCSurveyReportLite
 
         private void cmdQuickGenerate_Click(object sender, EventArgs e)
         {
+            //GenerateReport();
+            //return;
+
             surveyReportBindingSource.EndEdit();
 
             if (SR.Surveys.Count == 0)
@@ -273,41 +277,328 @@ namespace ITCSurveyReportLite
 
         private void GenerateReport()
         {
+            surveyReportBindingSource.EndEdit();
+
+            if (Surveys.Count == 0)
+            {
+                MessageBox.Show("No surveys selected.");
+                return;
+            }
+
+            if (Surveys.Any(x => x.ContentOptions.TranslationOptions.TransFields.Count == 0) && SR.SubsetTablesTranslation)
+            {
+                MessageBox.Show("You have selected Translation Subset Tables but no translation language was selected.");
+                return;
+            }
+
             // check template
             switch (CurrentTemplate)
             {
                 case ReportTemplate.Translator:
+                    RunTranslatorReport();
                     break;
                 case ReportTemplate.Website:
+                    RunWebReport();
                     break;
                 case ReportTemplate.Standard:
+                    if (Surveys.Count > 1)
+                        RunStandardComparisonReport();
+                    else
+                        RunStandardSingleSurveyReport(chkStdTranslation.Checked);
+
                     break;
                 case ReportTemplate.Custom:
 
-                    if (SR.Surveys.Count > 1)
-                        RunComparisonReport();
+                    if (Surveys.Count > 1)
+                        RunComparisonReport2();
+                    else if (SR.SubsetTables)
+                        RunTableFormatReport();
                     else
-                    {
-                        if (SR.SubsetTables)
-                            RunTableFormatReport();
-                        else
-                            RunSingleSurveyReport();
-                    }
+                        RunSingleSurveyReport();
+                    
                     break;
 
             }
         }
 
+        #region New Methods
+
+
+        private void RunStandardComparisonReport()
+        {
+
+        }
+
+        private void RunStandardSingleSurveyReport(bool withTranslation)
+        {
+            ReportSurvey survey = Surveys[0];
+            survey.Qnum = true;
+
+            if (withTranslation)
+            {
+                List<string> langs = survey.ListLanguages.ToList();
+                langs.Remove("English");
+                survey.ContentOptions.TranslationOptions.TransFields = langs;
+            }
+
+            switch (survey.Mode.ModeAbbrev)
+            {
+                case "F2F":
+                case "mail":
+                case "semi-tel":
+                    SR.QNInsertion = true;
+                    SR.NrFormat = ReadOutOptions.DontReadOut;
+                    break;
+                case "CATI":
+                case "web":
+                case "tel":
+                case "CAPI":
+                    SR.QNInsertion = false;
+                    SR.NrFormat = ReadOutOptions.Neither;
+                    break;
+            }
+
+            // get the survey data for all chosen surveys
+            PopulateSurveys(Surveys);
+
+            try
+            {
+                StandardSurveyReport report = new StandardSurveyReport(SR.Surveys[0]);
+                report.BlankColumn = true;
+                report.ReportOptions.VarChangesCol = true;
+                report.ReportOptions.ExcludeTempChanges = true;
+                
+                report.UpdateColumnOrder(chkTranslationFirst.Checked);
+
+                // bind status label to survey report's status property
+                lblStatus.DataBindings.Clear();
+                lblStatus.DataBindings.Add(new Binding("Text", report, "ReportStatus"));
+
+                report.CreateReport();
+
+                StandardReportPrinter printer = new StandardReportPrinter(report);
+                printer.OutputOptions.FileFormat = FileFormats.DOC;
+
+                if (report.ColumnOrder.Count >= 4)
+                    printer.OutputOptions.PaperSize = PaperSizes.Legal;
+                else
+                    printer.OutputOptions.PaperSize = PaperSizes.Letter;
+
+                printer.ToC = true;
+                printer.Unattended = false;
+                
+                printer.PrintReport();
+            }
+            catch
+            {
+                MessageBox.Show("Error generating report.");
+            }
+        }
 
         /// <summary>
         /// Run a survey report with 1 survey.
+        /// </summary>
+        private void RunSingleSurveyReport()
+        {
+            // get the survey data for all chosen surveys
+            PopulateSurveys(Surveys);
+
+            try
+            {
+                StandardSurveyReport report = new StandardSurveyReport(SR.Surveys[0]);
+
+                report.UpdateColumnOrder(chkTranslationFirst.Checked);
+
+                // bind status label to survey report's status property
+                lblStatus.DataBindings.Clear();
+                lblStatus.DataBindings.Add(new Binding("Text", report, "ReportStatus"));
+
+                report.CreateReport();
+
+                StandardReportPrinter printer = new StandardReportPrinter(report);
+                printer.OutputOptions.FileFormat = SR.LayoutOptions.FileFormat;
+                printer.ToC = true;
+                printer.Unattended = false;
+                if (printer.OutputOptions.PaperSize == PaperSizes.Letter)
+                {
+                    if (report.ColumnOrder.Count >= 6)
+                        printer.OutputOptions.PaperSize = PaperSizes.Eleven17;
+                    else if (report.ColumnOrder.Count >= 4)
+                        printer.OutputOptions.PaperSize = PaperSizes.Legal;
+                }
+
+                printer.PrintReport();
+            }
+            catch
+            {
+                MessageBox.Show("Error generating report.");
+            }
+
+        }
+
+        /// <summary>
+        /// Run a survey report with 2 or more surveys.
+        /// </summary>
+        private void RunComparisonReport2()
+        {
+            int result;
+
+            // get the survey data for all chosen surveys
+            PopulateSurveys(SR.Surveys);
+
+
+            SurveyReport survReport = new SurveyReport(SR)
+            {
+                SurveyCompare = compare
+            };
+
+            // bind status label to survey report's status property
+            lblStatus.DataBindings.Clear();
+            lblStatus.DataBindings.Add(new Binding("Text", survReport, "ReportStatus"));
+
+            if (chkTranslationFirst.Checked)
+            {
+                survReport.UpdateColumnOrder(true);
+            }
+
+            result = survReport.GenerateReport();
+            switch (result)
+            {
+                case 1:
+                    MessageBox.Show("One or more surveys contain no records.");
+                    // TODO if a backup was chosen, show a form for selecting a different survey code from that date
+                    break;
+                default:
+                    break;
+            }
+
+            if (survReport.LayoutOptions.PaperSize == PaperSizes.Letter)
+            {
+                if (survReport.ColumnOrder.Count >= 6)
+                    survReport.LayoutOptions.PaperSize = PaperSizes.Eleven17;
+                else if (survReport.ColumnOrder.Count >= 4)
+                    survReport.LayoutOptions.PaperSize = PaperSizes.Legal;
+            }
+
+            // output report to Word/PDF
+            survReport.OutputReportTableXML();
+        }
+
+        /// <summary>
+        /// Run a survey report with 1 survey in table format.
+        /// </summary>
+        private void RunTableFormatReport()
+        {
+            // get the survey data for all chosen surveys
+            PopulateSurveys(Surveys);
+
+            try
+            {
+                TableFormatReport report = new TableFormatReport(SR.Surveys[0]);
+
+                report.UpdateColumnOrder(false);
+
+                // bind status label to survey report's status property
+                lblStatus.DataBindings.Clear();
+                lblStatus.DataBindings.Add(new Binding("Text", report, "ReportStatus"));
+
+                report.CreateReport();
+
+                TableFormatPrinter printer = new TableFormatPrinter(report);
+                printer.OutputOptions.FileFormat = FileFormats.DOC;
+                printer.OutputOptions.PaperSize = PaperSizes.Letter;
+                printer.ToC = true;
+                printer.Unattended = false;
+
+
+                printer.PrintReport();
+            }
+            catch
+            {
+                MessageBox.Show("Error generating report.");
+            }
+
+        }
+
+        /// <summary>
+        /// Run a survey report for 1 survey to be posted to the web.
+        /// </summary>
+        private void RunWebReport()
+        {
+            ReportSurvey survey = SR.Surveys[0];
+
+            PopulateWebsiteReport(survey);
+
+            WebsiteSurveyReport report = new WebsiteSurveyReport(survey);
+            report.ShowEnglish = survey.ShowQuestion;
+            report.UpdateColumnOrder();
+
+            // bind status label to survey report's status property
+            lblStatus.DataBindings.Clear();
+            lblStatus.DataBindings.Add(new Binding("Text", report, "ReportStatus"));
+
+            try
+            {
+                report.CreateReport();
+
+                WebsiteReportPrinter printer = new WebsiteReportPrinter(report, report.SurveyContent.WebName);
+                printer.PrintReport();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error generating this report. " + e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Run a survey report to be sent for translation.
+        /// </summary>
+        private void RunTranslatorReport()
+        {
+            if (SR.Surveys.Count != 2)
+            {
+                MessageBox.Show("Translator options not set.");
+                return;
+            }
+
+            SR.Surveys[0].Qnum = true;
+            SR.Surveys[1].Primary = true;
+
+            // get the survey data for all chosen surveys
+            PopulateTranslatorSurveys();
+
+            TranslatorReport report = new TranslatorReport(SR.Surveys[0], SR.Surveys[1]);
+            report.Comparer.SimilarWords = DBAction.GetSimilarWords();
+            report.UpdateColumnOrder();
+
+            // bind status label to survey report's status property
+            lblStatus.DataBindings.Clear();
+            lblStatus.DataBindings.Add(new Binding("Text", report, "ReportStatus"));
+
+            try
+            {
+                report.CreateReport();
+                TranslatorReportPrinter printer = new TranslatorReportPrinter(report, report.ReportTitle());
+                printer.PrintReport();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error generating this report. " + e.Message);
+            }
+        }
+
+        #endregion
+
+
+        /// <summary>
+        /// Run a survey report.
         /// </summary>
         private void RunSurveyReport()
         {
             int result;
 
             // get the survey data for all chosen surveys
-            PopulateSurveys();
+            PopulateSurveys(SR.Surveys);
 
             SurveyReport survReport = new SurveyReport(SR)
             {
@@ -353,89 +644,10 @@ namespace ITCSurveyReportLite
             survReport.OutputReportTableXML();
         }
 
-        /// <summary>
-        /// Run a survey report with 1 survey in table format.
-        /// </summary>
-        private void RunTableFormatReport()
-        {
-            // get the survey data for all chosen surveys
-            PopulateSurveys();
-          
-            try
-            {
-                TableFormatReport report = new TableFormatReport(SR.Surveys[0]);
-
-                report.ColumnOrder = SR.ColumnOrder;
-
-                // bind status label to survey report's status property
-                lblStatus.DataBindings.Clear();
-                lblStatus.DataBindings.Add(new Binding("Text", report, "ReportStatus"));
-
-                report.CreateReport();
-
-                TableFormatPrinter printer = new TableFormatPrinter(report);
-                printer.OutputOptions.FileFormat = SR.LayoutOptions.FileFormat;
-                printer.OutputOptions.PaperSize = PaperSizes.Letter;
-                printer.ToC = true;
-                printer.Unattended = false;
-                
-
-                printer.PrintReport();
-            }
-            catch
-            {
-                MessageBox.Show("Error generating report.");
-            }
-
-        }
+        
 
 
-        /// <summary>
-        /// Run a survey report with 1 survey.
-        /// </summary>
-        private void RunSingleSurveyReport()
-        {
-            // get the survey data for all chosen surveys
-            PopulateSurveys();
-
-            SurveyReport survReport = new SurveyReport(SR);
-
-            if (chkTranslationFirst.Checked)
-            {
-                survReport.UpdateColumnOrder(true);
-            }
-            //try
-            //{
-                StandardSurveyReport report = new StandardSurveyReport(SR.Surveys[0]);
-
-                report.ColumnOrder = survReport.ColumnOrder;
-
-                // bind status label to survey report's status property
-                lblStatus.DataBindings.Clear();
-                lblStatus.DataBindings.Add(new Binding("Text", report, "ReportStatus"));
-
-                report.CreateReport();
-
-                StandardReportPrinter printer = new StandardReportPrinter(report);
-                printer.OutputOptions.FileFormat = SR.LayoutOptions.FileFormat;
-                printer.ToC = true;
-                printer.Unattended = false;
-                if (printer.OutputOptions.PaperSize == PaperSizes.Letter)
-                {
-                    if (report.ColumnOrder.Count >= 6)
-                        printer.OutputOptions.PaperSize = PaperSizes.Eleven17;
-                    else if (report.ColumnOrder.Count >= 4)
-                        printer.OutputOptions.PaperSize = PaperSizes.Legal;
-                }
-
-                printer.PrintReport();
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Error generating report.");
-            //}
-            
-        }
+        
 
         /// <summary>
         /// Run a survey report with 2 or more surveys.
@@ -445,7 +657,7 @@ namespace ITCSurveyReportLite
             int result;
 
             // get the survey data for all chosen surveys
-            PopulateComparisonSurveys();
+            PopulateSurveys(SR.Surveys);
 
 
             SurveyReport survReport = new SurveyReport(SR)
@@ -556,7 +768,7 @@ namespace ITCSurveyReportLite
             SR.Details = "";
 
             // get the survey data for all chosen surveys
-            PopulateSurveys();
+            PopulateSurveys(SR.Surveys);
 
             int result;
             SurveyReport survReport = new SurveyReport(SR)
@@ -584,35 +796,7 @@ namespace ITCSurveyReportLite
             survReport.OutputReportTableXML();
         }
 
-        /// <summary>
-        /// Run a survey report for 1 survey to be posted to the web.
-        /// </summary>
-        private void RunWebReport()
-        {
-            ReportSurvey survey = SR.Surveys[0];
-
-            PopulateWebsiteReport(survey);
-
-            WebsiteSurveyReport report = new WebsiteSurveyReport(survey);
-            report.ShowEnglish = survey.ShowQuestion;
-            report.UpdateColumnOrder();
-
-            // bind status label to survey report's status property
-            lblStatus.DataBindings.Clear();
-            lblStatus.DataBindings.Add(new Binding("Text", report, "ReportStatus"));
-
-            try
-            {
-                report.CreateReport();
-
-                WebsiteReportPrinter printer = new WebsiteReportPrinter(report, report.SurveyContent.WebName);
-                printer.PrintReport();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Error generating this report. " + e.Message);
-            }
-        }
+        
 
         /// <summary>
         /// Populates a ReportSurvey object populated with the data for a website survey. All questions with previous names and, optionally a translation.
@@ -648,42 +832,7 @@ namespace ITCSurveyReportLite
             survey.LastUpdate = DBAction.GetSurveyLastUpdate(survey);
         }
 
-        /// <summary>
-        /// Run a survey report to be sent for translation.
-        /// </summary>
-        private void RunTranslatorReport()
-        {
-            if (SR.Surveys.Count != 2)
-            {
-                MessageBox.Show("Translator options not set.");
-                return;
-            }
-
-            SR.Surveys[0].Qnum = true;
-            SR.Surveys[1].Primary = true;
-
-            // get the survey data for all chosen surveys
-            PopulateTranslatorSurveys();
-
-            TranslatorReport report = new TranslatorReport(SR.Surveys[0], SR.Surveys[1]);
-            report.Comparer.SimilarWords = DBAction.GetSimilarWords();
-            report.UpdateColumnOrder();
-
-            // bind status label to survey report's status property
-            lblStatus.DataBindings.Clear();
-            lblStatus.DataBindings.Add(new Binding("Text", report, "ReportStatus"));
-
-            try
-            {
-                report.CreateReport();
-                TranslatorReportPrinter printer = new TranslatorReportPrinter(report, report.ReportTitle());
-                printer.PrintReport();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Error generating this report. " + e.Message);
-            }
-        }
+        
 
         /// <summary>
         /// For each survey in the report, fill the question list and translations as needed.
@@ -732,10 +881,10 @@ namespace ITCSurveyReportLite
         /// <summary>
         /// For each survey in the report, fill the question list, comments and translations as needed.
         /// </summary>
-        private void PopulateSurveys()
+        private void PopulateSurveys(BindingList<ReportSurvey> surveys)
         {
             // populate the survey and extra fields
-            foreach (ReportSurvey rs in SR.Surveys)
+            foreach (ReportSurvey rs in surveys)
             {
                 rs.Questions.Clear();
                 rs.SurveyNotes.Clear();
@@ -760,12 +909,14 @@ namespace ITCSurveyReportLite
                     rs.ProjectGroups.Add(q, groups);
                 }
 
+                
                 var images = DBAction.GetSurveyImagesFromFolder(rs);
                 foreach (SurveyImage img in images)
                 {
                     var q = SR.Surveys[0].QuestionByRefVar(img.VarName);
                     if (q != null) q.Images.Add(img);
                 }
+                
 
 
                 // correct questions
@@ -796,95 +947,9 @@ namespace ITCSurveyReportLite
                     DBAction.FillCommentsBySurvey(rs);
                 }
 
-                // translations
-                if (rs.Backend.Date != DateTime.Today)
-                    DBAction.FillBackupTranslation(rs, rs.Backend.Date, rs.ContentOptions.TranslationOptions.TransFields);
-                else
+                if (rs.ContentOptions.CommentOptions.IncludeDeletedComments)
                 {
-                    foreach (string language in rs.ContentOptions.TranslationOptions.TransFields)
-                    {
-                        var translations = DBAction.GetSurveyTranslation(rs.SurveyCode, language);
-
-                        foreach (Translation t in translations)
-                            rs.QuestionByID(t.QID).Translations.Add(t);
-                    }
-                }
-
-
-                // filters
-                if (rs.FilterCol)
-                    rs.MakeFilterList();
-
-                // varchanges (for appendix)
-                if (SR.VarChangesApp)
-                    rs.VarChanges = new List<VarNameChange>(DBAction.GetVarNameChanges(rs).Where(x => x.PreFWChange != SR.ExcludeTempChanges));
-
-                rs.LastUpdate = DBAction.GetSurveyLastUpdate(rs);
-            }
-        }
-
-        private void PopulateComparisonSurveys()
-        {
-            // populate the survey and extra fields
-            foreach (ReportSurvey rs in SR.Surveys)
-            {
-                rs.Questions.Clear();
-                rs.SurveyNotes.Clear();
-                rs.VarChanges.Clear();
-
-                // questions
-                if (rs.Backend.Date != DateTime.Today)
-                {
-                    rs.AddQuestions(DBAction.GetBackupQuestions(rs, rs.Backend));
-                    List<QuestionTimeFrame> timeframes = DBAction.GetTimeFrames(rs.SurveyCode);
-                    foreach (SurveyQuestion question in rs.Questions)
-                    {
-                        question.TimeFrames = timeframes.Where(x => x.QID == question.ID).ToList();
-                    }
-                }
-                else
-                    rs.AddQuestions(DBAction.GetSurveyQuestions(rs));
-
-                foreach (SurveyQuestion q in rs.Questions)
-                {
-                    string groups = DBAction.GetSurveyGroups(rs.SurveyCode, q.VarName.RefVarName);
-                    rs.ProjectGroups.Add(q, groups);
-                }
-
-                var images = DBAction.GetSurveyImagesFromFolder(rs);
-                foreach (SurveyImage img in images)
-                {
-                    var q = SR.Surveys[0].QuestionByRefVar(img.VarName);
-                    if (q != null) q.Images.Add(img);
-                }
-
-
-                // correct questions
-                if (rs.Corrected)
-                {
-                    rs.CorrectedQuestions = DBAction.GetCorrectedWordings(rs);
-                    rs.CorrectWordings();
-                }
-
-                // previous names (for Var column)
-                DBAction.FillPreviousNames(rs, SR.ExcludeTempChanges);
-
-                if (compare.MatchOnRename && rs.Backend.Date != DateTime.Today)
-                {
-                    foreach (SurveyQuestion sq in rs.Questions)
-                    {
-                        sq.VarName.VarName = DBAction.GetCurrentName(rs.SurveyCode, sq.VarName.VarName, rs.Backend);
-                    }
-                }
-
-                // survey notes
-                if (SR.SurvNotes)
-                    rs.SurveyNotes = DBAction.GetSurvComments(rs);
-
-                // comments
-                if (rs.ContentOptions.CommentOptions.CommentFields.Count > 0)
-                {
-                    DBAction.FillCommentsBySurvey(rs);
+                    rs.DeletedVarComments.AddRange(DBAction.GetDeletedComments(rs.SurveyCode));
                 }
 
                 // translations
@@ -974,12 +1039,19 @@ namespace ITCSurveyReportLite
         /// <param name="s">ReportSurvey object being added to the report.</param>
         private void AddSurvey(ReportSurvey s)
         {
+            if (Surveys.Contains(s))
+            {
+                BackupConnection bkp = new BackupConnection(s.Backend);
+                s.Backend = bkp.GetNearestBackup();
+            }
+
             if (SR.HasSurvey(s))
             {
                 BackupConnection bkp = new BackupConnection(s.Backend);
                 s.Backend = bkp.GetNearestBackup();
             }
 
+            Surveys.Add(s);
             SR.AddSurvey(s);
 
             UpdateReportColumns(null, null);
@@ -1024,6 +1096,7 @@ namespace ITCSurveyReportLite
         {
             // remove survey from the SurveyReport object
             SR.RemoveSurvey((ReportSurvey)lstSelectedSurveys.SelectedItem);
+            Surveys.Remove((ReportSurvey)lstSelectedSurveys.SelectedItem);
             GC.Collect();
 
             UpdateReportColumns(null, null);
@@ -1160,6 +1233,9 @@ namespace ITCSurveyReportLite
                         lstCommentTypes.SetSelected(i, true);
             }
 
+            if (CurrentSurvey.ContentOptions.CommentOptions.IncludeDeletedComments)
+                lstCommentTypes.SetSelected(lstCommentTypes.Items.Count - 1, true);
+
             switch (CurrentSurvey.RoutingFormat)
             {
                 case RoutingStyle.Normal:
@@ -1202,6 +1278,8 @@ namespace ITCSurveyReportLite
                     lstTransFields.Items.Add(s);
 
             List<CommentType> commentTypes = DBAction.GetCommentTypes(survey);
+            if (Surveys.Count > 1)
+                commentTypes.Add(new CommentType() { ID = -1, TypeName = "Deleted Var Comments", ShortForm="Deletion" });
             lstCommentTypes.DisplayMember = "TypeName";
             lstCommentTypes.ValueMember = "ID";
             lstCommentTypes.DataSource = commentTypes;
@@ -1213,6 +1291,7 @@ namespace ITCSurveyReportLite
         private void NewReport(List<ReportSurvey> surveys)
         {
             // reset report settings
+            Surveys = new BindingList<ReportSurvey>();
             SR = new SurveyBasedReport(surveys);
             SR.LayoutOptions.ToC = TableOfContents.PageNums;
 
@@ -1525,9 +1604,14 @@ namespace ITCSurveyReportLite
         private void lstCommentTypes_Click(object sender, EventArgs e)
         {
             CurrentSurvey.ContentOptions.CommentOptions.CommentFields.Clear();
+            CurrentSurvey.ContentOptions.CommentOptions.IncludeDeletedComments = false;
+
             foreach (CommentType type in lstCommentTypes.SelectedItems)
             {
-                CurrentSurvey.ContentOptions.CommentOptions.CommentFields.Add(type.TypeName);
+                if (type.TypeName.Equals("Deleted Var Comments"))
+                    CurrentSurvey.ContentOptions.CommentOptions.IncludeDeletedComments = true;
+                else
+                    CurrentSurvey.ContentOptions.CommentOptions.CommentFields.Add(type.TypeName);
             }
 
             UpdateReportColumns(sender, e);
@@ -1695,44 +1779,6 @@ namespace ITCSurveyReportLite
         }
 
         #endregion
-
-        #region Output Tab
-        private void FileFormat_CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton r = sender as RadioButton;
-            int sel = Convert.ToInt32(r.Tag);
-
-            SR.LayoutOptions.FileFormat = (FileFormats)sel;
-        }
-
-        private void ToC_CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton r = sender as RadioButton;
-            int sel = Convert.ToInt32(r.Tag);
-
-            SR.LayoutOptions.ToC = (TableOfContents)sel;
-        }
-
-        private void PaperSize_CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton r = sender as RadioButton;
-            int sel = Convert.ToInt32(r.Tag);
-
-            SR.LayoutOptions.PaperSize = (PaperSizes)sel;
-        }
-
-        private void NRFormat_CheckedChanged(object sender, EventArgs e)
-        {
-            RadioButton r = sender as RadioButton;
-            int sel = Convert.ToInt32(r.Tag);
-
-            SR.NrFormat = (ReadOutOptions)sel;
-        }
-
-
-        #endregion
-
-
 
         private void tabControlOptions_SelectedIndexChanged(object sender, EventArgs e)
         {

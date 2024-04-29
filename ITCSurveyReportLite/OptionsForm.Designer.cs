@@ -36,13 +36,9 @@
             this.chkInlineRouting = new System.Windows.Forms.CheckBox();
             this.chkSemiTelephone = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.chkSubsetTables = new System.Windows.Forms.CheckBox();
             this.panelInsertQnums = new System.Windows.Forms.Panel();
             this.rbInsertAQN = new System.Windows.Forms.RadioButton();
             this.rbInsertQnum = new System.Windows.Forms.RadioButton();
-            this.panelSubsetTables = new System.Windows.Forms.Panel();
-            this.rbTranslationSubsetTables = new System.Windows.Forms.RadioButton();
-            this.rbEnglishSubsetTables = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
             this.groupNRFormat = new System.Windows.Forms.GroupBox();
             this.rbNRDRO = new System.Windows.Forms.RadioButton();
@@ -57,7 +53,6 @@
             this.chkIncludeImages = new System.Windows.Forms.CheckBox();
             this.chkImageAppendix = new System.Windows.Forms.CheckBox();
             this.panelInsertQnums.SuspendLayout();
-            this.panelSubsetTables.SuspendLayout();
             this.groupNRFormat.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -127,7 +122,7 @@
             // chkSemiTelephone
             // 
             this.chkSemiTelephone.AutoSize = true;
-            this.chkSemiTelephone.Location = new System.Drawing.Point(12, 250);
+            this.chkSemiTelephone.Location = new System.Drawing.Point(12, 178);
             this.chkSemiTelephone.Name = "chkSemiTelephone";
             this.chkSemiTelephone.Size = new System.Drawing.Size(120, 20);
             this.chkSemiTelephone.TabIndex = 6;
@@ -143,17 +138,6 @@
             this.label2.Size = new System.Drawing.Size(343, 16);
             this.label2.TabIndex = 9;
             this.label2.Text = "These options will apply to all surveys in the report.";
-            // 
-            // chkSubsetTables
-            // 
-            this.chkSubsetTables.AutoSize = true;
-            this.chkSubsetTables.Location = new System.Drawing.Point(12, 180);
-            this.chkSubsetTables.Name = "chkSubsetTables";
-            this.chkSubsetTables.Size = new System.Drawing.Size(144, 20);
-            this.chkSubsetTables.TabIndex = 10;
-            this.chkSubsetTables.Text = "Insert Subset Tables";
-            this.chkSubsetTables.UseVisualStyleBackColor = true;
-            this.chkSubsetTables.Click += new System.EventHandler(this.chkSubsetTables_Click);
             // 
             // panelInsertQnums
             // 
@@ -187,38 +171,6 @@
             this.rbInsertQnum.Text = "Qnum";
             this.rbInsertQnum.UseVisualStyleBackColor = true;
             // 
-            // panelSubsetTables
-            // 
-            this.panelSubsetTables.Controls.Add(this.rbTranslationSubsetTables);
-            this.panelSubsetTables.Controls.Add(this.rbEnglishSubsetTables);
-            this.panelSubsetTables.Enabled = false;
-            this.panelSubsetTables.Location = new System.Drawing.Point(59, 206);
-            this.panelSubsetTables.Name = "panelSubsetTables";
-            this.panelSubsetTables.Size = new System.Drawing.Size(100, 40);
-            this.panelSubsetTables.TabIndex = 13;
-            // 
-            // rbTranslationSubsetTables
-            // 
-            this.rbTranslationSubsetTables.AutoSize = true;
-            this.rbTranslationSubsetTables.Location = new System.Drawing.Point(6, 18);
-            this.rbTranslationSubsetTables.Name = "rbTranslationSubsetTables";
-            this.rbTranslationSubsetTables.Size = new System.Drawing.Size(89, 20);
-            this.rbTranslationSubsetTables.TabIndex = 1;
-            this.rbTranslationSubsetTables.TabStop = true;
-            this.rbTranslationSubsetTables.Text = "Translation";
-            this.rbTranslationSubsetTables.UseVisualStyleBackColor = true;
-            // 
-            // rbEnglishSubsetTables
-            // 
-            this.rbEnglishSubsetTables.AutoSize = true;
-            this.rbEnglishSubsetTables.Location = new System.Drawing.Point(6, 0);
-            this.rbEnglishSubsetTables.Name = "rbEnglishSubsetTables";
-            this.rbEnglishSubsetTables.Size = new System.Drawing.Size(65, 20);
-            this.rbEnglishSubsetTables.TabIndex = 0;
-            this.rbEnglishSubsetTables.TabStop = true;
-            this.rbEnglishSubsetTables.Text = "English";
-            this.rbEnglishSubsetTables.UseVisualStyleBackColor = true;
-            // 
             // label4
             // 
             this.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -233,7 +185,7 @@
             this.groupNRFormat.Controls.Add(this.rbNRDRO);
             this.groupNRFormat.Controls.Add(this.rbNRDR);
             this.groupNRFormat.Controls.Add(this.rbNRNormal);
-            this.groupNRFormat.Location = new System.Drawing.Point(181, 36);
+            this.groupNRFormat.Location = new System.Drawing.Point(14, 204);
             this.groupNRFormat.Name = "groupNRFormat";
             this.groupNRFormat.Size = new System.Drawing.Size(126, 86);
             this.groupNRFormat.TabIndex = 17;
@@ -275,7 +227,7 @@
             // chkSurveyNotes
             // 
             this.chkSurveyNotes.AutoSize = true;
-            this.chkSurveyNotes.Location = new System.Drawing.Point(177, 178);
+            this.chkSurveyNotes.Location = new System.Drawing.Point(170, 82);
             this.chkSurveyNotes.Name = "chkSurveyNotes";
             this.chkSurveyNotes.Size = new System.Drawing.Size(101, 20);
             this.chkSurveyNotes.TabIndex = 18;
@@ -285,7 +237,7 @@
             // chkVarChangesColumn
             // 
             this.chkVarChangesColumn.AutoSize = true;
-            this.chkVarChangesColumn.Location = new System.Drawing.Point(177, 204);
+            this.chkVarChangesColumn.Location = new System.Drawing.Point(170, 152);
             this.chkVarChangesColumn.Name = "chkVarChangesColumn";
             this.chkVarChangesColumn.Size = new System.Drawing.Size(258, 20);
             this.chkVarChangesColumn.TabIndex = 19;
@@ -295,7 +247,7 @@
             // chkVarChangesAppendix
             // 
             this.chkVarChangesAppendix.AutoSize = true;
-            this.chkVarChangesAppendix.Location = new System.Drawing.Point(177, 230);
+            this.chkVarChangesAppendix.Location = new System.Drawing.Point(170, 178);
             this.chkVarChangesAppendix.Name = "chkVarChangesAppendix";
             this.chkVarChangesAppendix.Size = new System.Drawing.Size(212, 20);
             this.chkVarChangesAppendix.TabIndex = 20;
@@ -306,7 +258,7 @@
             // 
             this.chkExcludeHiddenChanges.Checked = true;
             this.chkExcludeHiddenChanges.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkExcludeHiddenChanges.Location = new System.Drawing.Point(195, 254);
+            this.chkExcludeHiddenChanges.Location = new System.Drawing.Point(188, 202);
             this.chkExcludeHiddenChanges.Name = "chkExcludeHiddenChanges";
             this.chkExcludeHiddenChanges.Size = new System.Drawing.Size(234, 38);
             this.chkExcludeHiddenChanges.TabIndex = 21;
@@ -316,7 +268,7 @@
             // chkBlankColumn
             // 
             this.chkBlankColumn.AutoSize = true;
-            this.chkBlankColumn.Location = new System.Drawing.Point(177, 154);
+            this.chkBlankColumn.Location = new System.Drawing.Point(170, 58);
             this.chkBlankColumn.Name = "chkBlankColumn";
             this.chkBlankColumn.Size = new System.Drawing.Size(103, 20);
             this.chkBlankColumn.TabIndex = 22;
@@ -327,7 +279,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(185, 132);
+            this.label3.Location = new System.Drawing.Point(178, 36);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(97, 16);
             this.label3.TabIndex = 23;
@@ -336,7 +288,7 @@
             // chkIncludeImages
             // 
             this.chkIncludeImages.AutoSize = true;
-            this.chkIncludeImages.Location = new System.Drawing.Point(304, 152);
+            this.chkIncludeImages.Location = new System.Drawing.Point(170, 104);
             this.chkIncludeImages.Name = "chkIncludeImages";
             this.chkIncludeImages.Size = new System.Drawing.Size(122, 20);
             this.chkIncludeImages.TabIndex = 26;
@@ -346,7 +298,7 @@
             // chkImageAppendix
             // 
             this.chkImageAppendix.AutoSize = true;
-            this.chkImageAppendix.Location = new System.Drawing.Point(304, 178);
+            this.chkImageAppendix.Location = new System.Drawing.Point(170, 126);
             this.chkImageAppendix.Name = "chkImageAppendix";
             this.chkImageAppendix.Size = new System.Drawing.Size(118, 20);
             this.chkImageAppendix.TabIndex = 27;
@@ -370,9 +322,7 @@
             this.Controls.Add(this.chkSurveyNotes);
             this.Controls.Add(this.groupNRFormat);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.panelSubsetTables);
             this.Controls.Add(this.panelInsertQnums);
-            this.Controls.Add(this.chkSubsetTables);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.chkSemiTelephone);
             this.Controls.Add(this.chkInlineRouting);
@@ -388,8 +338,6 @@
             this.Text = "Report Options";
             this.panelInsertQnums.ResumeLayout(false);
             this.panelInsertQnums.PerformLayout();
-            this.panelSubsetTables.ResumeLayout(false);
-            this.panelSubsetTables.PerformLayout();
             this.groupNRFormat.ResumeLayout(false);
             this.groupNRFormat.PerformLayout();
             this.ResumeLayout(false);
@@ -407,13 +355,9 @@
         private System.Windows.Forms.CheckBox chkInlineRouting;
         private System.Windows.Forms.CheckBox chkSemiTelephone;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.CheckBox chkSubsetTables;
         private System.Windows.Forms.Panel panelInsertQnums;
         private System.Windows.Forms.RadioButton rbInsertAQN;
         private System.Windows.Forms.RadioButton rbInsertQnum;
-        private System.Windows.Forms.Panel panelSubsetTables;
-        private System.Windows.Forms.RadioButton rbTranslationSubsetTables;
-        private System.Windows.Forms.RadioButton rbEnglishSubsetTables;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupNRFormat;
         private System.Windows.Forms.RadioButton rbNRDRO;

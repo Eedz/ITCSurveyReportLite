@@ -111,6 +111,7 @@
     <Compile Include="CommentOptions.Designer.cs">
       <DependentUpon>CommentOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComparisonOptionsForm.cs" />
     <Compile Include="CustomizeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +131,7 @@
     <Compile Include="OutputOptionsForm.Designer.cs">
       <DependentUpon>OutputOptionsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SingleOptionsForm.cs" />
     <Compile Include="SurveyReportForm.cs">
       <SubType>Form</SubType>
     </Compile>

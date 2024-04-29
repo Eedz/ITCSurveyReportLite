@@ -18,7 +18,8 @@ namespace ITCSurveyReportLite
     public partial class OptionsForm : Form
     {
         SurveyBasedReport SR;
-        
+        IReport Report;
+
         /// <summary>
         /// 
         /// </summary>
@@ -38,12 +39,6 @@ namespace ITCSurveyReportLite
 
             chkInsertCC.Checked = SR.CCInsertion;
             chkInlineRouting.Checked = SR.InlineRouting;
-
-            chkSubsetTables.Checked = SR.SubsetTables || SR.SubsetTablesTranslation;
-            rbEnglishSubsetTables.Checked = SR.SubsetTables;
-            rbTranslationSubsetTables.Checked = SR.SubsetTablesTranslation;
-
-            ToggleSubsetTableOptions();
 
             chkSemiTelephone.Checked = SR.SemiTel;
 
@@ -79,6 +74,60 @@ namespace ITCSurveyReportLite
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="report"></param>
+        public OptionsForm(IReport report)
+        {
+            InitializeComponent();
+            Report = report;
+
+            chkLongLists.Checked = Report.ReportOptions.ShowLongLists;
+
+            chkInsertQnums.Checked = Report.ReportOptions.QNInsertion != QnumInsertion.Neither;
+            rbInsertQnum.Checked = Report.ReportOptions.QNInsertion == QnumInsertion.QN;
+            rbInsertAQN.Checked = Report.ReportOptions.QNInsertion == QnumInsertion.AQN;
+
+            ToggleQnumInsertionOptions();
+
+            chkInsertCC.Checked = Report.ReportOptions.CCInsertion;
+            chkInlineRouting.Checked = Report.ReportOptions.InlineRouting;
+
+            chkSemiTelephone.Checked = Report.ReportOptions.SemiTel;
+
+            switch (Report.ReportOptions.NrFormat)
+            {
+                case ReadOutOptions.Neither:
+                    rbNRNormal.Checked = true;
+                    break;
+                case ReadOutOptions.DontRead:
+                    rbNRDR.Checked = true;
+                    break;
+                case ReadOutOptions.DontReadOut:
+                    rbNRDRO.Checked = true;
+                    break;
+            }
+
+            chkBlankColumn.Checked = Report.BlankColumn;
+            //chkIncludeImages.Checked = Report.IncludeImages;
+            chkImageAppendix.Checked = Report.Appendices.Contains("Images");
+            chkSurveyNotes.Checked = Report.Appendices.Contains("Notes");
+            chkVarChangesColumn.Checked = Report.ReportOptions.VarChangesCol;
+            chkVarChangesAppendix.Checked = Report.Appendices.Contains("Renames");
+            chkExcludeHiddenChanges.Checked = Report.ReportOptions.ExcludeTempChanges;
+
+            if (Report.Surveys.Count > 1 || !Report.Surveys.Any(x=>x.Mode.ModeAbbrev.Equals("F2F")))
+            {
+                chkInlineRouting.Enabled = false;
+                chkInlineRouting.Checked = false;
+            }
+            else
+            {
+                chkInlineRouting.Enabled = true;
+            }
+        }
+
         private void cmdCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
@@ -87,13 +136,64 @@ namespace ITCSurveyReportLite
 
         private void cmdOK_Click(object sender, EventArgs e)
         {
+            //SaveReportOptions();
+            SaveSROptions();
+            Close();
+        }
+
+        private void SaveReportOptions()
+        {
+            Report.ReportOptions.ShowLongLists = chkLongLists.Checked;
+            if (rbInsertQnum.Checked)
+            {
+                Report.ReportOptions.QNInsertion = QnumInsertion.QN;
+            }else if (rbInsertAQN.Checked)
+            {
+                Report.ReportOptions.QNInsertion = QnumInsertion.AQN;
+            }
+            else
+            {
+                Report.ReportOptions.QNInsertion = QnumInsertion.Neither;
+            }
+            
+            Report.ReportOptions.CCInsertion = chkInsertCC.Checked;
+            Report.ReportOptions.InlineRouting = chkInlineRouting.Checked;
+            
+            Report.ReportOptions.SemiTel = chkSemiTelephone.Checked;
+
+            if (rbNRNormal.Checked)
+                Report.ReportOptions.NrFormat = ReadOutOptions.Neither;
+            else if (rbNRDR.Checked)
+                Report.ReportOptions.NrFormat = ReadOutOptions.DontRead;
+            else if (rbNRDRO.Checked)
+                Report.ReportOptions.NrFormat = ReadOutOptions.DontReadOut;
+
+            Report.BlankColumn = chkBlankColumn.Checked;
+            //Report.IncludeImages = chkIncludeImages.Checked;
+
+            if (chkImageAppendix.Checked && !Report.Appendices.Contains("Images"))
+                Report.Appendices.Add("Images");
+
+            if (chkSurveyNotes.Checked && !Report.Appendices.Contains("Notes"))
+                Report.Appendices.Add("Notes");
+
+            Report.ReportOptions.VarChangesCol = chkVarChangesColumn.Checked;
+
+
+            if (chkVarChangesAppendix.Checked && !Report.Appendices.Contains("Renames"))
+                Report.Appendices.Add("Renames");
+
+            Report.ReportOptions.ExcludeTempChanges = chkExcludeHiddenChanges.Checked;
+        }
+
+        private void SaveSROptions()
+        {
             SR.ShowLongLists = chkLongLists.Checked;
             SR.QNInsertion = rbInsertQnum.Checked;
             SR.AQNInsertion = rbInsertAQN.Checked;
             SR.CCInsertion = chkInsertCC.Checked;
             SR.InlineRouting = chkInlineRouting.Checked;
-            SR.SubsetTables = rbEnglishSubsetTables.Checked || rbTranslationSubsetTables.Checked;
-            SR.SubsetTablesTranslation = rbTranslationSubsetTables.Checked;
+            
             SR.SemiTel = chkSemiTelephone.Checked;
 
             if (rbNRNormal.Checked)
@@ -110,8 +210,8 @@ namespace ITCSurveyReportLite
             SR.VarChangesCol = chkVarChangesColumn.Checked;
             SR.VarChangesApp = chkVarChangesAppendix.Checked;
             SR.ExcludeTempChanges = chkExcludeHiddenChanges.Checked;
-            Close();
         }
+
 
         private void chkInsertQnums_Click(object sender, EventArgs e)
         {
@@ -133,27 +233,5 @@ namespace ITCSurveyReportLite
                     rbInsertQnum.Checked = true;
             }
         }
-
-        private void chkSubsetTables_Click(object sender, EventArgs e)
-        {
-            ToggleSubsetTableOptions();
-        }
-
-        private void ToggleSubsetTableOptions()
-        {
-            panelSubsetTables.Enabled = chkSubsetTables.Checked;
-            if (!chkSubsetTables.Checked)
-            {
-                rbEnglishSubsetTables.Checked = false;
-                rbTranslationSubsetTables.Checked = false;
-            }
-            else
-            {
-                // if neither are true, set the default
-                if (!SR.SubsetTables && !SR.SubsetTablesTranslation)
-                    rbEnglishSubsetTables.Checked = true;
-            }
-        }
-
     }
 }

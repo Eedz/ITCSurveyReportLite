@@ -33,7 +33,10 @@ namespace ITCSurveyReportLite
             InitializeComponent();
 
             Survey = survey;
-            SurveyContent = new List<SurveyQuestion>(DBAction.GetSurveyQuestions(survey));
+            if (survey.Backend != DateTime.Today)
+                SurveyContent = new List<SurveyQuestion>(DBAction.GetBackupQuestions(survey, survey.Backend));
+            else 
+                SurveyContent = new List<SurveyQuestion>(DBAction.GetSurveyQuestions(survey));
 
             this.Text = "Content for " + survey.SurveyCode + " from " + survey.Backend.ToString("d");
             lblSurvey.Text = survey.SurveyCode + " Content";
@@ -174,14 +177,14 @@ namespace ITCSurveyReportLite
                         lstFilterType.Items.Add(h);
                     }
 
-                    h = new Heading(q.Qnum, q.PreP)
+                    h = new Heading(q.Qnum, q.PrePW.WordingText)
                     {
                         StartQnum = q.Qnum,
                         VarName = q.VarName
                     };
                 }
 
-                    
+
             }
             if (h != null)
             {
