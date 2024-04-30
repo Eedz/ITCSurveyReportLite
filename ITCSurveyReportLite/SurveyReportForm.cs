@@ -973,7 +973,15 @@ namespace ITCSurveyReportLite
 
                 // varchanges (for appendix)
                 if (SR.VarChangesApp)
-                    rs.VarChanges = new List<VarNameChange>(DBAction.GetVarNameChanges(rs).Where(x => x.PreFWChange != SR.ExcludeTempChanges));
+                {
+                    var changes = DBAction.GetVarNameChanges(rs);
+                    if (SR.ExcludeTempChanges)
+                        changes = changes.Where(x => !x.PreFWChange).ToList();
+
+                    var matches = changes.Where(x => rs.Questions.Any(y => y.VarName.VarName.Equals(x.NewName))).ToList();
+                    rs.VarChanges = matches;
+                    
+                }
 
                 rs.LastUpdate = DBAction.GetSurveyLastUpdate(rs);
             }
