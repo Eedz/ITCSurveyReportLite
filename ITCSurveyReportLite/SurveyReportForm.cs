@@ -365,8 +365,8 @@ namespace ITCSurveyReportLite
             {
                 StandardSurveyReport report = new StandardSurveyReport(SR.Surveys[0]);
                 report.BlankColumn = true;
-                report.ReportOptions.VarChangesCol = true;
-                report.ReportOptions.ExcludeTempChanges = true;
+                report.Options.FormattingOptions.VarChangesCol = true;
+                report.Options.FormattingOptions.ExcludeTempChanges = true;
                 
                 report.UpdateColumnOrder(chkTranslationFirst.Checked);
 

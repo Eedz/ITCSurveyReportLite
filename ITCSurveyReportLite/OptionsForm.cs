@@ -40,8 +40,6 @@ namespace ITCSurveyReportLite
             chkInsertCC.Checked = SR.CCInsertion;
             chkInlineRouting.Checked = SR.InlineRouting;
 
-            chkSemiTelephone.Checked = SR.SemiTel;
-
             switch (SR.NrFormat)
             {
                 case ReadOutOptions.Neither:
@@ -83,20 +81,18 @@ namespace ITCSurveyReportLite
             InitializeComponent();
             Report = report;
 
-            chkLongLists.Checked = Report.ReportOptions.ShowLongLists;
+            chkLongLists.Checked = Report.Options.FormattingOptions.ShowLongLists;
 
-            chkInsertQnums.Checked = Report.ReportOptions.QNInsertion != QnumInsertion.Neither;
-            rbInsertQnum.Checked = Report.ReportOptions.QNInsertion == QnumInsertion.QN;
-            rbInsertAQN.Checked = Report.ReportOptions.QNInsertion == QnumInsertion.AQN;
+            chkInsertQnums.Checked = Report.Options.FormattingOptions.QNInsertion != QnumInsertion.Neither;
+            rbInsertQnum.Checked = Report.Options.FormattingOptions.QNInsertion == QnumInsertion.QN;
+            rbInsertAQN.Checked = Report.Options.FormattingOptions.QNInsertion == QnumInsertion.AQN;
 
             ToggleQnumInsertionOptions();
 
-            chkInsertCC.Checked = Report.ReportOptions.CCInsertion;
-            chkInlineRouting.Checked = Report.ReportOptions.InlineRouting;
+            chkInsertCC.Checked = Report.Options.FormattingOptions.CCInsertion;
+            chkInlineRouting.Checked = Report.Options.FormattingOptions.InlineRouting;
 
-            chkSemiTelephone.Checked = Report.ReportOptions.SemiTel;
-
-            switch (Report.ReportOptions.NrFormat)
+            switch (Report.Options.FormattingOptions.NrFormat)
             {
                 case ReadOutOptions.Neither:
                     rbNRNormal.Checked = true;
@@ -113,9 +109,9 @@ namespace ITCSurveyReportLite
             //chkIncludeImages.Checked = Report.IncludeImages;
             chkImageAppendix.Checked = Report.Appendices.Contains("Images");
             chkSurveyNotes.Checked = Report.Appendices.Contains("Notes");
-            chkVarChangesColumn.Checked = Report.ReportOptions.VarChangesCol;
+            chkVarChangesColumn.Checked = Report.Options.FormattingOptions.VarChangesCol;
             chkVarChangesAppendix.Checked = Report.Appendices.Contains("Renames");
-            chkExcludeHiddenChanges.Checked = Report.ReportOptions.ExcludeTempChanges;
+            chkExcludeHiddenChanges.Checked = Report.Options.FormattingOptions.ExcludeTempChanges;
 
             if (Report.Surveys.Count > 1 || !Report.Surveys.Any(x=>x.Mode.ModeAbbrev.Equals("F2F")))
             {
@@ -143,30 +139,28 @@ namespace ITCSurveyReportLite
 
         private void SaveReportOptions()
         {
-            Report.ReportOptions.ShowLongLists = chkLongLists.Checked;
+            Report.Options.FormattingOptions.ShowLongLists = chkLongLists.Checked;
             if (rbInsertQnum.Checked)
             {
-                Report.ReportOptions.QNInsertion = QnumInsertion.QN;
+                Report.Options.FormattingOptions.QNInsertion = QnumInsertion.QN;
             }else if (rbInsertAQN.Checked)
             {
-                Report.ReportOptions.QNInsertion = QnumInsertion.AQN;
+                Report.Options.FormattingOptions.QNInsertion = QnumInsertion.AQN;
             }
             else
             {
-                Report.ReportOptions.QNInsertion = QnumInsertion.Neither;
+                Report.Options.FormattingOptions.QNInsertion = QnumInsertion.Neither;
             }
             
-            Report.ReportOptions.CCInsertion = chkInsertCC.Checked;
-            Report.ReportOptions.InlineRouting = chkInlineRouting.Checked;
+            Report.Options.FormattingOptions.CCInsertion = chkInsertCC.Checked;
+            Report.Options.FormattingOptions.InlineRouting = chkInlineRouting.Checked;
             
-            Report.ReportOptions.SemiTel = chkSemiTelephone.Checked;
-
             if (rbNRNormal.Checked)
-                Report.ReportOptions.NrFormat = ReadOutOptions.Neither;
+                Report.Options.FormattingOptions.NrFormat = ReadOutOptions.Neither;
             else if (rbNRDR.Checked)
-                Report.ReportOptions.NrFormat = ReadOutOptions.DontRead;
+                Report.Options.FormattingOptions.NrFormat = ReadOutOptions.DontRead;
             else if (rbNRDRO.Checked)
-                Report.ReportOptions.NrFormat = ReadOutOptions.DontReadOut;
+                Report.Options.FormattingOptions.NrFormat = ReadOutOptions.DontReadOut;
 
             Report.BlankColumn = chkBlankColumn.Checked;
             //Report.IncludeImages = chkIncludeImages.Checked;
@@ -177,13 +171,13 @@ namespace ITCSurveyReportLite
             if (chkSurveyNotes.Checked && !Report.Appendices.Contains("Notes"))
                 Report.Appendices.Add("Notes");
 
-            Report.ReportOptions.VarChangesCol = chkVarChangesColumn.Checked;
+            Report.Options.FormattingOptions.VarChangesCol = chkVarChangesColumn.Checked;
 
 
             if (chkVarChangesAppendix.Checked && !Report.Appendices.Contains("Renames"))
                 Report.Appendices.Add("Renames");
 
-            Report.ReportOptions.ExcludeTempChanges = chkExcludeHiddenChanges.Checked;
+            Report.Options.FormattingOptions.ExcludeTempChanges = chkExcludeHiddenChanges.Checked;
         }
 
         private void SaveSROptions()
@@ -194,8 +188,6 @@ namespace ITCSurveyReportLite
             SR.CCInsertion = chkInsertCC.Checked;
             SR.InlineRouting = chkInlineRouting.Checked;
             
-            SR.SemiTel = chkSemiTelephone.Checked;
-
             if (rbNRNormal.Checked)
                 SR.NrFormat = ReadOutOptions.Neither;
             else if (rbNRDR.Checked)

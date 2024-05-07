@@ -34,7 +34,6 @@
             this.chkInsertQnums = new System.Windows.Forms.CheckBox();
             this.chkInsertCC = new System.Windows.Forms.CheckBox();
             this.chkInlineRouting = new System.Windows.Forms.CheckBox();
-            this.chkSemiTelephone = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panelInsertQnums = new System.Windows.Forms.Panel();
             this.rbInsertAQN = new System.Windows.Forms.RadioButton();
@@ -58,7 +57,7 @@
             // 
             // cmdOK
             // 
-            this.cmdOK.Location = new System.Drawing.Point(231, 299);
+            this.cmdOK.Location = new System.Drawing.Point(231, 281);
             this.cmdOK.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdOK.Name = "cmdOK";
             this.cmdOK.Size = new System.Drawing.Size(87, 28);
@@ -69,7 +68,7 @@
             // 
             // cmdCancel
             // 
-            this.cmdCancel.Location = new System.Drawing.Point(342, 299);
+            this.cmdCancel.Location = new System.Drawing.Point(342, 281);
             this.cmdCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(87, 28);
@@ -119,16 +118,6 @@
             this.chkInlineRouting.Text = "In-line Routing";
             this.chkInlineRouting.UseVisualStyleBackColor = true;
             // 
-            // chkSemiTelephone
-            // 
-            this.chkSemiTelephone.AutoSize = true;
-            this.chkSemiTelephone.Location = new System.Drawing.Point(12, 178);
-            this.chkSemiTelephone.Name = "chkSemiTelephone";
-            this.chkSemiTelephone.Size = new System.Drawing.Size(120, 20);
-            this.chkSemiTelephone.TabIndex = 6;
-            this.chkSemiTelephone.Text = "Semi-Telephone";
-            this.chkSemiTelephone.UseVisualStyleBackColor = true;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -174,7 +163,7 @@
             // label4
             // 
             this.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label4.Location = new System.Drawing.Point(6, 294);
+            this.label4.Location = new System.Drawing.Point(6, 276);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(430, 2);
             this.label4.TabIndex = 16;
@@ -185,7 +174,7 @@
             this.groupNRFormat.Controls.Add(this.rbNRDRO);
             this.groupNRFormat.Controls.Add(this.rbNRDR);
             this.groupNRFormat.Controls.Add(this.rbNRNormal);
-            this.groupNRFormat.Location = new System.Drawing.Point(14, 204);
+            this.groupNRFormat.Location = new System.Drawing.Point(14, 181);
             this.groupNRFormat.Name = "groupNRFormat";
             this.groupNRFormat.Size = new System.Drawing.Size(126, 86);
             this.groupNRFormat.TabIndex = 17;
@@ -310,7 +299,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(441, 336);
+            this.ClientSize = new System.Drawing.Size(441, 319);
             this.ControlBox = false;
             this.Controls.Add(this.chkImageAppendix);
             this.Controls.Add(this.chkIncludeImages);
@@ -324,7 +313,6 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.panelInsertQnums);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.chkSemiTelephone);
             this.Controls.Add(this.chkInlineRouting);
             this.Controls.Add(this.chkInsertCC);
             this.Controls.Add(this.chkInsertQnums);
@@ -353,7 +341,6 @@
         private System.Windows.Forms.CheckBox chkInsertQnums;
         private System.Windows.Forms.CheckBox chkInsertCC;
         private System.Windows.Forms.CheckBox chkInlineRouting;
-        private System.Windows.Forms.CheckBox chkSemiTelephone;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panelInsertQnums;
         private System.Windows.Forms.RadioButton rbInsertAQN;
