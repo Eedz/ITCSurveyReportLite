@@ -31,6 +31,8 @@ namespace ITCSurveyReportLite
 
         ReportSurvey TranslatorReference;
 
+        BindingSource comparisonBinder;
+
         // background color RGB values
         //int backColorR = 55;
         //int backColorG = 170;
@@ -54,27 +56,22 @@ namespace ITCSurveyReportLite
             cboSurveys.DisplayMember = "SurveyCode";
             cboSurveys.DataSource = new List<Survey>(Globals.FullSurveyList);
 
-            // add tooltips for the quick reports
-            // toolTipStandard.SetToolTip(this.optStd, standardToolTipText);
-            //toolTipStandard.ShowAlways = true;
-            //toolTipStandard.AutomaticDelay = 0;
-            //toolTipStandard.AutoPopDelay = 30000;
-
             // hide the comparison tab until it is needed
             pgCompareTab = pgCompare;
             tabControlOptions.TabPages.Remove(pgCompare);
 
             // start with blank constructor, default settings
-            NewReport(new List<ReportSurvey>());
+            SR = new SurveyBasedReport();
 
             UserPreferences = new UserPrefs();
 
             // bind the controls of the form to the SR object
             surveyReportBindingSource.DataSource = SR;
 
-            compareBindingSource.DataSource = compare;
-
-            reportLayoutBindingSource.DataSource = SR.LayoutOptions;
+            compare = new Comparison()
+            {
+                SimilarWords = DBAction.GetSimilarWords()
+            };
 
             optNoTemplate.Checked = true;
 
@@ -88,6 +85,20 @@ namespace ITCSurveyReportLite
             cmdOpenReportFolder.Visible = false;
             cmdGenerate.Visible = false;
 
+            comparisonBinder = new BindingSource()
+            {
+                DataSource = compare
+            };
+
+            chkHighlight.DataBindings.Add("Checked", comparisonBinder, "Highlight");
+            chkHighlightNR.DataBindings.Add("Checked", comparisonBinder, "HighlightNR");
+            chkIgnoreSimilarWords.DataBindings.Add("Checked", comparisonBinder, "IgnoreSimilarWords", true, DataSourceUpdateMode.OnPropertyChanged);
+            chkShowDeletedFields.DataBindings.Add("Checked", comparisonBinder, "ShowDeletedFields", true, DataSourceUpdateMode.OnPropertyChanged);
+            chkShowDeletedQuestions.DataBindings.Add("Checked", comparisonBinder, "ShowDeletedQuestions", true, DataSourceUpdateMode.OnPropertyChanged);
+            chkReInsertDeletions.DataBindings.Add("Checked", comparisonBinder, "ReInsertDeletions", true, DataSourceUpdateMode.OnPropertyChanged);
+            chkHideReference.DataBindings.Add("Checked", comparisonBinder, "HidePrimary", true, DataSourceUpdateMode.OnPropertyChanged);
+            chkHideIdenticalWordings.DataBindings.Add("Checked", comparisonBinder, "HideIdenticalWordings", true, DataSourceUpdateMode.OnPropertyChanged);
+            chkHideIdenticalQs.DataBindings.Add("Checked", comparisonBinder, "HideIdenticalQuestions", true, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         /// <summary>
@@ -659,11 +670,8 @@ namespace ITCSurveyReportLite
             // get the survey data for all chosen surveys
             PopulateSurveys(SR.Surveys);
 
-
-            SurveyReport survReport = new SurveyReport(SR)
-            {
-                SurveyCompare = compare
-            };
+            SurveyReport survReport = new SurveyReport(SR);
+            survReport.SurveyCompare = compare;
 
             // bind status label to survey report's status property
             lblStatus.DataBindings.Clear();
@@ -913,7 +921,7 @@ namespace ITCSurveyReportLite
                 var images = DBAction.GetSurveyImagesFromFolder(rs);
                 foreach (SurveyImage img in images)
                 {
-                    var q = SR.Surveys[0].QuestionByRefVar(img.VarName);
+                    var q = rs.QuestionByRefVar(img.VarName);
                     if (q != null) q.Images.Add(img);
                 }
                 
@@ -1307,7 +1315,7 @@ namespace ITCSurveyReportLite
             {
                 SimilarWords = DBAction.GetSimilarWords() // populate the similar words list
             };
-
+            
             // reset form controls
             chkStdTranslation.Checked = false;
 
@@ -1506,7 +1514,7 @@ namespace ITCSurveyReportLite
                 secondSources += ", ";
             }
 
-            secondSources = Utilities.TrimString(secondSources, ", ");
+            secondSources = secondSources.TrimAndRemoveAll(", ");
 
             txtMainSource.Text = mainSource;
             txtSecondSources.Text = secondSources;

@@ -177,7 +177,7 @@ namespace ITCSurveyReportLite
                         lstFilterType.Items.Add(h);
                     }
 
-                    h = new Heading(q.Qnum, q.PrePW.WordingText)
+                    h = new Heading(q.Qnum, q.PrePW)
                     {
                         StartQnum = q.Qnum,
                         VarName = q.VarName

@@ -47,6 +47,7 @@
             this.chkIncludeEnglish = new System.Windows.Forms.CheckBox();
             this.cmdCustomizeContent = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.chkTranslationFirst = new System.Windows.Forms.CheckBox();
             this.cmdCommentFields = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lstCommentTypes = new System.Windows.Forms.ListBox();
@@ -67,10 +68,9 @@
             this.lblPrimarySurvey = new System.Windows.Forms.Label();
             this.groupHighlightOptions = new System.Windows.Forms.GroupBox();
             this.flowHighlightOptions = new System.Windows.Forms.FlowLayoutPanel();
-            this.highlightNRCheckBox = new System.Windows.Forms.CheckBox();
-            this.compareBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.ignoreSimilarWordsCheckBox = new System.Windows.Forms.CheckBox();
-            this.showDeletedFieldsCheckBox = new System.Windows.Forms.CheckBox();
+            this.chkHighlightNR = new System.Windows.Forms.CheckBox();
+            this.chkIgnoreSimilarWords = new System.Windows.Forms.CheckBox();
+            this.chkShowDeletedFields = new System.Windows.Forms.CheckBox();
             this.chkShowDeletedQuestions = new System.Windows.Forms.CheckBox();
             this.chkReInsertDeletions = new System.Windows.Forms.CheckBox();
             this.chkHideReference = new System.Windows.Forms.CheckBox();
@@ -78,8 +78,9 @@
             this.chkHideIdenticalQs = new System.Windows.Forms.CheckBox();
             this.groupHighlightStyle = new System.Windows.Forms.GroupBox();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.highlightCheckBox = new System.Windows.Forms.CheckBox();
+            this.chkHighlight = new System.Windows.Forms.CheckBox();
             this.chkCompare = new System.Windows.Forms.CheckBox();
+            this.surveyReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pgFileName = new System.Windows.Forms.TabPage();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -91,10 +92,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.cmdSelfCompare = new System.Windows.Forms.Button();
-            this.toolTipStandard = new System.Windows.Forms.ToolTip(this.components);
-            this.toolTipStandardT = new System.Windows.Forms.ToolTip(this.components);
-            this.toolTipWeb = new System.Windows.Forms.ToolTip(this.components);
-            this.toolTipWebT = new System.Windows.Forms.ToolTip(this.components);
             this.lblStatus = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,10 +109,7 @@
             this.optStdTemplate = new System.Windows.Forms.RadioButton();
             this.cmdGenerate = new System.Windows.Forms.Button();
             this.cmdOpenReportFolder = new System.Windows.Forms.Button();
-            this.reportLayoutBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.surveysBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.chkTranslationFirst = new System.Windows.Forms.CheckBox();
-            this.surveyReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
             detailsLabel = new System.Windows.Forms.Label();
             fileNameLabel = new System.Windows.Forms.Label();
             this.tabControlOptions.SuspendLayout();
@@ -126,14 +120,12 @@
             this.pgCompare.SuspendLayout();
             this.groupHighlightOptions.SuspendLayout();
             this.flowHighlightOptions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).BeginInit();
             this.groupHighlightStyle.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).BeginInit();
             this.pgFileName.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupTemplate.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveysBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // detailsLabel
@@ -336,6 +328,17 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(471, 238);
             this.panel2.TabIndex = 32;
+            // 
+            // chkTranslationFirst
+            // 
+            this.chkTranslationFirst.AutoSize = true;
+            this.chkTranslationFirst.Location = new System.Drawing.Point(126, 206);
+            this.chkTranslationFirst.Name = "chkTranslationFirst";
+            this.chkTranslationFirst.Size = new System.Drawing.Size(119, 20);
+            this.chkTranslationFirst.TabIndex = 35;
+            this.chkTranslationFirst.Text = "Translation First";
+            this.chkTranslationFirst.UseVisualStyleBackColor = true;
+            this.chkTranslationFirst.Visible = false;
             // 
             // cmdCommentFields
             // 
@@ -562,7 +565,7 @@
             // 
             this.groupHighlightOptions.Controls.Add(this.flowHighlightOptions);
             this.groupHighlightOptions.Controls.Add(this.groupHighlightStyle);
-            this.groupHighlightOptions.Controls.Add(this.highlightCheckBox);
+            this.groupHighlightOptions.Controls.Add(this.chkHighlight);
             this.groupHighlightOptions.Location = new System.Drawing.Point(282, 32);
             this.groupHighlightOptions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupHighlightOptions.Name = "groupHighlightOptions";
@@ -575,9 +578,9 @@
             // 
             // flowHighlightOptions
             // 
-            this.flowHighlightOptions.Controls.Add(this.highlightNRCheckBox);
-            this.flowHighlightOptions.Controls.Add(this.ignoreSimilarWordsCheckBox);
-            this.flowHighlightOptions.Controls.Add(this.showDeletedFieldsCheckBox);
+            this.flowHighlightOptions.Controls.Add(this.chkHighlightNR);
+            this.flowHighlightOptions.Controls.Add(this.chkIgnoreSimilarWords);
+            this.flowHighlightOptions.Controls.Add(this.chkShowDeletedFields);
             this.flowHighlightOptions.Controls.Add(this.chkShowDeletedQuestions);
             this.flowHighlightOptions.Controls.Add(this.chkReInsertDeletions);
             this.flowHighlightOptions.Controls.Add(this.chkHideReference);
@@ -590,45 +593,41 @@
             this.flowHighlightOptions.Size = new System.Drawing.Size(173, 216);
             this.flowHighlightOptions.TabIndex = 10;
             // 
-            // highlightNRCheckBox
+            // chkHighlightNR
             // 
-            this.highlightNRCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.compareBindingSource, "HighlightNR", true));
-            this.highlightNRCheckBox.Location = new System.Drawing.Point(1, 1);
-            this.highlightNRCheckBox.Margin = new System.Windows.Forms.Padding(0);
-            this.highlightNRCheckBox.Name = "highlightNRCheckBox";
-            this.highlightNRCheckBox.Padding = new System.Windows.Forms.Padding(1);
-            this.highlightNRCheckBox.Size = new System.Drawing.Size(164, 25);
-            this.highlightNRCheckBox.TabIndex = 29;
-            this.highlightNRCheckBox.Text = "Highlight NR";
-            this.highlightNRCheckBox.UseVisualStyleBackColor = true;
+            this.chkHighlightNR.Location = new System.Drawing.Point(1, 1);
+            this.chkHighlightNR.Margin = new System.Windows.Forms.Padding(0);
+            this.chkHighlightNR.Name = "chkHighlightNR";
+            this.chkHighlightNR.Padding = new System.Windows.Forms.Padding(1);
+            this.chkHighlightNR.Size = new System.Drawing.Size(164, 25);
+            this.chkHighlightNR.TabIndex = 29;
+            this.chkHighlightNR.Text = "Highlight NR";
+            this.chkHighlightNR.UseVisualStyleBackColor = true;
             // 
-            // ignoreSimilarWordsCheckBox
+            // chkIgnoreSimilarWords
             // 
-            this.ignoreSimilarWordsCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.compareBindingSource, "IgnoreSimilarWords", true));
-            this.ignoreSimilarWordsCheckBox.Location = new System.Drawing.Point(1, 26);
-            this.ignoreSimilarWordsCheckBox.Margin = new System.Windows.Forms.Padding(0);
-            this.ignoreSimilarWordsCheckBox.Name = "ignoreSimilarWordsCheckBox";
-            this.ignoreSimilarWordsCheckBox.Padding = new System.Windows.Forms.Padding(1);
-            this.ignoreSimilarWordsCheckBox.Size = new System.Drawing.Size(164, 25);
-            this.ignoreSimilarWordsCheckBox.TabIndex = 37;
-            this.ignoreSimilarWordsCheckBox.Text = "Ignore Word Variants";
-            this.ignoreSimilarWordsCheckBox.UseVisualStyleBackColor = true;
+            this.chkIgnoreSimilarWords.Location = new System.Drawing.Point(1, 26);
+            this.chkIgnoreSimilarWords.Margin = new System.Windows.Forms.Padding(0);
+            this.chkIgnoreSimilarWords.Name = "chkIgnoreSimilarWords";
+            this.chkIgnoreSimilarWords.Padding = new System.Windows.Forms.Padding(1);
+            this.chkIgnoreSimilarWords.Size = new System.Drawing.Size(164, 25);
+            this.chkIgnoreSimilarWords.TabIndex = 37;
+            this.chkIgnoreSimilarWords.Text = "Ignore Word Variants";
+            this.chkIgnoreSimilarWords.UseVisualStyleBackColor = true;
             // 
-            // showDeletedFieldsCheckBox
+            // chkShowDeletedFields
             // 
-            this.showDeletedFieldsCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.compareBindingSource, "ShowDeletedFields", true));
-            this.showDeletedFieldsCheckBox.Location = new System.Drawing.Point(1, 51);
-            this.showDeletedFieldsCheckBox.Margin = new System.Windows.Forms.Padding(0);
-            this.showDeletedFieldsCheckBox.Name = "showDeletedFieldsCheckBox";
-            this.showDeletedFieldsCheckBox.Padding = new System.Windows.Forms.Padding(1);
-            this.showDeletedFieldsCheckBox.Size = new System.Drawing.Size(164, 25);
-            this.showDeletedFieldsCheckBox.TabIndex = 47;
-            this.showDeletedFieldsCheckBox.Text = "Show Deleted Fields";
-            this.showDeletedFieldsCheckBox.UseVisualStyleBackColor = true;
+            this.chkShowDeletedFields.Location = new System.Drawing.Point(1, 51);
+            this.chkShowDeletedFields.Margin = new System.Windows.Forms.Padding(0);
+            this.chkShowDeletedFields.Name = "chkShowDeletedFields";
+            this.chkShowDeletedFields.Padding = new System.Windows.Forms.Padding(1);
+            this.chkShowDeletedFields.Size = new System.Drawing.Size(164, 25);
+            this.chkShowDeletedFields.TabIndex = 47;
+            this.chkShowDeletedFields.Text = "Show Deleted Fields";
+            this.chkShowDeletedFields.UseVisualStyleBackColor = true;
             // 
             // chkShowDeletedQuestions
             // 
-            this.chkShowDeletedQuestions.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.compareBindingSource, "ShowDeletedQuestions", true));
             this.chkShowDeletedQuestions.Location = new System.Drawing.Point(1, 76);
             this.chkShowDeletedQuestions.Margin = new System.Windows.Forms.Padding(0);
             this.chkShowDeletedQuestions.Name = "chkShowDeletedQuestions";
@@ -641,7 +640,6 @@
             // 
             // chkReInsertDeletions
             // 
-            this.chkReInsertDeletions.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.compareBindingSource, "ReInsertDeletions", true));
             this.chkReInsertDeletions.Location = new System.Drawing.Point(1, 101);
             this.chkReInsertDeletions.Margin = new System.Windows.Forms.Padding(0);
             this.chkReInsertDeletions.Name = "chkReInsertDeletions";
@@ -654,7 +652,6 @@
             // chkHideReference
             // 
             this.chkHideReference.AutoSize = true;
-            this.chkHideReference.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.compareBindingSource, "HidePrimary", true));
             this.chkHideReference.Location = new System.Drawing.Point(1, 126);
             this.chkHideReference.Margin = new System.Windows.Forms.Padding(0);
             this.chkHideReference.Name = "chkHideReference";
@@ -667,7 +664,6 @@
             // chkHideIdenticalWordings
             // 
             this.chkHideIdenticalWordings.AutoSize = true;
-            this.chkHideIdenticalWordings.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.compareBindingSource, "HideIdenticalWordings", true));
             this.chkHideIdenticalWordings.Location = new System.Drawing.Point(1, 148);
             this.chkHideIdenticalWordings.Margin = new System.Windows.Forms.Padding(0);
             this.chkHideIdenticalWordings.Name = "chkHideIdenticalWordings";
@@ -680,7 +676,6 @@
             // chkHideIdenticalQs
             // 
             this.chkHideIdenticalQs.AutoSize = true;
-            this.chkHideIdenticalQs.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.compareBindingSource, "HideIdenticalQuestions", true));
             this.chkHideIdenticalQs.Location = new System.Drawing.Point(1, 170);
             this.chkHideIdenticalQs.Margin = new System.Windows.Forms.Padding(0);
             this.chkHideIdenticalQs.Name = "chkHideIdenticalQs";
@@ -717,17 +712,16 @@
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.HighlightStyle_CheckedChanged);
             // 
-            // highlightCheckBox
+            // chkHighlight
             // 
-            this.highlightCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.compareBindingSource, "Highlight", true));
-            this.highlightCheckBox.Enabled = false;
-            this.highlightCheckBox.Location = new System.Drawing.Point(12, 23);
-            this.highlightCheckBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.highlightCheckBox.Name = "highlightCheckBox";
-            this.highlightCheckBox.Size = new System.Drawing.Size(121, 25);
-            this.highlightCheckBox.TabIndex = 27;
-            this.highlightCheckBox.Text = "Highlight";
-            this.highlightCheckBox.UseVisualStyleBackColor = true;
+            this.chkHighlight.Enabled = false;
+            this.chkHighlight.Location = new System.Drawing.Point(12, 23);
+            this.chkHighlight.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.chkHighlight.Name = "chkHighlight";
+            this.chkHighlight.Size = new System.Drawing.Size(121, 25);
+            this.chkHighlight.TabIndex = 27;
+            this.chkHighlight.Text = "Highlight";
+            this.chkHighlight.UseVisualStyleBackColor = true;
             // 
             // chkCompare
             // 
@@ -740,6 +734,10 @@
             this.chkCompare.Text = "Compare?";
             this.chkCompare.UseVisualStyleBackColor = true;
             this.chkCompare.CheckedChanged += new System.EventHandler(this.Compare_CheckedChanged);
+            // 
+            // surveyReportBindingSource
+            // 
+            this.surveyReportBindingSource.DataSource = typeof(ITCReportLib.SurveyReport);
             // 
             // pgFileName
             // 
@@ -1047,21 +1045,6 @@
             this.surveysBindingSource.DataMember = "Surveys";
             this.surveysBindingSource.DataSource = this.surveyReportBindingSource;
             // 
-            // chkTranslationFirst
-            // 
-            this.chkTranslationFirst.AutoSize = true;
-            this.chkTranslationFirst.Location = new System.Drawing.Point(126, 206);
-            this.chkTranslationFirst.Name = "chkTranslationFirst";
-            this.chkTranslationFirst.Size = new System.Drawing.Size(119, 20);
-            this.chkTranslationFirst.TabIndex = 35;
-            this.chkTranslationFirst.Text = "Translation First";
-            this.chkTranslationFirst.UseVisualStyleBackColor = true;
-            this.chkTranslationFirst.Visible = false;
-            // 
-            // surveyReportBindingSource
-            // 
-            this.surveyReportBindingSource.DataSource = typeof(ITCReportLib.SurveyReport);
-            // 
             // SurveyReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -1102,18 +1085,16 @@
             this.groupHighlightOptions.ResumeLayout(false);
             this.flowHighlightOptions.ResumeLayout(false);
             this.flowHighlightOptions.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.compareBindingSource)).EndInit();
             this.groupHighlightStyle.ResumeLayout(false);
             this.groupHighlightStyle.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).EndInit();
             this.pgFileName.ResumeLayout(false);
             this.pgFileName.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupTemplate.ResumeLayout(false);
             this.groupTemplate.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.reportLayoutBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surveysBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.surveyReportBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1147,22 +1128,16 @@
         private System.Windows.Forms.TextBox txtMainSource;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.CheckBox chkCompare;
-        private System.Windows.Forms.CheckBox highlightCheckBox;
-        private System.Windows.Forms.CheckBox highlightNRCheckBox;
-        private System.Windows.Forms.CheckBox ignoreSimilarWordsCheckBox;
+        private System.Windows.Forms.CheckBox chkHighlight;
+        private System.Windows.Forms.CheckBox chkHighlightNR;
+        private System.Windows.Forms.CheckBox chkIgnoreSimilarWords;
         private System.Windows.Forms.CheckBox chkReInsertDeletions;
-        private System.Windows.Forms.CheckBox showDeletedFieldsCheckBox;
+        private System.Windows.Forms.CheckBox chkShowDeletedFields;
         private System.Windows.Forms.CheckBox chkShowDeletedQuestions;
         private System.Windows.Forms.BindingSource surveyReportBindingSource;
         private System.Windows.Forms.Label lblPrimarySurvey;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button cmdSelfCompare;
-        private System.Windows.Forms.ToolTip toolTipStandard;
-        private System.Windows.Forms.ToolTip toolTipStandardT;
-        private System.Windows.Forms.ToolTip toolTipWeb;
-        private System.Windows.Forms.ToolTip toolTipWebT;
-        private System.Windows.Forms.BindingSource compareBindingSource;
-        private System.Windows.Forms.BindingSource reportLayoutBindingSource;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;

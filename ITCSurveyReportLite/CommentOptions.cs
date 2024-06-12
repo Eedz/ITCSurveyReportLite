@@ -63,11 +63,11 @@ namespace ITCSurveyReportLite
                 lstAuthor.Items.Add(author[0].Author);
             }
 
-            var authority = comments.OrderBy(x => x.SourceName).GroupBy(x => x.SourceName).Select(grp => grp.ToList()).ToList();
+            var authority = comments.OrderBy(x => x.Authority.ID).GroupBy(x => x.Authority.ID).Select(grp => grp.ToList()).ToList();
 
             foreach (var author in authority)
             {
-                lstAuthority.Items.Add(author[0].SourceName);
+                lstAuthority.Items.Add(author[0].Authority.Name);
             }
         }
 
