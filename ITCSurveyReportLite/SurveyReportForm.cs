@@ -918,7 +918,7 @@ namespace ITCSurveyReportLite
                 }
 
                 
-                var images = DBAction.GetSurveyImagesFromFolder(rs);
+                var images = DBAction.GetSurveyImages(rs);
                 foreach (SurveyImage img in images)
                 {
                     var q = rs.QuestionByRefVar(img.VarName);
