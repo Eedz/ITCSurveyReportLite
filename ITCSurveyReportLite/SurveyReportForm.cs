@@ -375,6 +375,7 @@ namespace ITCSurveyReportLite
             try
             {
                 StandardSurveyReport report = new StandardSurveyReport(SR.Surveys[0]);
+                report.Options.ToC = true;
                 report.BlankColumn = true;
                 report.Options.FormattingOptions.VarChangesCol = true;
                 report.Options.FormattingOptions.ExcludeTempChanges = true;
@@ -389,13 +390,13 @@ namespace ITCSurveyReportLite
 
                 StandardReportPrinter printer = new StandardReportPrinter(report);
                 printer.OutputOptions.FileFormat = FileFormats.DOC;
-
+               
                 if (report.ColumnOrder.Count >= 4)
                     printer.OutputOptions.PaperSize = PaperSizes.Legal;
                 else
                     printer.OutputOptions.PaperSize = PaperSizes.Letter;
 
-                printer.ToC = true;
+                
                 printer.Unattended = false;
                 
                 printer.PrintReport();
@@ -417,7 +418,7 @@ namespace ITCSurveyReportLite
             try
             {
                 StandardSurveyReport report = new StandardSurveyReport(SR.Surveys[0]);
-
+                report.Options.ToC = true;
                 report.UpdateColumnOrder(chkTranslationFirst.Checked);
 
                 // bind status label to survey report's status property
@@ -428,7 +429,7 @@ namespace ITCSurveyReportLite
 
                 StandardReportPrinter printer = new StandardReportPrinter(report);
                 printer.OutputOptions.FileFormat = SR.LayoutOptions.FileFormat;
-                printer.ToC = true;
+            
                 printer.Unattended = false;
                 if (printer.OutputOptions.PaperSize == PaperSizes.Letter)
                 {
@@ -506,7 +507,7 @@ namespace ITCSurveyReportLite
             try
             {
                 TableFormatReport report = new TableFormatReport(SR.Surveys[0]);
-
+                report.Options.ToC = true;
                 report.UpdateColumnOrder(false);
 
                 // bind status label to survey report's status property
@@ -518,7 +519,7 @@ namespace ITCSurveyReportLite
                 TableFormatPrinter printer = new TableFormatPrinter(report);
                 printer.OutputOptions.FileFormat = FileFormats.DOC;
                 printer.OutputOptions.PaperSize = PaperSizes.Letter;
-                printer.ToC = true;
+            
                 printer.Unattended = false;
 
 
@@ -541,7 +542,7 @@ namespace ITCSurveyReportLite
             PopulateWebsiteReport(survey);
 
             WebsiteSurveyReport report = new WebsiteSurveyReport(survey);
-            report.ShowEnglish = survey.ShowQuestion;
+            ((WebReportOptions)report.Options).IncludeEnglish = survey.ShowQuestion;
             report.UpdateColumnOrder();
 
             // bind status label to survey report's status property
@@ -579,7 +580,7 @@ namespace ITCSurveyReportLite
             PopulateTranslatorSurveys();
 
             TranslatorReport report = new TranslatorReport(SR.Surveys[0], SR.Surveys[1]);
-            report.Comparer.SimilarWords = DBAction.GetSimilarWords();
+            report.SetSimilarWords(DBAction.GetSimilarWords());
             report.UpdateColumnOrder();
 
             // bind status label to survey report's status property
@@ -921,7 +922,7 @@ namespace ITCSurveyReportLite
                 var images = DBAction.GetSurveyImages(rs);
                 foreach (SurveyImage img in images)
                 {
-                    var q = rs.QuestionByRefVar(img.VarName);
+                    var q = rs.QuestionByVar(img.VarName);
                     if (q != null) q.Images.Add(img);
                 }
                 
