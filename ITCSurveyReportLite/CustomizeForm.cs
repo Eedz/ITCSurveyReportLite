@@ -294,7 +294,8 @@ namespace ITCSurveyReportLite
             switch (FilterType)
             {
                 case FilterBy.Prefix:
-                    Survey.ContentOptions.Prefixes.AddRange(lstFilterType.SelectedItems.Cast<string>().ToList());
+                    foreach(string s in lstFilterType.SelectedItems.Cast<string>().ToList())
+                        Survey.ContentOptions.Prefixes.Add(s);
                     break;
                 case FilterBy.Heading:
                     foreach (Heading s in lstFilterType.SelectedItems)

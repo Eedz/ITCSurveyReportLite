@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -211,7 +212,7 @@ namespace ITCSurveyReportLite
                 SR.PrimarySurvey().ContentOptions.TranslationOptions.TransFields.Add(language.LanguageName);
             }
             else
-                SR.PrimarySurvey().ContentOptions.TranslationOptions.TransFields = DBAction.ListLanguages(SR.QnumSurvey()).Select(x=>x.LanguageName).ToList();
+                SR.PrimarySurvey().ContentOptions.TranslationOptions.TransFields = new ObservableCollection<string>(DBAction.ListLanguages(SR.QnumSurvey()).Select(x=>x.LanguageName).ToList());
         }
 
         #endregion 
@@ -349,7 +350,7 @@ namespace ITCSurveyReportLite
             {
                 List<string> langs = survey.ListLanguages.ToList();
                 langs.Remove("English");
-                survey.ContentOptions.TranslationOptions.TransFields = langs;
+                survey.ContentOptions.TranslationOptions.TransFields = new ObservableCollection<string>(langs);
             }
 
             switch (survey.Mode.ModeAbbrev)
@@ -750,7 +751,7 @@ namespace ITCSurveyReportLite
                 {
                     List<string> langs = DBAction.ListLanguages(rs).Select(x => x.LanguageName).ToList();
                     langs.Remove("English");
-                    rs.ContentOptions.TranslationOptions.TransFields = langs;
+                    rs.ContentOptions.TranslationOptions.TransFields = new ObservableCollection<string>(langs);
                 }
             }
 
